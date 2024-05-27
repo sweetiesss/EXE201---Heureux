@@ -7,7 +7,8 @@ namespace Application.Repositories
     {
 
         
-        Task<HttpStatusCode> CheckUserExisted(string email, string hashedPassword);
+        Task<bool> CheckUserExisted(string email);
+        Task<bool> CheckLogin(string email, string Hashedpassword);
         //Task<User> GetUserById(int userid);
 
     }

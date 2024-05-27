@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Application.Commons;
 using Domain.Entities;
+using Application.ViewModels.UserViewModels;
 
 namespace Infrastructures.Mappers
 {
@@ -8,10 +9,10 @@ namespace Infrastructures.Mappers
     {
         public MapperConfigurationsProfile()
         {
-            //CreateMap<CreateChemicalViewModel, Chemical>();
-            //CreateMap(typeof(Pagination<>), typeof(Pagination<>));
-            //CreateMap<Chemical, ChemicalViewModel>()
-            //    .ForMember(dest => dest._Id, src => src.MapFrom(x => x.Id));
+            CreateMap<UserListDTO, User>();
+            CreateMap(typeof(Pagination<>), typeof(Pagination<>));
+            CreateMap<User, UserListDTO>()
+                ;
         }
     }
 }

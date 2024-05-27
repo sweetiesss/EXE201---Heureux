@@ -19,17 +19,38 @@ namespace Infrastructures.Repositories
         {
         }
 
-        public async Task<HttpStatusCode> CheckUserExisted(string email, string Hashedpassword)
+        public async Task<bool> CheckUserExisted(string email)
         {
-            var user = await _dbSet.FirstOrDefaultAsync(x => x.Email == email && x.Password == Hashedpassword) ;
+            if(email == null)
+            {
+                throw new Exception("null"); //400
+            }
+            var user = await _dbSet.FirstOrDefaultAsync(x => x.Email == email) ;
             if(user == null)
             {
-                return HttpStatusCode.NotFound; //404
+                return false; //404
             }
-            return HttpStatusCode.OK; //200
+            
+            return true; //200
 
         }
 
-       
+        public async Task<bool> CheckLogin(string email, string Hashedpassword)
+        {
+            if (email == null || Hashedpassword == null)
+            {
+                throw new Exception("Missing fields"); //400
+            }
+            var user = await _dbSet.FirstOrDefaultAsync(x => x.Email == email && x.Password == Hashedpassword);
+            if (user == null)
+            {
+                return false; //404
+            }
+
+            return true; //200
+
+        }
+
+
     }
 }

@@ -9,10 +9,15 @@ namespace Application.Interfaces
     {
         //System.Threading.Tasks.Task Login(UserLoginDTO userLoginDTO);
 
+        Task<HttpStatusCode> Login(UserLoginDTO userLoginDTO);
+        Task<HttpStatusCode> Register(UserRegisterDTO userRegisterDTO);
+
         Task<Pagination<User>> GetListUsersTESTAPI();
         Task<Pagination<UserListDTO>> GetListUsers(int pageIndex, int pageSize);
 
-        Task<HttpStatusCode> UserExists(string email, string password);   
+        Task<HttpStatusCode> UserExists(string email);   
+
+
         
     }
 }

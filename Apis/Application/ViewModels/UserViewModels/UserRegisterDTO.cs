@@ -1,5 +1,4 @@
-﻿using Domain.Entities;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -7,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Application.ViewModels.UserViewModels
 {
-    public class UserListDTO
+    public class UserRegisterDTO
     {
         public string Email { get; set; } = null!;
 
@@ -22,9 +21,6 @@ namespace Application.ViewModels.UserViewModels
         public string? Gender { get; set; }
 
         public string Username { get; set; } = null!;
-
-        public string? Status { get; set; }
-
         public int? Roleid { get; set; }
     }
 }

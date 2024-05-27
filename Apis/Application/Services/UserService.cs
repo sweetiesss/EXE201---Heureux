@@ -37,20 +37,62 @@ namespace Infrastructures.Services
             throw new NotImplementedException();
         }
 
-        public async Task<HttpStatusCode> UserExists(string email, string password)
+        public async Task<HttpStatusCode> Login(UserLoginDTO userLoginDTO)
+        {
+            string Email = userLoginDTO.Email;
+            string Password = userLoginDTO.Password;
+            if(Email != null && Password != null)
+            {
+                var result = await _unitOfWork.UserRepository.CheckLogin(Email, Password);
+                switch (result)
+                {
+                    case true:
+                        return HttpStatusCode.OK;
+                    case false:
+                        return HttpStatusCode.NotFound;
+                }
+            }
+            return HttpStatusCode.BadRequest;
+        }
+
+        public async Task<HttpStatusCode> Register(UserRegisterDTO userRegisterDTO)
+        {
+            var checkExists = await _unitOfWork.UserRepository.CheckUserExisted(userRegisterDTO.Email);
+            if(checkExists == true)
+            {
+                throw new Exception("Email already exists.");
+            }
+
+            var user = new User
+            {
+                Email = userRegisterDTO.Email,
+                Password = userRegisterDTO.Password,
+                Address = userRegisterDTO.Address,
+                Dob = userRegisterDTO.Dob,
+                Gender = userRegisterDTO.Gender,
+                Phone = userRegisterDTO.Phone,
+                Roleid = userRegisterDTO.Roleid,
+                Username = userRegisterDTO.Username,
+                Status = "Test",
+            };
+            await _unitOfWork.UserRepository.AddAsync(user);
+            await _unitOfWork.SaveChangeAsync();
+            return HttpStatusCode.OK;
+        }
+
+        public async Task<HttpStatusCode> UserExists(string email)
         {
             //tam thoi chua hash password
 
             //
 
-            var result = await _unitOfWork.UserRepository.CheckUserExisted(email, password);
+            var result = await _unitOfWork.UserRepository.CheckUserExisted(email);
             switch (result)
             {
-                case HttpStatusCode.OK:
+                case true:
                     return HttpStatusCode.OK;
-                case HttpStatusCode.NotFound:
+                case false:
                     return HttpStatusCode.NotFound;
-                default: return HttpStatusCode.NoContent;
             }
         }
 
