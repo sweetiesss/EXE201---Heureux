@@ -2,6 +2,7 @@
 using Application.Commons;
 using Application.Interfaces;
 using Application.Utils;
+using Application.ViewModels.RequestModels;
 using Application.ViewModels.UserViewModels;
 using AutoMapper;
 using Domain.Entities;
@@ -37,10 +38,10 @@ namespace Infrastructures.Services
             throw new NotImplementedException();
         }
 
-        public async Task<HttpStatusCode> Login(UserLoginDTO userLoginDTO)
+        public async Task<HttpStatusCode> Login(LoginRequestModel loginRequestModel)
         {
-            string Email = userLoginDTO.Email;
-            string Password = userLoginDTO.Password;
+            string Email = loginRequestModel.Email;
+            string Password = loginRequestModel.Password;
             if(Email != null && Password != null)
             {
                 var result = await _unitOfWork.UserRepository.CheckLogin(Email, Password);
@@ -55,9 +56,9 @@ namespace Infrastructures.Services
             return HttpStatusCode.BadRequest;
         }
 
-        public async Task<HttpStatusCode> Register(UserRegisterDTO userRegisterDTO)
+        public async Task<HttpStatusCode> Register(RegisterRequestModel registerRequestModel)
         {
-            var checkExists = await _unitOfWork.UserRepository.CheckUserExisted(userRegisterDTO.Email);
+            var checkExists = await _unitOfWork.UserRepository.CheckUserExisted(registerRequestModel.Email);
             if(checkExists == true)
             {
                 throw new Exception("Email already exists.");
@@ -65,14 +66,14 @@ namespace Infrastructures.Services
 
             var user = new User
             {
-                Email = userRegisterDTO.Email,
-                Password = userRegisterDTO.Password,
-                Address = userRegisterDTO.Address,
-                Dob = userRegisterDTO.Dob,
-                Gender = userRegisterDTO.Gender,
-                Phone = userRegisterDTO.Phone,
-                Roleid = userRegisterDTO.Roleid,
-                Username = userRegisterDTO.Username,
+                Email = registerRequestModel.Email,
+                Password = registerRequestModel.Password,
+                Address = registerRequestModel.Address,
+                Dob =   registerRequestModel.Dob,
+                Gender = registerRequestModel.Gender,
+                Phone = registerRequestModel.Phone,
+                Roleid = registerRequestModel.Roleid,
+                Username = registerRequestModel.Username,
                 Status = "Test",
             };
             await _unitOfWork.UserRepository.AddAsync(user);
