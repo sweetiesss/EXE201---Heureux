@@ -1,7 +1,6 @@
 package com.example.exe201_heureux.entity;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.*;
 
@@ -13,6 +12,7 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @Builder
 @Entity
+@Table(name = "Task")
 public class Task {
     @Id
     @Column(name = "id", nullable = false)
@@ -23,7 +23,6 @@ public class Task {
     private String description;
 
     @Size(max = 100)
-    @NotNull
     @Column(name = "name", nullable = false, length = 100)
     private String name;
 

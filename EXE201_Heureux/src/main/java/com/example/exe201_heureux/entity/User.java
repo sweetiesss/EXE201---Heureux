@@ -1,28 +1,28 @@
 package com.example.exe201_heureux.entity;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.LocalDate;
 
 @Getter
 @Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 @Entity
+@Table(name = "User")
 public class User {
     @Id
     @Column(name = "id", nullable = false)
     private Integer id;
 
     @Size(max = 100)
-    @NotNull
     @Column(name = "email", nullable = false, length = 100)
     private String email;
 
     @Size(max = 255)
-    @NotNull
     @Column(name = "password", nullable = false)
     private String password;
 
@@ -42,7 +42,6 @@ public class User {
     private String gender;
 
     @Size(max = 50)
-    @NotNull
     @Column(name = "username", nullable = false, length = 50)
     private String username;
 

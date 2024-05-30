@@ -3,7 +3,6 @@ package com.example.exe201_heureux.entity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
 import lombok.*;
-import org.hibernate.annotations.ColumnDefault;
 
 import java.time.Instant;
 
@@ -13,6 +12,7 @@ import java.time.Instant;
 @AllArgsConstructor
 @Builder
 @Entity
+@Table(name = "Report")
 public class Report {
     @Id
     @Column(name = "id", nullable = false)
@@ -22,7 +22,6 @@ public class Report {
     @JoinColumn(name = "teamid")
     private Team teamid;
 
-    @ColumnDefault("CURRENT_TIMESTAMP")
     @Column(name = "create_date")
     private Instant createDate;
 
