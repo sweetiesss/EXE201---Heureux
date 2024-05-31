@@ -5,7 +5,6 @@ namespace Domain.Entities;
 
 public class Role : BaseEntity
 {
-    //public int Id { get; set; }
 
     public string RoleCode { get; set; } = null!;
 

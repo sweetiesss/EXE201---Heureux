@@ -5,17 +5,15 @@ namespace Domain.Entities;
 
 public class Team : BaseEntity
 {
-    //public int Id { get; set; }
+    public int? Classid { get; set; }
 
-    public string Name { get; set; } = null!;
-
-    public bool? Flag { get; set; }
-
-    public int? Size { get; set; }
+    public ulong? Flag { get; set; }
 
     public int? Projectid { get; set; }
 
-    public int? Classid { get; set; }
+    public int? Size { get; set; }
+
+    public string Name { get; set; } = null!;
 
     public virtual Class? Class { get; set; }
 

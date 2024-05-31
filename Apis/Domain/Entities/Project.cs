@@ -5,15 +5,14 @@ namespace Domain.Entities;
 
 public class Project : BaseEntity
 {
-    //public int Id { get; set; }
-
-    public string Name { get; set; } = null!;
-
-    public string? Description { get; set; }
 
     public string? Status { get; set; }
 
     public string? CreateBy { get; set; }
+
+    public string Name { get; set; } = null!;
+
+    public string? Description { get; set; }
 
     public virtual ICollection<ClassProject> ClassProjects { get; } = new List<ClassProject>();
 

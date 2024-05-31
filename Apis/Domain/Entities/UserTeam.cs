@@ -5,13 +5,12 @@ namespace Domain.Entities;
 
 public class UserTeam : BaseEntity
 {
-    //public int Id { get; set; }
 
-    public int? Userid { get; set; }
+    public ulong? IsLeader { get; set; }
 
     public int? Teamid { get; set; }
 
-    public bool? IsLeader { get; set; }
+    public int? Userid { get; set; }
 
     public virtual Team? Team { get; set; }
 

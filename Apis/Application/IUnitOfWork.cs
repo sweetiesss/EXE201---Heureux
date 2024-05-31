@@ -9,6 +9,8 @@ namespace Application
 
         public IRoleRepository RoleRepository { get; }
 
+        public ISubscriptionRepository SubscriptionRepository { get; }
+        public IUserSubsciptionRepository UserSubsciptionRepository { get; }
         public Task<int> SaveChangeAsync();
     }
 }

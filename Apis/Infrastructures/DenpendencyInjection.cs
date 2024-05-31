@@ -17,9 +17,13 @@ namespace Infrastructures
         {
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IRoleRepository, RoleRepository>();
+            services.AddScoped<ISubscriptionRepository, SubscriptionRepository>();
+            services.AddScoped<IUserSubsciptionRepository, UserSubscriptionRepository>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IRoleService, RoleService>();
+            services.AddScoped<ISubscriptionService, SubscriptionService>();
+            services.AddScoped<IUserSubscriptionService, UserSubscriptionService>();
             // ATTENTION: if you do migration please check file README.md
             services.AddDbContext<AppDbContext>(option => option.UseMySQL(databaseConnection));
 

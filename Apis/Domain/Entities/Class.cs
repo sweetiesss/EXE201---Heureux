@@ -5,13 +5,12 @@ namespace Domain.Entities;
 
 public class Class : BaseEntity
 {
-    //public int Id { get; set; }
+    public DateTime? CreateDate { get; set; }
 
-    public string Name { get; set; } = null!;
 
     public string? CreateBy { get; set; }
 
-    public DateTime? CreateDate { get; set; }
+    public string Name { get; set; } = null!;
 
     public virtual ICollection<ClassProject> ClassProjects { get; } = new List<ClassProject>();
 

@@ -5,9 +5,9 @@ namespace Domain.Entities;
 
 public class ClassUser : BaseEntity
 {
-    //public int Id { get; set; }
-
     public int? Classid { get; set; }
+
+    public ulong? Flag { get; set; }
 
     public int? Userid { get; set; }
 
