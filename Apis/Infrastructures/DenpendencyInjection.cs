@@ -5,6 +5,7 @@ using Application.Services;
 using Infrastructures.Mappers;
 using Infrastructures.Repositories;
 using Infrastructures.Services;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -24,11 +25,11 @@ namespace Infrastructures
             services.AddScoped<IRoleService, RoleService>();
             services.AddScoped<ISubscriptionService, SubscriptionService>();
             services.AddScoped<IUserSubscriptionService, UserSubscriptionService>();
-            // ATTENTION: if you do migration please check file README.md
-            services.AddDbContext<AppDbContext>(option => option.UseMySQL(databaseConnection));
+            services.AddScoped<CustomRoleCodeResolver>();
+            services.AddScoped<CustomEmailResolver>();
+            services.AddScoped<CustomSubscriptionNameResolver>();
 
-            // this configuration just use in-memory for fast develop
-            //services.AddDbContext<AppDbContext>(option => option.UseInMemoryDatabase("test"));
+            services.AddDbContext<AppDbContext>(option => option.UseMySQL(databaseConnection));
 
             services.AddAutoMapper(typeof(MapperConfigurationsProfile).Assembly);
 

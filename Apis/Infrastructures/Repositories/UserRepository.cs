@@ -19,7 +19,7 @@ namespace Infrastructures.Repositories
         {
         }
 
-        public async Task<bool> CheckUserExisted(string email)
+        public async Task<User> GetUser(string email)
         {
             if(email == null)
             {
@@ -28,10 +28,10 @@ namespace Infrastructures.Repositories
             var user = await _dbSet.FirstOrDefaultAsync(x => x.Email == email) ;
             if(user == null)
             {
-                return false; //404
+                return null;
             }
             
-            return true; //200
+            return user; //200
 
         }
 

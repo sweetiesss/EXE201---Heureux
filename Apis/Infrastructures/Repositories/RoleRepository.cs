@@ -12,7 +12,12 @@ namespace Infrastructures.Repositories
     {
         public RoleRepository(AppDbContext context) : base(context)
         {
-
+            
+        }
+        public async Task<Role> GetByName(string name)
+        {
+            var result = _dbSet.FirstOrDefault(x => x.RoleCode == name);
+            return result;
         }
     }
 }

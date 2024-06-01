@@ -13,7 +13,8 @@ namespace Application.ViewModels.UserViewModels
         public DateTime? StartDate { get; set; }
 
         public int? SubscriptionId { get; set; }
-
+        public string SubscriptionName { get; set; }
         public int? UserId { get; set; }
+        public string UserEmail { get; set; }
     }
 }

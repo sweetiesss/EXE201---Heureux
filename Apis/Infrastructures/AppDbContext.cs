@@ -35,29 +35,7 @@ namespace Infrastructures
 
         public DbSet<UserTeam> UserTeams { get; set; }
 
-        //public DbSet<Class> Class { get; set; }
-
-        //public DbSet<ClassProject> class_project { get; set; }
-
-        //public DbSet<ClassUser> class_user { get; set; }
-
-        //public DbSet<Project> Project { get; set; }
-
-        //public DbSet<Report> Report { get; set; }
-
-        //public DbSet<Role> Role { get; set; }
-
-        //public DbSet<Subscription> subscription { get; set; }
-
-        //public DbSet<Domain.Entities.Task> Task { get; set; }
-
-        //public DbSet<Team> Team { get; set; }
-
-        //public DbSet<User> User { get; set; }
-
-        //public DbSet<UserSubscription> User_Subscription { get; set; }
-
-        //public DbSet<UserTeam> user_team { get; set; }
+     
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

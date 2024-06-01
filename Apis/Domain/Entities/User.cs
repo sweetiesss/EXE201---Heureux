@@ -28,7 +28,7 @@ public class User : BaseEntity
 
     public virtual ICollection<ClassUser> ClassUsers { get; } = new List<ClassUser>();
 
-    public virtual Role? Role { get; set; }
+    public Role? Role { get; set; }
 
     public virtual ICollection<UserSubscription> UserSubscriptions { get; } = new List<UserSubscription>();
 

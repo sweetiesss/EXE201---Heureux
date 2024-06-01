@@ -16,30 +16,21 @@ namespace WebAPI.Controllers
             _subscriptionService = subscriptionService;
         }
         [HttpGet]
-        public async Task<Pagination<SubscriptionListDTO>> GetSubcription([FromQuery][DefaultValue(0)] int pageIndex,
+        public async Task<Pagination<SubscriptionListDTO>> GetSubcriptions([FromQuery][DefaultValue(0)] int pageIndex,
                                                                            [FromQuery][DefaultValue(10)] int pageSize)
-        {
-            return await _subscriptionService.GetSubscription(pageIndex, pageSize);
-        }
-
+        => await _subscriptionService.GetSubscription(pageIndex, pageSize);
+        
         [HttpGet("{id}")]
-        public async Task<Subscription> GetSubscriptionById(int id)
-        {
-            return await _subscriptionService.GetSubscriptionById(id);
-        }
+        public async Task<Subscription> GetSubscription(int id) => await _subscriptionService.GetSubscriptionById(id);
 
         [HttpPost]
-        public async Task<Subscription> CreateSubscription(SubscriptionRequest subscription)
-        {
-            return await _subscriptionService.CreateSubscription(subscription);
-        }
+        public async Task<Subscription> CreateSubscription(SubscriptionRequest subscription) => await _subscriptionService.CreateSubscription(subscription);
+
 
         [HttpPut("{id}")]
         public async System.Threading.Tasks.Task UpdateSubscription(int id, SubscriptionRequest subscription)
-        {
-             await _subscriptionService.UpdateSubscription(id, subscription);
-            
-        }
+        => await _subscriptionService.UpdateSubscription(id, subscription);
+       
 
         [HttpDelete("{id}")]
         public async Task<Subscription> DeleteSubscription(int id)

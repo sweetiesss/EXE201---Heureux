@@ -2,6 +2,7 @@
 using Application.Commons;
 using Domain.Entities;
 using Application.ViewModels.UserViewModels;
+using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructures.Mappers
 {
@@ -15,10 +16,15 @@ namespace Infrastructures.Mappers
             CreateMap<UserListDTO, User>();
             CreateMap<SubscriptionListDTO, Subscription>();
             CreateMap<UserSubscriptionListDTO, UserSubscription>();
+            CreateMap<RoleListDTO, Role>();
             CreateMap(typeof(Pagination<>), typeof(Pagination<>));
             CreateMap<Subscription, SubscriptionListDTO>();
-            CreateMap<User, UserListDTO>();
-            CreateMap<UserSubscription, UserSubscriptionListDTO>();
+            CreateMap<User, UserListDTO>()
+                .ForMember(dest => dest.RoleCode, opt => opt.MapFrom<CustomRoleCodeResolver>());
+            CreateMap<UserSubscription, UserSubscriptionListDTO>()
+                 .ForMember(dest => dest.SubscriptionName, opt => opt.MapFrom<CustomSubscriptionNameResolver>())
+                 .ForMember(dest => dest.UserEmail, opt => opt.MapFrom<CustomEmailResolver>());
+            CreateMap<Role, RoleListDTO>();
         }
     }
 }

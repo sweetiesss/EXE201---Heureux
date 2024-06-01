@@ -7,16 +7,24 @@ using System.Net;
 namespace Application.Interfaces
 {
     public interface IUserService
-    {
-        //System.Threading.Tasks.Task Login(UserLoginDTO userLoginDTO);
+    { 
+        //GET
+        Task<UserListDTO> GetUserByEmail(string email);
+        Task<Pagination<UserListDTO>> GetListUsers(int pageIndex, int pageSize);
 
+        //POST
         Task<HttpStatusCode> Login(LoginRequestModel loginRequestModel);
         Task<HttpStatusCode> Register(RegisterRequestModel registerRequestModel);
 
-        Task<Pagination<User>> GetListUsersTESTAPI();
-        Task<Pagination<UserListDTO>> GetListUsers(int pageIndex, int pageSize);
+        //PUT
+        Task<HttpStatusCode> UpdateUser(RegisterRequestModel registerRequestModel);
 
-        Task<HttpStatusCode> UserExists(string email);   
+        //DELETE
+        Task<HttpStatusCode> DeleteUser(string email);
+        
+        //TEST
+        Task<List<User>> GetListUser();
+
 
 
         

@@ -23,7 +23,7 @@ namespace WebAPI.Controllers
             return await _userSubscriptionService.GetUserSubscription(pageIndex, pageSize);
         }
         [HttpGet("{id}")]
-        public async Task<UserSubscription> GetUserSubscriptionById(int id)
+        public async Task<UserSubscriptionListDTO> GetUserSubscriptionById(int id)
         {
             return await _userSubscriptionService.GetUserSubscriptionById(id);
         }

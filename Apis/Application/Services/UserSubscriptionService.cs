@@ -39,9 +39,11 @@ namespace Application.Services
             return result;
         }
 
-        public async Task<UserSubscription> GetUserSubscriptionById(int id)
+        public async Task<UserSubscriptionListDTO> GetUserSubscriptionById(int id)
         {
-            return await _unitOfWork.UserSubsciptionRepository.GetByIdAsync(id);
+            var us = await _unitOfWork.UserSubsciptionRepository.GetByIdAsync(id);
+            var result = _mapper.Map<UserSubscriptionListDTO>(us);
+            return result;
         }
         public async Task<Pagination<UserSubscriptionListDTO>> GetUserSubscription(int pageIndex, int pageSize)
         {

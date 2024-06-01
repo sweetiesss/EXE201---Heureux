@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Runtime.InteropServices;
@@ -19,13 +20,13 @@ namespace Application.ViewModels.RequestModels
         public string? Phone { get; set; }
 
         public string? Address { get; set; }
-
+        [DataType(DataType.Date)]
         public DateTime? Dob { get; set; }
 
         public string? Gender { get; set; }
         [Required(ErrorMessage = "Username can not be empty")]
         public string Username { get; set; } = null!;
         
-        public int? Roleid { get; set; }
+        public string? RoleCode { get; set; }
     }
 }
