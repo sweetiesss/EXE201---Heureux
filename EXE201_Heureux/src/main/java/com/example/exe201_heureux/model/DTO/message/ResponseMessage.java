@@ -16,13 +16,6 @@ public class ResponseMessage {
     public static final String msgUserDeleted = "User Deleted!";
     public static final String msgUserDoesNotExist = "User does not exist!";
 
-    // report
-    public static final String msgReportDoesNotExist = "Report does not exist!";
-    public static final String msgReportReasonDoesNotExist = "Report reason does not exist!";
-
-    // follow
-    public static final String msgUserNotFollow = "This user dont have this follow!";
-
-    // artwork
-    public static final String msgArtworkNotFound = "Artwork Not Found!";
+    //class
+    public static final String msgClassDoesNotExist = "Class does not exist!";
 }

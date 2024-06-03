@@ -1,4 +1,4 @@
-package com.example.exe201_heureux.Controller;
+package com.example.exe201_heureux.controller;
 
 import com.example.exe201_heureux.model.DTO.ResponseObject;
 import com.example.exe201_heureux.model.DTO.classservice.CreateProjectRequestDTO;
