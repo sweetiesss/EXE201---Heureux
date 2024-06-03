@@ -10,6 +10,7 @@ import java.util.Optional;
 
 public interface ProjectRepository extends JpaRepository<Project, Integer> {
     Optional<Project> findById (int id);
+    Optional<Project> findAllByName (String name);
     Page<Project> findByNameContaining(Pageable pageable, String search);
     Page<Project> findByNameContainingAndStatus(Pageable pageable, String search,String status);
 }

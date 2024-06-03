@@ -1,16 +1,19 @@
 package com.example.exe201_heureux.service.Implement;
 
 
+import com.example.exe201_heureux.entity.Class;
 import com.example.exe201_heureux.entity.Project;
 import com.example.exe201_heureux.model.DTO.ResponseObject;
+import com.example.exe201_heureux.model.DTO.classservice.ClassResponseDTO;
 import com.example.exe201_heureux.model.DTO.classservice.CreateProjectRequestDTO;
 import com.example.exe201_heureux.model.DTO.classservice.ProjectResponseDTO;
 import com.example.exe201_heureux.model.DTO.classservice.UpdateProjectRequestDTO;
 import com.example.exe201_heureux.model.DTO.message.ResponseMessage;
 import com.example.exe201_heureux.model.DTO.pagination.APIPageableResponseDTO;
+import com.example.exe201_heureux.model.mapper.ClassMapper;
 import com.example.exe201_heureux.model.mapper.ProjectMapper;
 import com.example.exe201_heureux.repository.ProjectRepository;
-import com.example.exe201_heureux.repository.UserRepository;
+import com.example.exe201_heureux.repository.UserRepo;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -24,22 +27,29 @@ import java.util.Optional;
 public class ProjectServiceImp {
 
     private final ProjectRepository projectRepository;
-    private final UserRepository userRepository;
+    private final UserRepo userRepo;
 
-    public ProjectServiceImp(ProjectRepository projectRepository , UserRepository userRepository) {
-        this.userRepository = userRepository;
+    public ProjectServiceImp(ProjectRepository projectRepository , UserRepo userRepo) {
+        this.userRepo = userRepo;
         this.projectRepository = projectRepository;
     }
     public ResponseObject createProject(CreateProjectRequestDTO requestDTO) {
+        if (projectRepository.findAllByName(requestDTO.getProjectName()).isPresent()) {
 
+            return ResponseObject.builder()
+                    .message("Project name had existed")
+                    .statusCode(400)
+                    .build();
+        }
         if (requestDTO.getProjectName() == null) {
+
             return ResponseObject.builder()
                     .message("Project name cannot be null")
                     .statusCode(400)
                     .build();
         }
 
-        if (userRepository.findAllByUsername(requestDTO.getCreateBy()).isEmpty()) {
+        if (userRepo.findAllByEmail(requestDTO.getCreateBy()).isEmpty()) {
             return ResponseObject.builder()
                     .message("User does not exist")
                     .statusCode(400)
