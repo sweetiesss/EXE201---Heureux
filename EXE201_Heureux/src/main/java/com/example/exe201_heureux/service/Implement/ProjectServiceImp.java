@@ -34,7 +34,13 @@ public class ProjectServiceImp {
         this.projectRepository = projectRepository;
     }
     public ResponseObject createProject(CreateProjectRequestDTO requestDTO) {
+        if (projectRepository.findAllByName(requestDTO.getProjectName()).isPresent()) {
 
+            return ResponseObject.builder()
+                    .message("Project name had existed")
+                    .statusCode(400)
+                    .build();
+        }
         if (requestDTO.getProjectName() == null) {
 
             return ResponseObject.builder()
@@ -43,7 +49,7 @@ public class ProjectServiceImp {
                     .build();
         }
 
-        if (userRepo.findAllByUsername(requestDTO.getCreateBy()).isEmpty()) {
+        if (userRepo.findAllByEmail(requestDTO.getCreateBy()).isEmpty()) {
             return ResponseObject.builder()
                     .message("User does not exist")
                     .statusCode(400)
