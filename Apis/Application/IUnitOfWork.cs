@@ -11,6 +11,7 @@ namespace Application
 
         public ISubscriptionRepository SubscriptionRepository { get; }
         public IUserSubsciptionRepository UserSubsciptionRepository { get; }
+        public IPaymentRepository PaymentRepository { get; }
         public Task<int> SaveChangeAsync();
     }
 }
