@@ -12,6 +12,7 @@ import com.example.exe201_heureux.model.mapper.TeamMapper;
 import com.example.exe201_heureux.repository.TeamRepository;
 
 import com.example.exe201_heureux.repository.UserRepository;
+import com.example.exe201_heureux.service.Interface.TeamServiceInterface;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -21,7 +22,7 @@ import org.springframework.stereotype.Service;
 import java.util.Optional;
 
 @Service
-public class TeamServiceImp {
+public class TeamServiceImp implements TeamServiceInterface {
     private final UserRepository userRepo;
     private final TeamRepository teamRepository;
     public TeamServiceImp(TeamRepository teamRepository , UserRepository userRepo) {

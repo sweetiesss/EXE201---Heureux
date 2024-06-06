@@ -15,6 +15,7 @@ import com.example.exe201_heureux.model.mapper.ProjectMapper;
 import com.example.exe201_heureux.repository.ProjectRepository;
 import com.example.exe201_heureux.repository.UserRepository;
 import com.example.exe201_heureux.repository.UserRepository;
+import com.example.exe201_heureux.service.Interface.ProjectServiceInterface;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -25,7 +26,7 @@ import java.util.Optional;
 
 @Service
 
-public class ProjectServiceImp {
+public class ProjectServiceImp implements ProjectServiceInterface {
 
     private final ProjectRepository projectRepository;
     private final UserRepository userRepo;

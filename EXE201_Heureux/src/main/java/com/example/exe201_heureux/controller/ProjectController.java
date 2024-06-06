@@ -6,16 +6,18 @@ import com.example.exe201_heureux.model.DTO.classservice.ProjectResponseDTO;
 import com.example.exe201_heureux.model.DTO.classservice.UpdateProjectRequestDTO;
 import com.example.exe201_heureux.model.DTO.pagination.APIPageableResponseDTO;
 import com.example.exe201_heureux.service.Implement.ProjectServiceImp;
+import com.example.exe201_heureux.service.Interface.ProjectServiceInterface;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
+@RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/projects")
 public class ProjectController {
     @Autowired
-    private ProjectServiceImp projectService;
+    private  ProjectServiceInterface projectService;
 
     @PostMapping("/create")
     public ResponseEntity<ResponseObject> createProject(@RequestBody CreateProjectRequestDTO requestDTO) {

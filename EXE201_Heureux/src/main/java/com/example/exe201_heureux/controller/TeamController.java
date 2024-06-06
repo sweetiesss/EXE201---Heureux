@@ -5,16 +5,18 @@ import com.example.exe201_heureux.model.DTO.classservice.*;
 import com.example.exe201_heureux.model.DTO.pagination.APIPageableResponseDTO;
 import com.example.exe201_heureux.service.Implement.ProjectServiceImp;
 import com.example.exe201_heureux.service.Implement.TeamServiceImp;
+import com.example.exe201_heureux.service.Interface.TeamServiceInterface;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
+@RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/teams")
 public class TeamController {
     @Autowired
-    private TeamServiceImp teamService;
+    private TeamServiceInterface teamService;
     @PostMapping("/create")
     public ResponseEntity<ResponseObject> createTeam(@RequestBody CreateTeamRequestDTO requestDTO) {
         ResponseObject responseDTO = teamService.createTeam(requestDTO);
