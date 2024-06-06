@@ -13,7 +13,8 @@ import com.example.exe201_heureux.model.DTO.pagination.APIPageableResponseDTO;
 import com.example.exe201_heureux.model.mapper.ClassMapper;
 import com.example.exe201_heureux.model.mapper.ProjectMapper;
 import com.example.exe201_heureux.repository.ProjectRepository;
-import com.example.exe201_heureux.repository.UserRepo;
+import com.example.exe201_heureux.repository.UserRepository;
+import com.example.exe201_heureux.repository.UserRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -27,9 +28,9 @@ import java.util.Optional;
 public class ProjectServiceImp {
 
     private final ProjectRepository projectRepository;
-    private final UserRepo userRepo;
+    private final UserRepository userRepo;
 
-    public ProjectServiceImp(ProjectRepository projectRepository , UserRepo userRepo) {
+    public ProjectServiceImp(ProjectRepository projectRepository , UserRepository userRepo) {
         this.userRepo = userRepo;
         this.projectRepository = projectRepository;
     }
@@ -49,7 +50,7 @@ public class ProjectServiceImp {
                     .build();
         }
 
-        if (userRepo.findAllByEmail(requestDTO.getCreateBy()).isEmpty()) {
+        if (userRepo.findByEmail(requestDTO.getCreateBy()).isEmpty()) {
             return ResponseObject.builder()
                     .message("User does not exist")
                     .statusCode(400)

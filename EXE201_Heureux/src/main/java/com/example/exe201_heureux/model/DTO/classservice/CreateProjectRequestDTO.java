@@ -10,5 +10,4 @@ public class CreateProjectRequestDTO {
      private String projectName;
      private String description;
      private String createBy;
-     private String status;
 }

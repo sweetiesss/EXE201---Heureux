@@ -6,7 +6,7 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class ProjectResponseDTO {
+public class ProjectResponseDTO <T> {
     private int id;
     private String projectName;
     private String description;
