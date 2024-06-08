@@ -29,6 +29,16 @@ public class ClassServiceImp implements ClassServiceInterface {
     private final UserRepository userRepository;
 
     @Override
+    public Class findClassById(Integer classId) throws ClassNotFoundException {
+        Optional<Class> optionalClass = classRepository.findById(classId);
+
+        if(optionalClass.isEmpty()) throw new ClassNotFoundException();
+
+        return optionalClass.get();
+    }
+
+
+    @Override
     public APIPageableResponseDTO<ClassResponseDTO> getALlUserByDelete(int pageNo, int pageSize, String search, String sortField) {
         Pageable pageable= PageRequest.of(pageNo,pageSize, Sort.by(sortField).ascending());
         Page<Class> page=classRepository.findByNameContaining(pageable,search);

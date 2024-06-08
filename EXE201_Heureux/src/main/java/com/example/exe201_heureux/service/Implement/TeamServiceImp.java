@@ -3,6 +3,8 @@ package com.example.exe201_heureux.service.Implement;
 
 import com.example.exe201_heureux.entity.Project;
 import com.example.exe201_heureux.entity.Team;
+import com.example.exe201_heureux.exceptions.ProjectNotFoundException;
+import com.example.exe201_heureux.exceptions.TeamNotFoundException;
 import com.example.exe201_heureux.model.DTO.ResponseObject;
 import com.example.exe201_heureux.model.DTO.classservice.*;
 import com.example.exe201_heureux.model.DTO.message.ResponseMessage;
@@ -12,6 +14,7 @@ import com.example.exe201_heureux.model.mapper.TeamMapper;
 import com.example.exe201_heureux.repository.TeamRepository;
 
 import com.example.exe201_heureux.repository.UserRepository;
+import com.example.exe201_heureux.service.Interface.ProjectServiceInterface;
 import com.example.exe201_heureux.service.Interface.TeamServiceInterface;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -21,10 +24,12 @@ import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
+
 @Service
 public class TeamServiceImp implements TeamServiceInterface {
     private final UserRepository userRepo;
     private final TeamRepository teamRepository;
+    ProjectServiceInterface projectServiceInterface;
     public TeamServiceImp(TeamRepository teamRepository , UserRepository userRepo) {
         this.userRepo = userRepo;
         this.teamRepository = teamRepository;
@@ -73,11 +78,29 @@ public class TeamServiceImp implements TeamServiceInterface {
                 .statusCode(200)
                 .build();
     }
+
     public APIPageableResponseDTO<TeamResponseDTO> getAllTeams(int pageNo, int pageSize, String search, String sortField, boolean ascending) {
         Sort.Direction direction = ascending ? Sort.Direction.ASC : Sort.Direction.DESC;
         Pageable pageable = PageRequest.of(pageNo, pageSize, direction, sortField);
         Page<Team> page = teamRepository.findByNameContaining(pageable, search);
         Page<TeamResponseDTO> userDtoPage = page.map(TeamMapper::teamToDTO);
         return new APIPageableResponseDTO<>(userDtoPage);
+    }
+
+    public Team findByID(Integer teamId) throws TeamNotFoundException {
+        Optional<Team> teamOptional = teamRepository.findById(teamId);
+
+        if(teamOptional.isEmpty()) throw new TeamNotFoundException();
+
+        return teamOptional.get();
+    }
+
+    public void addProjectToTeam(Integer teamId, Integer projectId) throws TeamNotFoundException, ProjectNotFoundException {
+        Team team = findByID(teamId);
+        Project project = projectServiceInterface.findByID(projectId);
+
+        team.setProjectid(project);
+
+        teamRepository.save(team);
     }
 }

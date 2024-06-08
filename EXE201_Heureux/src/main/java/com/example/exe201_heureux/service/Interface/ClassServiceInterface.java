@@ -8,6 +8,7 @@ import com.example.exe201_heureux.model.DTO.classservice.ClassResponseDTO;
 import com.example.exe201_heureux.model.DTO.pagination.APIPageableResponseDTO;
 
 public interface ClassServiceInterface {
+    Class findClassById(Integer classId) throws ClassNotFoundException;
     APIPageableResponseDTO<ClassResponseDTO> getALlUserByDelete(int pageNo, int pageSize, String search, String sortField);
     Class getClassByName(ClassRequestDTO classRequestDTO) throws ClassNotFoundException;
     void createClass(ClassRequestDTO classRequestDTO) throws UserNotFoundException;

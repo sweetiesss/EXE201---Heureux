@@ -3,6 +3,7 @@ package com.example.exe201_heureux.service.Implement;
 
 import com.example.exe201_heureux.entity.Class;
 import com.example.exe201_heureux.entity.Project;
+import com.example.exe201_heureux.exceptions.ProjectNotFoundException;
 import com.example.exe201_heureux.model.DTO.ResponseObject;
 import com.example.exe201_heureux.model.DTO.classservice.ClassResponseDTO;
 import com.example.exe201_heureux.model.DTO.classservice.CreateProjectRequestDTO;
@@ -158,4 +159,13 @@ public class ProjectServiceImp implements ProjectServiceInterface {
                 .statusCode(200)
                 .build();
     }
+
+    public Project findByID(Integer projectId) throws ProjectNotFoundException {
+        Optional<Project> projectOptional = projectRepository.findById(projectId);
+
+        if(projectOptional.isEmpty()) throw new ProjectNotFoundException();
+
+        return projectOptional.get();
+    }
+
 }

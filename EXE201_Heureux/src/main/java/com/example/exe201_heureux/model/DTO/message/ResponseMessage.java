@@ -18,4 +18,11 @@ public class ResponseMessage {
 
     //class
     public static final String msgClassDoesNotExist = "Class does not exist!";
+
+    //team
+    public static final String msgTeamDoesNotExist = "Team does not exist!";
+
+    //project
+    public static final String msgProjectDoesNotExist = "Project does not exist!";
+
 }
