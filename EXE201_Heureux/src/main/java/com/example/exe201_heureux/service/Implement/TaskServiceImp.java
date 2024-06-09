@@ -83,15 +83,34 @@ public class TaskServiceImp implements TaskServiceInterface {
     public ResponseObject updateTask(UpdateTaskRequestDTO requestDTO) {
         Optional<Task> taskOptional = taskRepository.findById(requestDTO.getId());
 
-
+        if (requestDTO.getStartDate() != null && requestDTO.getEndDate() != null) {
+            if (requestDTO.getStartDate().isAfter(requestDTO.getEndDate())) {
+                return ResponseObject.builder()
+                        .message("Start date cannot be after end date")
+                        .statusCode(400)
+                        .build();
+            }
+        }
         Task task = taskOptional.get();
 
         if (requestDTO.getName() != null) {
             task.setName(requestDTO.getName());
         }
-        if (requestDTO.getDescription() != null) {
+
             task.setDescription(requestDTO.getDescription());
-        }
+
+
+            task.setAssignee(requestDTO.getAssignee());
+
+
+            task.setStartDate(requestDTO.getStartDate());
+
+
+            task.setEndDate(requestDTO.getEndDate());
+
+
+            task.setPriority(requestDTO.getPriority());
+
 
         String status = requestDTO.getStatus() != null ? requestDTO.getStatus() : task.getStatus();
         task.setStatus(status);
