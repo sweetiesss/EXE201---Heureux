@@ -1,7 +1,9 @@
 ﻿using Application.Commons;
 using Application.Interfaces;
+using Application.Utils;
 using Application.ViewModels.RequestModels;
 using Application.ViewModels.ResponseModels;
+using Application.ViewModels.UserViewModels;
 using AutoMapper;
 using Domain.Models;
 using System;
@@ -62,9 +64,23 @@ namespace Application.Services
             }
         }
 
-        public async Task<TransactionRequestModel> GetTransaction(int orderId)
+        public async Task<Pagination<TransactionRequestModel>> GetTransactions(int pageIndex, int pageSize)
         {
-            var result = await _unitOfWork.TransactionRepository.GetByOrderCode(orderId);
+            var result = await _unitOfWork.TransactionRepository.GetAllAsync();
+            var map = _mapper.Map<List<TransactionRequestModel>>(result);
+            return await ListPagination<TransactionRequestModel>.PaginateList(map, pageIndex, pageSize);
+        }
+
+        public async Task<Pagination<TransactionRequestModel>> GetTransactionsByEmail(int pageIndex, int pageSize, string email)
+        {
+            var result = await _unitOfWork.TransactionRepository.GetByEmail(email);
+            var map = _mapper.Map<List<TransactionRequestModel>>(result);
+            return await ListPagination<TransactionRequestModel>.PaginateList(map, pageIndex, pageSize);
+        }
+
+        public async Task<TransactionRequestModel> GetTransaction(int orderCode)
+        {
+            var result = await _unitOfWork.TransactionRepository.GetByOrderCode(orderCode);
             var map = _mapper.Map<TransactionRequestModel>(result);
             return map;
         }

@@ -15,6 +15,12 @@ namespace Infrastructures.Repositories
         {
         }
 
+        public async Task<List<Transaction>> GetByEmail(string email)
+        {
+            var result = await _dbSet.Where(x => x.BuyerEmail == email).ToListAsync();
+            return result;
+        }
+
         public async Task<Transaction> GetByOrderCode(int id)
         {
             var result = await _dbSet.FirstOrDefaultAsync(x => x.OrderCode == id);

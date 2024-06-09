@@ -31,10 +31,26 @@ namespace WebAPI.Controllers
         public async Task<HttpStatusCode> Login(LoginRequestModel loginRequestModel) => await _userService.Login(loginRequestModel);
 
         [HttpPost]
-        public async Task<HttpStatusCode> Register(RegisterRequestModel registerRequestModel) => await _userService.Register(registerRequestModel);
+        public async Task<HttpStatusCode> Register([FromBody] RegisterRequestModel registerRequestModel)
+        {
+            if(!ModelState.IsValid)
+            {
+                throw new Exception(ModelState.ToString());
+            }
+
+            return await _userService.Register(registerRequestModel);
+        }
 
         [HttpPut]
-        public async Task<HttpStatusCode> UpdateUser(RegisterRequestModel registerRequestModel) => await _userService.UpdateUser(registerRequestModel);
+        public async Task<HttpStatusCode> UpdateUser([FromBody] RegisterRequestModel registerRequestModel)
+        {
+            if (!ModelState.IsValid)
+            {
+                throw new Exception(ModelState.ToString());
+            }
+
+            return await _userService.UpdateUser(registerRequestModel);
+        }
 
         [HttpDelete("{email}")]
         public async Task<HttpStatusCode> DeleteUser(string email) => await _userService.DeleteUser(email);
