@@ -21,12 +21,14 @@ namespace Infrastructures
             services.AddScoped<ISubscriptionRepository, SubscriptionRepository>();
             services.AddScoped<IUserSubsciptionRepository, UserSubscriptionRepository>();
             services.AddScoped<IPaymentRepository, PaymentRepository>();
+            services.AddScoped<ITransactionRepository, TransactionRepository>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IRoleService, RoleService>();
             services.AddScoped<ISubscriptionService, SubscriptionService>();
             services.AddScoped<IUserSubscriptionService, UserSubscriptionService>();
             services.AddScoped<IPaymentService, PaymentService>();
+            services.AddScoped<ITransactionService, TransactionService>();
             services.AddScoped<CustomRoleCodeResolver>();
             services.AddScoped<CustomEmailResolver>();
             services.AddScoped<CustomSubscriptionNameResolver>();

@@ -5,11 +5,6 @@ using Application.ViewModels.RequestModels;
 using Application.ViewModels.UserViewModels;
 using AutoMapper;
 using Domain.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Application.Services
 {
@@ -70,7 +65,8 @@ namespace Application.Services
                     return result;
                 }
 
-            } catch (Exception e)
+            }
+            catch (Exception e)
             {
                 throw new Exception(e.Message);
             }
@@ -83,6 +79,6 @@ namespace Application.Services
             await _unitOfWork.SaveChangeAsync();
             return userSubscription;
         }
-        
+
     }
 }

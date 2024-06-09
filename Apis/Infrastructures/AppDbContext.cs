@@ -1,4 +1,5 @@
 ﻿using Domain.Entities;
+using Domain.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 
@@ -27,6 +28,8 @@ namespace Infrastructures
 
         public  DbSet<Domain.Entities.Task> Tasks { get; set; }
 
+        public virtual DbSet<Transaction> Transactions { get; set; }
+
         public DbSet<Team> Teams { get; set; }
 
         public DbSet<User> Users { get; set; }
@@ -35,7 +38,7 @@ namespace Infrastructures
 
         public DbSet<UserTeam> UserTeams { get; set; }
 
-     
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -50,7 +53,8 @@ namespace Infrastructures
                     .HasMaxLength(100)
                     .HasColumnName("create_by");
                 entity.Property(e => e.CreateDate)
-                    .HasColumnType("date")
+                    .HasDefaultValueSql("CURRENT_TIMESTAMP")
+                    .HasColumnType("datetime")
                     .HasColumnName("create_date");
                 entity.Property(e => e.Name)
                     .HasMaxLength(100)
@@ -63,9 +67,9 @@ namespace Infrastructures
 
                 entity.ToTable("class_project");
 
-                entity.HasIndex(e => e.Classid, "FK584r5fmjqd248p9qcailkg7n1");
+                entity.HasIndex(e => e.Classid, "classid");
 
-                entity.HasIndex(e => e.Projectid, "FKpgqhpqffqw617we75wl5b0uq7");
+                entity.HasIndex(e => e.Projectid, "projectid");
 
                 entity.Property(e => e.Id).HasColumnName("id");
                 entity.Property(e => e.Classid).HasColumnName("classid");
@@ -73,11 +77,11 @@ namespace Infrastructures
 
                 entity.HasOne(d => d.Class).WithMany(p => p.ClassProjects)
                     .HasForeignKey(d => d.Classid)
-                    .HasConstraintName("FK584r5fmjqd248p9qcailkg7n1");
+                    .HasConstraintName("class_project_ibfk_1");
 
                 entity.HasOne(d => d.Project).WithMany(p => p.ClassProjects)
                     .HasForeignKey(d => d.Projectid)
-                    .HasConstraintName("FKpgqhpqffqw617we75wl5b0uq7");
+                    .HasConstraintName("class_project_ibfk_2");
             });
 
             modelBuilder.Entity<ClassUser>(entity =>
@@ -86,24 +90,21 @@ namespace Infrastructures
 
                 entity.ToTable("class_user");
 
-                entity.HasIndex(e => e.Classid, "FK9wus2uosdf5qtmjf375l7j7y4");
+                entity.HasIndex(e => e.Classid, "classid");
 
-                entity.HasIndex(e => e.Userid, "FKfk2jf49f5ubk0ukc4r0igt8bs");
+                entity.HasIndex(e => e.Userid, "userid");
 
                 entity.Property(e => e.Id).HasColumnName("id");
                 entity.Property(e => e.Classid).HasColumnName("classid");
-                entity.Property(e => e.Flag)
-                    .HasColumnType("bit(1)")
-                    .HasColumnName("flag");
                 entity.Property(e => e.Userid).HasColumnName("userid");
 
                 entity.HasOne(d => d.Class).WithMany(p => p.ClassUsers)
                     .HasForeignKey(d => d.Classid)
-                    .HasConstraintName("FK9wus2uosdf5qtmjf375l7j7y4");
+                    .HasConstraintName("class_user_ibfk_1");
 
                 entity.HasOne(d => d.User).WithMany(p => p.ClassUsers)
                     .HasForeignKey(d => d.Userid)
-                    .HasConstraintName("FKfk2jf49f5ubk0ukc4r0igt8bs");
+                    .HasConstraintName("class_user_ibfk_2");
             });
 
             modelBuilder.Entity<Project>(entity =>
@@ -117,7 +118,7 @@ namespace Infrastructures
                     .HasMaxLength(100)
                     .HasColumnName("create_by");
                 entity.Property(e => e.Description)
-                    .HasColumnType("tinytext")
+                    .HasColumnType("text")
                     .HasColumnName("description");
                 entity.Property(e => e.Name)
                     .HasMaxLength(100)
@@ -133,14 +134,15 @@ namespace Infrastructures
 
                 entity.ToTable("report");
 
-                entity.HasIndex(e => e.Teamid, "FKjjhjld317w3hqfymt2weyimie");
+                entity.HasIndex(e => e.Teamid, "teamid");
 
                 entity.Property(e => e.Id).HasColumnName("id");
                 entity.Property(e => e.CreateDate)
-                    .HasMaxLength(6)
+                    .HasDefaultValueSql("CURRENT_TIMESTAMP")
+                    .HasColumnType("timestamp")
                     .HasColumnName("create_date");
                 entity.Property(e => e.Description)
-                    .HasColumnType("tinytext")
+                    .HasColumnType("text")
                     .HasColumnName("description");
                 entity.Property(e => e.Status)
                     .HasMaxLength(50)
@@ -149,7 +151,7 @@ namespace Infrastructures
 
                 entity.HasOne(d => d.Team).WithMany(p => p.Reports)
                     .HasForeignKey(d => d.Teamid)
-                    .HasConstraintName("FKjjhjld317w3hqfymt2weyimie");
+                    .HasConstraintName("report_ibfk_1");
             });
 
             modelBuilder.Entity<Role>(entity =>
@@ -158,10 +160,10 @@ namespace Infrastructures
 
                 entity.ToTable("role");
 
+                entity.HasIndex(e => e.RoleCode, "RoleCode").IsUnique();
+
                 entity.Property(e => e.Id).HasColumnName("id");
-                entity.Property(e => e.RoleCode)
-                    .HasMaxLength(50)
-                    .HasColumnName("role_code");
+                entity.Property(e => e.RoleCode).HasMaxLength(50);
             });
 
             modelBuilder.Entity<Subscription>(entity =>
@@ -172,7 +174,7 @@ namespace Infrastructures
 
                 entity.Property(e => e.Id).HasColumnName("id");
                 entity.Property(e => e.Description)
-                    .HasColumnType("tinytext")
+                    .HasColumnType("text")
                     .HasColumnName("description");
                 entity.Property(e => e.Duration).HasColumnName("duration");
                 entity.Property(e => e.Name)
@@ -189,14 +191,14 @@ namespace Infrastructures
 
                 entity.ToTable("task");
 
-                entity.HasIndex(e => e.Teamid, "FKdy615hoexarbq57jhuvi4ytsk");
+                entity.HasIndex(e => e.Teamid, "teamid");
 
                 entity.Property(e => e.Id).HasColumnName("id");
                 entity.Property(e => e.Assignee)
                     .HasMaxLength(100)
                     .HasColumnName("assignee");
                 entity.Property(e => e.Description)
-                    .HasColumnType("tinytext")
+                    .HasColumnType("text")
                     .HasColumnName("description");
                 entity.Property(e => e.EndDate)
                     .HasColumnType("date")
@@ -217,7 +219,7 @@ namespace Infrastructures
 
                 entity.HasOne(d => d.Team).WithMany(p => p.Tasks)
                     .HasForeignKey(d => d.Teamid)
-                    .HasConstraintName("FKdy615hoexarbq57jhuvi4ytsk");
+                    .HasConstraintName("task_ibfk_1");
             });
 
             modelBuilder.Entity<Team>(entity =>
@@ -226,15 +228,13 @@ namespace Infrastructures
 
                 entity.ToTable("team");
 
-                entity.HasIndex(e => e.Classid, "FKly6xs7lesq2o6rfutjyxnovx8");
+                entity.HasIndex(e => e.Classid, "classid");
 
-                entity.HasIndex(e => e.Projectid, "FKnqeae6pap38n33fcnfrgdheq2");
+                entity.HasIndex(e => e.Projectid, "projectid");
 
                 entity.Property(e => e.Id).HasColumnName("id");
                 entity.Property(e => e.Classid).HasColumnName("classid");
-                entity.Property(e => e.Flag)
-                    .HasColumnType("bit(1)")
-                    .HasColumnName("flag");
+                entity.Property(e => e.Flag).HasColumnName("flag");
                 entity.Property(e => e.Name)
                     .HasMaxLength(100)
                     .HasColumnName("name");
@@ -243,11 +243,62 @@ namespace Infrastructures
 
                 entity.HasOne(d => d.Class).WithMany(p => p.Teams)
                     .HasForeignKey(d => d.Classid)
-                    .HasConstraintName("FKly6xs7lesq2o6rfutjyxnovx8");
+                    .HasConstraintName("team_ibfk_2");
 
                 entity.HasOne(d => d.Project).WithMany(p => p.Teams)
                     .HasForeignKey(d => d.Projectid)
-                    .HasConstraintName("FKnqeae6pap38n33fcnfrgdheq2");
+                    .HasConstraintName("team_ibfk_1");
+            });
+
+            modelBuilder.Entity<Transaction>(entity =>
+            {
+                entity.HasKey(e => e.Id).HasName("PRIMARY");
+
+                entity.ToTable("transaction");
+
+                entity.HasIndex(e => e.BuyerEmail, "buyerEmail");
+
+                entity.HasIndex(e => e.ItemId, "itemId");
+
+                entity.HasIndex(e => e.OrderCode, "orderCode").IsUnique();
+
+                entity.Property(e => e.Id).HasColumnName("id");
+                entity.Property(e => e.Address)
+                    .HasColumnType("text")
+                    .HasColumnName("address");
+                entity.Property(e => e.Amount).HasColumnName("amount");
+                entity.Property(e => e.BuyerEmail)
+                    .HasMaxLength(50)
+                    .HasColumnName("buyerEmail");
+                entity.Property(e => e.BuyerName)
+                    .HasMaxLength(50)
+                    .HasColumnName("buyerName");
+                entity.Property(e => e.BuyerPhone)
+                    .HasMaxLength(20)
+                    .HasColumnName("buyerPhone");
+                entity.Property(e => e.CancellationReason)
+                    .HasColumnType("text")
+                    .HasColumnName("cancellationReason");
+                entity.Property(e => e.CreateDate)
+                    .HasColumnType("date")
+                    .HasColumnName("createDate");
+                entity.Property(e => e.Description)
+                    .HasColumnType("text")
+                    .HasColumnName("description");
+                entity.Property(e => e.ItemId).HasColumnName("itemId");
+                entity.Property(e => e.OrderCode).HasColumnName("orderCode");
+                entity.Property(e => e.Status)
+                    .HasMaxLength(10)
+                    .HasColumnName("status");
+
+                entity.HasOne(d => d.BuyerEmailNavigation).WithMany(p => p.Transactions)
+                    .HasPrincipalKey(p => p.Email)
+                    .HasForeignKey(d => d.BuyerEmail)
+                    .HasConstraintName("transaction_ibfk_1");
+
+                entity.HasOne(d => d.Item).WithMany(p => p.Transactions)
+                    .HasForeignKey(d => d.ItemId)
+                    .HasConstraintName("transaction_ibfk_2");
             });
 
             modelBuilder.Entity<User>(entity =>
@@ -256,18 +307,19 @@ namespace Infrastructures
 
                 entity.ToTable("user");
 
-                entity.HasIndex(e => e.Roleid, "FK2ovmsl4hvm5vu1w8i308r5j6w");
+                entity.HasIndex(e => e.Email, "email").IsUnique();
+
+                entity.HasIndex(e => e.Roleid, "roleid");
+
+                entity.HasIndex(e => e.Username, "username").IsUnique();
 
                 entity.Property(e => e.Id).HasColumnName("id");
                 entity.Property(e => e.Address)
-                    .HasColumnType("tinytext")
+                    .HasColumnType("text")
                     .HasColumnName("address");
-                entity.Property(e => e.Avatar)
-                    .HasMaxLength(100)
-                    .HasColumnName("avatar");
                 entity.Property(e => e.Dob)
                     .HasColumnType("date")
-                    .HasColumnName("dob");
+                    .HasColumnName("DOB");
                 entity.Property(e => e.Email)
                     .HasMaxLength(100)
                     .HasColumnName("email");
@@ -290,7 +342,7 @@ namespace Infrastructures
 
                 entity.HasOne(d => d.Role).WithMany(p => p.Users)
                     .HasForeignKey(d => d.Roleid)
-                    .HasConstraintName("FK2ovmsl4hvm5vu1w8i308r5j6w");
+                    .HasConstraintName("user_ibfk_1");
             });
 
             modelBuilder.Entity<UserSubscription>(entity =>
@@ -299,9 +351,9 @@ namespace Infrastructures
 
                 entity.ToTable("user_subscription");
 
-                entity.HasIndex(e => e.SubscriptionId, "FKhaqil7thjcrmntsjy8er8akjy");
+                entity.HasIndex(e => e.SubscriptionId, "subscription_id");
 
-                entity.HasIndex(e => e.UserId, "FKpsiiu2nyr0cbxeluuouw474s9");
+                entity.HasIndex(e => e.UserId, "user_id");
 
                 entity.Property(e => e.Id).HasColumnName("id");
                 entity.Property(e => e.StartDate)
@@ -312,11 +364,11 @@ namespace Infrastructures
 
                 entity.HasOne(d => d.Subscription).WithMany(p => p.UserSubscriptions)
                     .HasForeignKey(d => d.SubscriptionId)
-                    .HasConstraintName("FKhaqil7thjcrmntsjy8er8akjy");
+                    .HasConstraintName("user_subscription_ibfk_2");
 
                 entity.HasOne(d => d.User).WithMany(p => p.UserSubscriptions)
                     .HasForeignKey(d => d.UserId)
-                    .HasConstraintName("FKpsiiu2nyr0cbxeluuouw474s9");
+                    .HasConstraintName("user_subscription_ibfk_1");
             });
 
             modelBuilder.Entity<UserTeam>(entity =>
@@ -325,31 +377,28 @@ namespace Infrastructures
 
                 entity.ToTable("user_team");
 
-                entity.HasIndex(e => e.Teamid, "FKe6nng3dddqxth5q9d54dtl1mi");
+                entity.HasIndex(e => e.Teamid, "teamid");
 
-                entity.HasIndex(e => e.Userid, "FKiuf12h3x55l0e8yq5fm4cacki");
+                entity.HasIndex(e => e.Userid, "userid");
 
                 entity.Property(e => e.Id).HasColumnName("id");
-                entity.Property(e => e.IsLeader)
-                    .HasColumnType("bit(1)")
-                    .HasColumnName("is_leader");
+                entity.Property(e => e.IsLeader).HasColumnName("isLeader");
                 entity.Property(e => e.Teamid).HasColumnName("teamid");
                 entity.Property(e => e.Userid).HasColumnName("userid");
 
                 entity.HasOne(d => d.Team).WithMany(p => p.UserTeams)
                     .HasForeignKey(d => d.Teamid)
-                    .HasConstraintName("FKe6nng3dddqxth5q9d54dtl1mi");
+                    .HasConstraintName("user_team_ibfk_2");
 
                 entity.HasOne(d => d.User).WithMany(p => p.UserTeams)
                     .HasForeignKey(d => d.Userid)
-                    .HasConstraintName("FKiuf12h3x55l0e8yq5fm4cacki");
+                    .HasConstraintName("user_team_ibfk_1");
             });
 
             OnModelCreatingPartial(modelBuilder);
         }
 
         partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
-
     }
 
 }

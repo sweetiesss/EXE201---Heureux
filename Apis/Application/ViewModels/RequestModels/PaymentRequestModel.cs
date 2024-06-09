@@ -8,7 +8,7 @@ namespace Application.ViewModels.RequestModels
 {
     public class PaymentRequestModel
     {
-        public int OrderCode { get; set; }
+        //public int OrderCode { get; set; }
         public string BuyerEmail { get; set; }
         //public string buyerName { get; set; }
         //public string buyerPhone { get; set; }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Domain.Models;
+using System;
 using System.Collections.Generic;
 
 namespace Domain.Entities;
@@ -12,6 +13,8 @@ public class Subscription : BaseEntity
     public string Name { get; set; } = null!;
 
     public string? Description { get; set; }
+
+    public virtual ICollection<Transaction> Transactions { get; } = new List<Transaction>();
 
     public virtual ICollection<UserSubscription> UserSubscriptions { get; } = new List<UserSubscription>();
 }

@@ -19,7 +19,7 @@ namespace Infrastructures.Repositories
         {
         }
 
-        public async Task<User> GetUser(string email)
+        public async Task<User?> GetUser(string email)
         {
             if(email == null)
             {

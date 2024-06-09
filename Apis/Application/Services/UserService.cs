@@ -6,8 +6,6 @@ using Application.ViewModels.RequestModels;
 using Application.ViewModels.UserViewModels;
 using AutoMapper;
 using Domain.Entities;
-using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.Extensions.Configuration;
 using System.Net;
 
 namespace Infrastructures.Services
@@ -90,7 +88,7 @@ namespace Infrastructures.Services
                 Phone = registerRequestModel.Phone,
                 Roleid = role.Id,
                 Username = registerRequestModel.Username,
-                Status = "Test",
+                Status = null,
             };
             await _unitOfWork.UserRepository.AddAsync(user);
             await _unitOfWork.SaveChangeAsync();

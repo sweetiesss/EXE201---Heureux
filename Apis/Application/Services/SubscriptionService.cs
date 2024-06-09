@@ -6,11 +6,6 @@ using Application.ViewModels.RequestModels;
 using Application.ViewModels.UserViewModels;
 using AutoMapper;
 using Domain.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Application.Services
 {
@@ -36,7 +31,7 @@ namespace Application.Services
                 Name = subscription.Name,
                 Duration = subscription.Duration,
                 Price = subscription.Price
-                
+
             };
             await _subscriptionRepository.AddAsync(result);
             await _unitOfWork.SaveChangeAsync();
@@ -62,27 +57,27 @@ namespace Application.Services
                 var exist = await _subscriptionRepository.GetByIdAsync(id);
                 if (exist is null)
                 {
-                   throw new Exception("Subscription not found");
+                    throw new Exception("Subscription not found");
                 }
-                if(!string.IsNullOrEmpty(subscription.Description))
+                if (!string.IsNullOrEmpty(subscription.Description))
                 {
-                    exist.Description = subscription.Description ;
+                    exist.Description = subscription.Description;
                 }
-                if(!string.IsNullOrEmpty(subscription.Name))
+                if (!string.IsNullOrEmpty(subscription.Name))
                 {
                     exist.Name = subscription.Name;
                 }
-                if(subscription.Price != null || subscription.Price.Equals("0"))
+                if (subscription.Price != 0 || subscription.Price.Equals("0"))
                 {
                     exist.Price = subscription.Price;
                 }
-                if(subscription.Duration != null || subscription.Duration.Equals("0"))
+                if (subscription.Duration != 0 || subscription.Duration.Equals("0"))
                 {
                     exist.Duration = subscription.Duration;
                 }
                 _unitOfWork.SubscriptionRepository.Update(exist);
                 await _unitOfWork.SaveChangeAsync();
-                
+
             }
             catch (Exception e)
             {

@@ -3,6 +3,8 @@ using Application.Commons;
 using Domain.Entities;
 using Application.ViewModels.UserViewModels;
 using Microsoft.EntityFrameworkCore;
+using Application.ViewModels.RequestModels;
+using Domain.Models;
 
 namespace Infrastructures.Mappers
 {
@@ -17,6 +19,7 @@ namespace Infrastructures.Mappers
             CreateMap<SubscriptionListDTO, Subscription>();
             CreateMap<UserSubscriptionListDTO, UserSubscription>();
             CreateMap<RoleListDTO, Role>();
+            CreateMap<TransactionRequestModel, Transaction>();
             CreateMap(typeof(Pagination<>), typeof(Pagination<>));
             CreateMap<Subscription, SubscriptionListDTO>();
             CreateMap<User, UserListDTO>()
@@ -25,6 +28,7 @@ namespace Infrastructures.Mappers
                  .ForMember(dest => dest.SubscriptionName, opt => opt.MapFrom<CustomSubscriptionNameResolver>())
                  .ForMember(dest => dest.UserEmail, opt => opt.MapFrom<CustomEmailResolver>());
             CreateMap<Role, RoleListDTO>();
+            CreateMap<Transaction, TransactionRequestModel>();
         }
     }
 }

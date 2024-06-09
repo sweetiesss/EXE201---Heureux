@@ -4,12 +4,7 @@ using Application.ViewModels.RequestModels;
 using Application.ViewModels.ResponseModels;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-using MySqlX.XDevAPI;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Newtonsoft.Json.Linq;
 
 namespace Application.Services
 {
@@ -42,6 +37,30 @@ namespace Application.Services
         public async Task<IActionResult> CancelPayment(string paymentId, string cancelReason)
         {
             var result = await _unitOfWork.PaymentRepository.CancelPayment(paymentId, cancelReason);
+            ContentResult result1 = result as ContentResult;
+            string a = result1.Content;
+
+            JObject json = JObject.Parse(a);
+            string code = json["code"].ToString();
+            if (code.Equals("101"))
+            {
+                return result;
+            }
+            else if(code.Equals("00"))
+            {
+                int orderCode = json["data"]["orderCode"].ToObject<int>();
+                string reason = json["data"]["cancellationReason"].ToString();
+                string status = json["data"]["status"].ToString();
+                var transaction = await _unitOfWork.TransactionRepository.GetByOrderCode(orderCode);
+                if(transaction != null)
+                {
+                    transaction.CancellationReason = reason;
+                    transaction.Status = status;
+                }
+                _unitOfWork.TransactionRepository.Update(transaction);
+                await _unitOfWork.SaveChangeAsync();
+            }
+
             return result;
         }
     }

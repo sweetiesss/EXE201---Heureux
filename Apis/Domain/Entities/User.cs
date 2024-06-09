@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Domain.Models;
+using System;
 using System.Collections.Generic;
 
 namespace Domain.Entities;
@@ -18,7 +19,6 @@ public class User : BaseEntity
 
     public string Username { get; set; } = null!;
 
-    public string? Avatar { get; set; }
 
     public string Email { get; set; } = null!;
 
@@ -28,7 +28,9 @@ public class User : BaseEntity
 
     public virtual ICollection<ClassUser> ClassUsers { get; } = new List<ClassUser>();
 
-    public Role? Role { get; set; }
+    public virtual Role? Role { get; set; }
+
+    public virtual ICollection<Transaction> Transactions { get; } = new List<Transaction>();
 
     public virtual ICollection<UserSubscription> UserSubscriptions { get; } = new List<UserSubscription>();
 

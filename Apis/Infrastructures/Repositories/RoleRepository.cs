@@ -14,10 +14,10 @@ namespace Infrastructures.Repositories
         {
             
         }
-        public async Task<Role> GetByName(string name)
+        public Task<Role?> GetByName(string name)
         {
             var result = _dbSet.FirstOrDefault(x => x.RoleCode == name);
-            return result;
+            return System.Threading.Tasks.Task.FromResult(result);
         }
     }
 }

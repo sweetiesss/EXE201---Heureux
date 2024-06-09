@@ -30,14 +30,15 @@ namespace Infrastructures.Repositories
         private readonly AppDbContext _DbContext;
         private readonly IUserRepository _userRepository;
         private readonly ISubscriptionRepository _subscriptionRepository;
+        private readonly ITransactionRepository _transactionRepository;
 
-        public PaymentRepository(IConfiguration configuration, AppDbContext dbContext, IUserRepository userRepository, ISubscriptionRepository subscriptionRepository)
-            : base(dbContext)
+        public PaymentRepository(IConfiguration configuration, AppDbContext dbContext, IUserRepository userRepository, ISubscriptionRepository subscriptionRepository, ITransactionRepository transactionRepository) : base(dbContext)
         {
             _configuration = configuration;
             _DbContext = dbContext;
             _userRepository = userRepository;
             _subscriptionRepository = subscriptionRepository;
+            _transactionRepository = transactionRepository;
         }
 
         public async Task<QRPaymentResponseModel> CreatePaymentLink(PaymentRequestModel model)
@@ -47,6 +48,15 @@ namespace Infrastructures.Repositories
             var clientId = payOS["ClientID"];
             var apiKey = payOS["APIKey"];
             var checksum = payOS["ChecksumKey"];
+
+            Random randomOrderCode = new Random();
+            int _orderCode = randomOrderCode.Next(1, 10000);
+
+            var transaction = await _transactionRepository.GetByOrderCode(_orderCode);
+            while(transaction != null)
+            {
+                _orderCode = randomOrderCode.Next(1, 10000);
+            }
 
             var user = await _userRepository.GetUser(model.BuyerEmail);
             if (user == null)
@@ -64,7 +74,7 @@ namespace Infrastructures.Repositories
             var data = $"amount={price}" +
                        $"&cancelUrl={model.CancelUrl}" +
                        $"&description={model.Description}" +
-                       $"&orderCode={model.OrderCode}" +
+                       $"&orderCode={_orderCode}" +
                        $"&returnUrl={model.ReturnUrl}";
             
 
@@ -88,7 +98,7 @@ namespace Infrastructures.Repositories
 
             var requestData = new
             {
-                orderCode= model.OrderCode,
+                orderCode= _orderCode,
                 amount= price,
                 description= model.Description,
                 buyerName= user.Username,
