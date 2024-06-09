@@ -81,7 +81,7 @@ namespace Infrastructures.Services
             var user = new User
             {
                 Email = registerRequestModel.Email,
-                Password = registerRequestModel.Password,
+                Password = registerRequestModel.Password.Hash(),
                 Address = registerRequestModel.Address,
                 Dob = registerRequestModel.Dob,
                 Gender = registerRequestModel.Gender,
@@ -123,7 +123,7 @@ namespace Infrastructures.Services
 
             if (!String.IsNullOrEmpty(registerRequestModel.Password) || !registerRequestModel.Password.Equals("string"))
             {
-                user.Password = registerRequestModel.Password;
+                user.Password = registerRequestModel.Password.Hash();
             }
             if (!String.IsNullOrEmpty(registerRequestModel.Username) || !registerRequestModel.Username.Equals("string"))
             {

@@ -1,6 +1,7 @@
 ﻿using Application.Commons;
 using Application.Interfaces;
 using Application.Repositories;
+using Application.Utils;
 using Application.ViewModels.UserViewModels;
 using Domain.Entities;
 using Microsoft.EntityFrameworkCore;
@@ -37,14 +38,22 @@ namespace Infrastructures.Repositories
 
         public async Task<bool> CheckLogin(string email, string Hashedpassword)
         {
+            
             if (email == null || Hashedpassword == null)
             {
                 throw new Exception("Missing fields"); //400
             }
-            var user = await _dbSet.FirstOrDefaultAsync(x => x.Email == email && x.Password == Hashedpassword);
+            var user = await _dbSet.FirstOrDefaultAsync(x => x.Email == email); // && x.Password == Hashedpassword);
             if (user == null)
             {
-                return false; //404
+                throw new KeyNotFoundException("Email and password is not correct.");
+            }
+            else
+            {
+                if (StringUtils.Verify(Hashedpassword, user.Password) != true)
+                {
+                    throw new KeyNotFoundException("Password is not correct.");
+                }
             }
 
             return true; //200

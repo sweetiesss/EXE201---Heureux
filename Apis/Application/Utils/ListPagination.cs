@@ -10,6 +10,8 @@ namespace Application.Utils
     public static class ListPagination<TEntity>
     {
 
+
+
         public static Task<Pagination<TEntity>> PaginateList(List<TEntity> list, int pageIndex = 0, int pageSize = 10)
         {
             var itemCount = list.Count;
