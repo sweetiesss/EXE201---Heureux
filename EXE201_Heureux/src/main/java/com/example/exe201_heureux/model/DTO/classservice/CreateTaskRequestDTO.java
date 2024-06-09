@@ -20,5 +20,5 @@ public class CreateTaskRequestDTO {
     private LocalDate endDate;
     private String status;
     private String priority;
-    private Team teamid;
+    private Integer teamid;
 }

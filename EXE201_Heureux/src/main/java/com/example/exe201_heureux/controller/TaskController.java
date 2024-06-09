@@ -26,7 +26,7 @@ public class TaskController {
         return ResponseEntity.status(response.getStatusCode()).body(response);
     }
 
-    @PutMapping("/{id}")
+    @PutMapping
     public ResponseEntity<ResponseObject> updateTask(@RequestBody UpdateTaskRequestDTO requestDTO) {
         requestDTO.setId(requestDTO.getId());
         ResponseObject response = taskService.updateTask(requestDTO);
@@ -43,6 +43,10 @@ public class TaskController {
     public ResponseEntity<List<TaskResponseDTO>> getAllTasks() {
         List<TaskResponseDTO> tasks = taskService.getAllTasks();
         return ResponseEntity.ok(tasks);
+    }
+    @GetMapping("/team/{teamId}")
+    public List<TaskResponseDTO> getTasksByTeamId(@PathVariable Integer teamId) {
+        return taskService.getTasksByTeamId(teamId);
     }
 }
 
