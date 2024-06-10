@@ -2,18 +2,22 @@
 using Application.ViewModels.RequestModels;
 using Application.ViewModels.ResponseModels;
 using Microsoft.AspNetCore.Mvc;
+using Steeltoe.Discovery;
 
 namespace WebAPI.Controllers
 {
+    
     public class PaymentController : BaseController
     {
         private readonly IPaymentService _paymentService;
         private readonly ITransactionService _transactionService;
+        private readonly IDiscoveryClient _discoveryClient;
 
-        public PaymentController(IPaymentService paymentService, ITransactionService transactionService)
+        public PaymentController(IPaymentService paymentService, ITransactionService transactionService, IDiscoveryClient discoveryClient) : base(discoveryClient) 
         {
             _paymentService = paymentService;
             _transactionService = transactionService;
+            _discoveryClient = discoveryClient;
         }
 
         [HttpGet]

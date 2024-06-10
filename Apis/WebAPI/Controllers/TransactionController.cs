@@ -2,6 +2,7 @@
 using Application.Interfaces;
 using Application.ViewModels.RequestModels;
 using Microsoft.AspNetCore.Mvc;
+using Steeltoe.Discovery;
 using System.ComponentModel;
 using System.Net;
 
@@ -10,8 +11,10 @@ namespace WebAPI.Controllers
     public class TransactionController : BaseController
     {
         private readonly ITransactionService _transactionService;
+        private readonly IDiscoveryClient _discoveryClient;
 
-        public TransactionController(ITransactionService transactionService)
+
+        public TransactionController(ITransactionService transactionService, IDiscoveryClient discoveryClient) : base(discoveryClient)
         {
             _transactionService = transactionService;
         }

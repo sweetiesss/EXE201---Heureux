@@ -4,6 +4,7 @@ using Application.ViewModels.RequestModels;
 using Application.ViewModels.UserViewModels;
 using Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
+using Steeltoe.Discovery;
 using System.ComponentModel;
 using System.Net;
 
@@ -12,10 +13,12 @@ namespace WebAPI.Controllers
     public class RoleController : BaseController
     {
         private readonly IRoleService _roleService;
+        private readonly IDiscoveryClient _discoveryClient;
 
-        public RoleController(IRoleService roleService)
+        public RoleController(IRoleService roleService, IDiscoveryClient discoveryClient) : base(discoveryClient)
         {
-            this._roleService = roleService;
+            _roleService = roleService;
+            _discoveryClient = discoveryClient;
         }
 
         [HttpGet]

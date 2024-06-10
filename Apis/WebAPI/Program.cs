@@ -4,10 +4,10 @@ using WebAPI;
 using Application.Commons;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Steeltoe.Discovery.Client;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// parse the configuration in appsettings
 var configuration = builder.Configuration.Get<AppConfiguration>();
 #pragma warning disable CS8602 // Dereference of a possibly null reference.
 builder.Services.AddInfrastructuresService(configuration.DatabaseConnection);
@@ -15,14 +15,11 @@ builder.Services.AddInfrastructuresService(configuration.DatabaseConnection);
 builder.Services.AddWebAPIService();
 builder.Services.AddSingleton(configuration);
 
-/*
-    register with singleton life time
-    now we can use dependency injection for AppConfiguration
-*/
+
 builder.Services.AddSingleton(configuration);
 //builder.Services.Configure<MomoConfig>(builder.Configuration.GetSection(MomoConfig.ConfigName)
 //    );
-
+builder.Services.AddDiscoveryClient(builder.Configuration);
 
 var app = builder.Build();
 
@@ -30,7 +27,6 @@ app.UseCors(builder =>
        builder.WithOrigins("*")
            .AllowAnyMethod()
            .AllowAnyHeader());
-// Configure the HTTP request pipeline.
 
 app.UseSwagger();
     app.UseSwaggerUI();
@@ -38,15 +34,14 @@ app.UseSwagger();
 
 app.UseMiddleware<GlobalExceptionMiddleware>();
 app.UseMiddleware<PerformanceMiddleware>();
+app.UseDiscoveryClient();
 app.MapHealthChecks("/healthchecks");
 app.UseHttpsRedirection();
-// todo authentication
 app.UseAuthorization();
+
 
 app.MapControllers();
 
 app.Run();
 
-// this line tell intergrasion test
-// https://stackoverflow.com/questions/69991983/deps-file-missing-for-dotnet-6-integration-tests
 public partial class Program { }

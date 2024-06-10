@@ -4,6 +4,7 @@ using Application.ViewModels.RequestModels;
 using Application.ViewModels.UserViewModels;
 using Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
+using Steeltoe.Discovery;
 using System.ComponentModel;
 
 namespace WebAPI.Controllers
@@ -11,7 +12,9 @@ namespace WebAPI.Controllers
     public class UserSubscriptionController : BaseController
     {
         private readonly IUserSubscriptionService _userSubscriptionService;
-        public UserSubscriptionController(IUserSubscriptionService userSubscriptionService)
+        private readonly IDiscoveryClient _discoveryClient;
+
+        public UserSubscriptionController(IUserSubscriptionService userSubscriptionService, IDiscoveryClient discoveryClient) : base(discoveryClient)
         {
             _userSubscriptionService = userSubscriptionService;
         }

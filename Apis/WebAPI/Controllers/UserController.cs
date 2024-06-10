@@ -7,14 +7,17 @@ using Application.Commons;
 using System.ComponentModel;
 using Application.ViewModels.RequestModels;
 using Domain.Entities;
+using Steeltoe.Discovery;
 
 namespace WebAPI.Controllers
 {
     public class UserController : BaseController
     {
         private readonly IUserService _userService;
+        private readonly IDiscoveryClient _discoveryClient;
 
-        public UserController(IUserService userService)
+
+        public UserController(IUserService userService, IDiscoveryClient discoveryClient) : base(discoveryClient)
         {
             _userService = userService;
         }

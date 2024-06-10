@@ -4,6 +4,7 @@ using Application.ViewModels.RequestModels;
 using Application.ViewModels.UserViewModels;
 using Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
+using Steeltoe.Discovery;
 using System.ComponentModel;
 
 namespace WebAPI.Controllers
@@ -11,10 +12,14 @@ namespace WebAPI.Controllers
     public class SubscriptionController : BaseController
     {
         private readonly ISubscriptionService _subscriptionService;
-        public SubscriptionController(ISubscriptionService subscriptionService)
+        private readonly IDiscoveryClient _discoveryClient;
+
+        public SubscriptionController(ISubscriptionService subscriptionService, IDiscoveryClient discoveryClient) : base(discoveryClient)
         {
             _subscriptionService = subscriptionService;
+            _discoveryClient = discoveryClient;
         }
+
         [HttpGet]
         public async Task<Pagination<SubscriptionListDTO>> GetSubcriptions([FromQuery][DefaultValue(0)] int pageIndex,
                                                                            [FromQuery][DefaultValue(10)] int pageSize)
