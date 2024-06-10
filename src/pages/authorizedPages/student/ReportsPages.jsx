@@ -45,6 +45,8 @@ export default function ReportsPages() {
           dateCreate={d}
           taskTitle={"Character design for goof long"}
           isOpen={isOpen}
+          percentage={40}
+          percentageColor={"login_button"}
         />
 
         <ReportBoxLong

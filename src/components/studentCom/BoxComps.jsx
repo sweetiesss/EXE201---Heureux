@@ -12,6 +12,7 @@ import { useGSAP } from "@gsap/react";
 
 import "../../styles/Task.css";
 import "../../styles/Scrollbar.css";
+import { SimpleProgressBar } from "../sharing/ProgressBar";
 
 export function ReportBoxShort({
   title,
@@ -139,6 +140,8 @@ export function ReportBoxLong({
   arrayOfContent,
   dateCreate,
   isOpen,
+  percentage,
+  percentageColor,
 }) {
   const boxStyle = isOpen
     ? {
@@ -163,8 +166,6 @@ export function ReportBoxLong({
   if (monthNameShort) {
     monthUsed = monthNameShort.split(" ");
   }
-
-
 
   return (
     <div
@@ -203,7 +204,12 @@ export function ReportBoxLong({
         <div className="w-[4rem] h-[4rem] bg-white text-center pt-[1rem] text-3xl rounded-xl text">
           {monthUsed.length != 0 && monthUsed[1]}
         </div>
-        <div className="text-xl mt-[0.5rem]">{monthUsed.length != 0 && monthUsed[0]}</div>
+        <div className="text-xl mt-[0.5rem]">
+          {monthUsed.length != 0 && monthUsed[0]}
+        </div>
+      </div>
+      <div className="absolute -bottom-[2rem] pl-[7rem] pr-[2rem] w-full">
+        <SimpleProgressBar percentage={percentage} bgColor={percentageColor} />
       </div>
     </div>
   );
