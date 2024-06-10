@@ -1,0 +1,68 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html {
+  font-size: 18px;
+}
+
+:root {
+  --default: black;
+  --login_button: rgba(33, 37, 255, 1);
+  --login_button_hover: rgba(26, 29, 204, 1);
+  --sider_color: rgb(209, 219, 255);
+  --report_color: rgb(253, 215, 226);
+  --report_textColor: rgb(250, 115, 158);
+  --report_color_notOpened: rgb(217, 217, 217);
+  --report_dateTime_color: rgb(115, 115, 115);
+  --report_dateTime_color_notOpened: rgb(140, 140, 140);
+  --liner-day-chart-background-color: rgb(209, 236, 254);
+  --liner-day-chart-font-color: rgb(24, 160, 251);
+  --task-progress-background-color: rgb(253, 215, 226);
+  --task-progress-none-background-color: rgb(255, 255, 255);
+  --task-progress-text-color: rgb(250, 110, 155);
+  --task-assigned-background-color: rgb(255, 229, 212);
+  --task-assigned-text-color: rgb(255, 147, 71);
+  --task-default-background-holder: rgb(241, 242, 244);
+  --task-default-background-task: rgb(255, 255, 255);
+}
+@font-face {
+  font-family: lexend;
+  src: url(../assets/font/Lexend-VariableFont_wght.ttf);
+}
+
+body {
+  margin: 0;
+  font-family: lexend, -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto",
+    "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  user-select: none;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+}
+
+.allow-select {
+  user-select: auto;
+  -moz-user-select: auto;
+  -webkit-user-select: auto;
+  -ms-user-select: auto;
+}
+
+.my-shadow {
+  box-shadow: 0 6px 8px 0 rgba(0, 0, 0, 0.2), 0 8px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.avatar-shadow {
+  /* box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.2), 0 4px 20px 0 rgba(0, 0, 0, 0.19); */
+  box-shadow: -2px 2px 8px 0 rgba(0, 0, 0, 0.2),
+    -4px 4px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+    monospace;
+}
+

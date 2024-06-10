@@ -1,0 +1,12 @@
+
+.input_main{
+    border-color: var(--backgroundColor);
+    outline-color: var(--hoveredColor);
+}
+
+.label_input{
+    color: #b2a3af;
+}
+.input-container:focus-within .label_input{
+    color:black;
+}

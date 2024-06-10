@@ -1,0 +1,17 @@
+select {
+    -webkit-appearance: none;
+    appearance: none;
+    border: none;
+}
+.blood-type {
+    position: relative;
+    border: 1px solid black;
+    border-radius: 2px;
+    padding: 5px;
+}
+.blood-type::after {
+    content: "▼";
+    font-size: 1rem;
+    right: 10px;
+    position: absolute;
+}

@@ -1,0 +1,26 @@
+.scrollball-nonBackground::-webkit-scrollbar {
+    width: 7px;
+  
+}
+.scrollball-nonBackground::-webkit-scrollbar-track {
+    background: transparent; /* Color of the scrollbar track */
+    border-radius: 10px; /* Rounded corners */
+}
+.scrollball-nonBackground::-webkit-scrollbar-thumb {
+    background: #888; /* Color of the scrollbar thumb */
+    border-radius: 10px; /* Rounded corners */
+
+}
+
+.scrollball-padding::-webkit-scrollbar{
+ 
+    width: 7px;
+}
+.scrollball-nonBackground::-webkit-scrollbar-track {
+    background: transparent; /* Color of the scrollbar track */
+    border-radius: 10px; /* Rounded corners */
+}
+.scrollball-nonBackground::-webkit-scrollbar-thumb {
+    background: #888; /* Color of the scrollbar thumb */
+    border-radius: 10px; /* Rounded corners */
+}

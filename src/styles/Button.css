@@ -1,0 +1,26 @@
+.button-holder:active > .button-main{
+    outline-style: solid;
+    outline-color: white;
+    outline-offset: -5px;
+    transform: scale(0.95);
+  
+}
+.button-holder .button-main{
+    background-color: var(--backgroundColor);
+}
+
+.button-holder:hover .button-main{
+    background-color: var(--hoveredColor);
+    
+}
+
+.button-main{
+    display: flex;
+    justify-items: center;
+    align-items: center;
+    transition-property: all;
+    transition-duration: 150ms;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+

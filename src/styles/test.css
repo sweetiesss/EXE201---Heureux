@@ -1,0 +1,44 @@
+.container{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: black;
+  transform-style: preserve-3d;
+  
+}
+.spinner{
+    position: relative;
+    width: 48px;
+    height: 48px;
+    transform-style: preserve-3d;
+    transition: 1.5s;
+    transform: perspective(2000px) rotateX(80deg);
+ 
+}
+.spinner .card{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    transform-origin: center;
+    transform-style: preserve-3d;
+    transform: rotateX(calc(var(--i)*38deg)) translateZ(100px) ;
+}
+
+
+
+
+.task_container{
+    background-color: green;
+    width: 100vw;
+    height: 100vh;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    padding-right: 10rem;
+}
+
+
+

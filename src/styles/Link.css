@@ -1,0 +1,33 @@
+.link-holder{
+  cursor: pointer;
+  display: flex;
+  justify-items: center;
+  align-items: center;
+  position: relative;
+}
+.link-main {
+  width: 100%;
+  position: relative;
+}
+.link-main:active {
+  opacity: 0.5;
+
+}
+.link-main::before {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 2px;
+  border-radius: 4px;
+  background-color: var(--this_link_color);
+  bottom: 0;
+  left: 0;
+  transform-origin: right;
+  transform: scaleX(0);
+  transition: transform 0.3s ease-in-out;
+}
+
+.link-holder:hover .link-main::before {
+  transform-origin: left;
+  transform: scaleX(1);
+}
