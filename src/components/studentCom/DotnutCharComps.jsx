@@ -17,6 +17,8 @@ export default function DotnutCharComps({
   backgroundColor,
   isTitle,
   isLegend,
+  percentageSize,
+  dateSize
 }) {
   const getTextColor = window
     .getComputedStyle(document.documentElement)
@@ -53,7 +55,7 @@ export default function DotnutCharComps({
         position: "bottom",
         labels:{
           padding:30
-        }
+        },
       },
       tooltip: {
         enabled: false,
@@ -92,8 +94,8 @@ export default function DotnutCharComps({
         className={`absolute m-auto flex flex-col top-[50%]  ${isLegend?" -translate-y-[50%]":" -translate-y-[15%]"}  left-0 right-0 items-center `}
         style={{ color: getTextColor }}
       >
-        <p className="text-lg font-semibold">{percentage && percentage}%</p>
-        <p className="" style={{ fontSize: "0.9rem" }}>
+        <p className={`${percentageSize?percentageSize:"text-lg"} font-semibold`}>{percentage && percentage}%</p>
+        <p className={`${dateSize?dateSize:"text-[0.9rem]"} `}>
           {toDay && toDay}
         </p>
       </div>

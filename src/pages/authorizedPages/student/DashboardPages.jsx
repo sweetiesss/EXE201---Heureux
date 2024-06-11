@@ -33,13 +33,24 @@ export default function DashboardPages() {
           <DotnutCharComps
             className="w-[20rem] shadow-xl h-[20rem] px-[3rem] pt-[3rem] pb-[1rem]"
             isLegend={true}
+            percentageSize="text-3xl"
+            dateSize="text-xl"
           />
         </div>
       </div>
-      <div className="flex h-fit w-full mt-[3rem]">
+      <div className="flex h-fit w-full mt-[3rem] justify-between">
         <div className="w-[53.5rem] flex flex-col">
           <p className="text-xl font-semibold mb-[1rem]">Tasks Progress</p>
-         <TaskScheduler/>
+          <TaskScheduler />
+         </div>
+        <div className="w-fit flex flex-col">
+          <p className="text-xl font-semibold mb-[1rem]">Report Progress</p>
+          <DotnutCharComps
+            className="w-[20rem] shadow-xl h-[20rem] px-[3rem] pt-[3rem] pb-[1rem]"
+            isLegend={true}
+            percentageSize="text-3xl"
+            dateSize="text-xl"
+          />
         </div>
       </div>
     </div>

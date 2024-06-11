@@ -84,7 +84,7 @@ export default function TaskScheduler() {
   console.log(daysAWeek);
 
   return (
-    <div className="bg-[var(--liner-day-chart-background-color)] w-full rounded-xl shadow-xl h-[19rem] flex flex-col text-[var(--liner-day-chart-font-color)]">
+    <div className="bg-[var(--liner-day-chart-background-color)] w-full rounded-xl shadow-xl h-[20rem] flex flex-col text-[var(--liner-day-chart-font-color)]">
       <div className="h-[5rem] border-b-[0.2rem] border-black border-[var(--liner-day-chart-font-color)] flex justify-between items-center px-[2rem]">
         <div
           className="flex items-center  hover:cursor-pointer"
@@ -114,7 +114,7 @@ export default function TaskScheduler() {
           daysAWeek.map((item) => {
             const date = item.split("-");
             return (
-              <div className="flex flex-col items-center">
+              <div className="flex flex-col items-center ">
                 <div>{date[0]}</div>
                 <div>{date[1]}</div>
                 <div className="h-full border-r-[0.15rem] border-black opacity-[0.2] border-dashed"></div>
