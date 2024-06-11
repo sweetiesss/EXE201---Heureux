@@ -9,10 +9,15 @@ import {
 } from "chart.js";
 import { format } from "date-fns";
 
-
 ChartJS.register(CategoryScale, ArcElement, Title, Tooltip, Legend);
 
-export default function DotnutCharComps({ className }) {
+export default function DotnutCharComps({
+  className,
+  textColor,
+  backgroundColor,
+  isTitle,
+  isLegend,
+}) {
   const getTextColor = window
     .getComputedStyle(document.documentElement)
     .getPropertyValue("--task-progress-text-color");
@@ -22,7 +27,6 @@ export default function DotnutCharComps({ className }) {
   const parentStyle = {
     background: "var(--task-progress-background-color)",
     borderRadius: "5%",
-    padding: "1rem",
   };
 
   const data = {
@@ -42,73 +46,57 @@ export default function DotnutCharComps({ className }) {
     responsive: true,
     maintainAspectRatio: false,
     cutout: "80%",
-    
+
     plugins: {
       legend: {
-        display: false,
+        display: isLegend,
+        position: "bottom",
+        labels:{
+          padding:30
+        }
       },
-      tooltip:{
-        enabled:false,
+      tooltip: {
+        enabled: false,
       },
       title: {
-        display: true,
+        display: isTitle,
         text: "Task progess",
         color: getTextColor,
         font: {
           size: 18,
         },
-        padding:{
-          top:0,
-          bottom:10
+        padding: {
+          top: 0,
+          bottom: 10,
         },
       },
       border: {
         display: false,
       },
     },
-    // scales: {
-    //   x: {
-    //     ticks: {
-    //       color: getTextColor,
-    //       font: {
-    //         weight: "bolder",
-    //         size:18
-    //       },
-    //     },
-    //     display: true,
-    //     border: {
-    //       display: true,
-    //       dash: [10, 10],
-    //       dashOffset: 1,
-    //       width: 0,
-    //     },
-    //     grid: {
-    //       lineWidth: 2,
-    //     },
-    //   },
-    //   y: {
-    //     display: false,
-    //     beginAtZero: true,
-    //   },
-    // },
   };
 
   const percentage = 50;
-  const toDay= format(new Date(), 'dd/MM');
-  
-//   const showDay=toDay.getDate()+'/'+toDay.getMonth();
+  const toDay = format(new Date(), "dd/MM");
+
+  //   const showDay=toDay.getDate()+'/'+toDay.getMonth();
   return (
     <div
       style={parentStyle}
       className={`${
         className && className
-      } shadow-xl flex justify-center pb-[1rem]  relative`}
+      } shadow-xl flex justify-center  relative`}
     >
-      <div className={`absolute m-auto flex flex-col top-[50%] -translate-y-[25%] items-center `} style={{color:getTextColor}}>
+      <Doughnut data={data} options={options} />
+      <div
+        className={`absolute m-auto flex flex-col top-[50%]  ${isLegend?" -translate-y-[50%]":" -translate-y-[15%]"}  left-0 right-0 items-center `}
+        style={{ color: getTextColor }}
+      >
         <p className="text-lg font-semibold">{percentage && percentage}%</p>
-        <p className="" style={{fontSize:"0.9rem"}}>{toDay&&toDay}</p>
+        <p className="" style={{ fontSize: "0.9rem" }}>
+          {toDay && toDay}
+        </p>
       </div>
-      <Doughnut data={data} options={options}/>
     </div>
   );
 }

@@ -1,7 +1,7 @@
 import { ReportBoxShort } from "../../../components/studentCom/BoxComps";
 import { Link as CusLink } from "../../../components/sharing";
 import { PiCaretRight, PiPlusBold } from "react-icons/pi";
-import {TasksHolderComps} from "../../../components/studentCom/BoxComps";
+import { TasksHolderComps } from "../../../components/studentCom/BoxComps";
 import LineChartComps from "../../../components/studentCom/LineChartComps";
 import TaskAssigned from "../../../components/studentCom/TaskAssigned";
 import DotnutCharComps from "../../../components/studentCom/DotnutCharComps";
@@ -107,21 +107,21 @@ export default function GeneralPages({}) {
               bIcon={PiCaretRight}
             />
           </div>
-          <LineChartComps />
+          <LineChartComps isTitle={true} />
           <div className="w-full flex justify-between mt-[2rem]">
-            <DotnutCharComps className="w-[47%] shadow-xl h-[10.5rem]" />
-            <TaskAssigned className="w-[47%] shadow-xl h-[10.5rem]" />
+            <DotnutCharComps className="w-[47%] shadow-xl h-[10.5rem] px-[1rem] pt-[1rem] pb-[0.5rem]" isTitle={true} isLegend={false}/>
+            <TaskAssigned className="w-[47%] h-[10.5rem] rounded-xl bg-[var(--task-assigned-background-color)] text-[var(--task-assigned-text-color)]" title="Tasks" body="You are assigned" number="04"/>
           </div>
         </div>
       </div>
       <div className="w-full flex-col  flex">
-        <p  className="font-bold text-xl mb-[2rem]">Team member</p>
+        <p className="font-bold text-xl mb-[2rem]">Team member</p>
         <div className="flex justify-around w-full  bg-[var(--sider\_color)] h-[10rem] rounded-xl items-center">
           <InforBoxCol name="Vung A Dinh" title="Environment design" />
           <InforBoxCol name="Vung A Dinh" title="Environment design" />
           <InforBoxCol name="Vung A Dinh" title="Environment design" />
           <div className="bg-yellow-500 w-[4rem] h-[4rem] rounded-full text-sm flex justify-center items-center">
-            <PiPlusBold className="text-3xl"/>
+            <PiPlusBold className="text-3xl" />
           </div>
         </div>
       </div>
