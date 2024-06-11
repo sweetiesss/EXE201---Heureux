@@ -1,10 +1,11 @@
 import DotnutCharComps from "../../../components/studentCom/DotnutCharComps";
 import LineChartComps from "../../../components/studentCom/LineChartComps";
 import TaskAssigned from "../../../components/studentCom/TaskAssigned";
+import TaskScheduler from "../../../components/studentCom/TaskScheduler";
 
 export default function DashboardPages() {
   return (
-    <div className="h-full w-full">
+    <div className="h-fit w-full">
       <div className="flex h-[23rem] w-full justify-between mt-[3rem]">
         <div className="flex justify-between flex-col">
           <p className="text-xl font-semibold">Work Time</p>
@@ -29,10 +30,18 @@ export default function DashboardPages() {
         <div className="flex justify-between flex-col ">
           <p className="text-xl font-semibold">Tasks Progress</p>
 
-          <DotnutCharComps className="w-[20rem] shadow-xl h-[20rem] px-[3rem] pt-[3rem] pb-[1rem]" isLegend={true}/>
+          <DotnutCharComps
+            className="w-[20rem] shadow-xl h-[20rem] px-[3rem] pt-[3rem] pb-[1rem]"
+            isLegend={true}
+          />
         </div>
       </div>
-      <div className="flex h-[50%] w-full"></div>
+      <div className="flex h-fit w-full mt-[3rem]">
+        <div className="w-[53.5rem] flex flex-col">
+          <p className="text-xl font-semibold mb-[1rem]">Tasks Progress</p>
+         <TaskScheduler/>
+        </div>
+      </div>
     </div>
   );
 }
