@@ -1,0 +1,83 @@
+/* src/Calendar.css */
+.calendar {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.days {
+  display: flex;
+  justify-content: space-between;
+  background-color: white;
+  border-top-left-radius: 1rem;
+  border-top-right-radius: 1rem;
+}
+
+.body {
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+  border-bottom-left-radius: 1rem;
+  border-bottom-right-radius: 1rem;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.row {
+  display: flex;
+}
+
+.col {
+  flex: 1;
+  padding: 0.5rem;
+  text-align: center;
+  cursor: pointer;
+}
+.col:hover {
+  background-color: var(--liner-day-chart-background-color);
+}
+
+.col.center {
+  flex: 2;
+}
+
+.col.disabled {
+  color: lightgray;
+  pointer-events: none;
+}
+
+.col.selected {
+  background-color: var(--report_textColor);
+  font-weight: bold;
+  color: white;
+}
+.col.today {
+  background-color: var(--login_button);
+  font-weight: bold;
+  color: white;
+}
+
+.number {
+  position: relative;
+  z-index: 2;
+}
+
+.bg {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  right: 16px;
+  bottom: 16px;
+  z-index: 1;
+  background-color: rgba(0, 123, 255, 0.1);
+  border-radius: 50%;
+  display: none;
+}

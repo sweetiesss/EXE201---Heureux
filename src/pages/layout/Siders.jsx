@@ -9,13 +9,14 @@ import {
 import Heuruex from "../../assets/icon/heuruex.png";
 import { useEffect, useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
+import Calendar from "../../components/sharing/Calendar";
 export function LeftSider() {
   const location = useLocation();
   const [onPages, setPages] = useState();
 
   useEffect(() => {
-    const locations=location.pathname.split("/");
-    setPages(locations[locations.length-1]);
+    const locations = location.pathname.split("/");
+    setPages(locations[locations.length - 1]);
   }, [location]);
   const nav = useNavigate();
   return (
@@ -120,16 +121,16 @@ export function LeftSider() {
 }
 export function RightSiderDateTime() {
   return (
-    <div className="h-full   flex flex-col bg-[var(--sider\_color)] ">
-      <div>Month</div>
-      <div>Upcomming</div>
-      <div>View all upcomming</div>
+    <div className="h-full w-full items-center  flex flex-col bg-[var(--sider\_color)] ">
+      <div className="w-[95%] flex items-center justify-center mt-[6rem]">
+        <Calendar />
+      </div>
     </div>
   );
 }
 export function RightSiderMember() {
   return (
-    <div className="h-full   flex flex-col  ">
+    <div className="h-full s  flex flex-col  ">
       <div>member</div>
       <div>member</div>
       <div>member</div>
