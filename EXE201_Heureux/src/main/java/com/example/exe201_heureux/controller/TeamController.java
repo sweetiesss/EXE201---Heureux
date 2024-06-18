@@ -34,7 +34,7 @@ public class TeamController {
     public ResponseEntity<APIPageableResponseDTO<TeamResponseDTO>> getAllTeams(
             @RequestParam(defaultValue = "0") int pageNo,
             @RequestParam(defaultValue = "10") int pageSize,
-            @RequestParam(required = false) String search,
+            @RequestParam(defaultValue = "", name = "search") String search,
             @RequestParam(defaultValue = "name") String sortField,
             @RequestParam(defaultValue = "true") boolean ascending) {
 
