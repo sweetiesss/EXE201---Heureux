@@ -119,16 +119,18 @@ public class TeamServiceImp implements TeamServiceInterface {
         teamRepository.save(team);
     }
     public void addUserToTeam(Integer teamId, List<Integer> userIds) throws TeamNotFoundException, ProjectNotFoundException {
-        UserTeam team = findTeamByID(teamId);
+        UserTeam userteam = findTeamByID(teamId);
+        Team team = findByID(teamId);
         for (Integer userId : userIds) {
             User user = userTeamInterface.findByID(userId);
             if (user == null) {
                 throw new ProjectNotFoundException();
             }
-            team.setUserid(user);
+            userteam.setTeamid(team);
+            userteam.setUserid(user);
         }
 
-        userTeamRepository.save(team);
+        userTeamRepository.save(userteam);
     }
 
 }
