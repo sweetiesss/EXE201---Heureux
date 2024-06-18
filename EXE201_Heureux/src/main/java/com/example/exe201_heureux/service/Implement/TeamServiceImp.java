@@ -3,6 +3,8 @@ package com.example.exe201_heureux.service.Implement;
 
 import com.example.exe201_heureux.entity.Project;
 import com.example.exe201_heureux.entity.Team;
+import com.example.exe201_heureux.entity.User;
+import com.example.exe201_heureux.entity.UserTeam;
 import com.example.exe201_heureux.exceptions.ProjectNotFoundException;
 import com.example.exe201_heureux.exceptions.TeamNotFoundException;
 import com.example.exe201_heureux.model.DTO.ResponseObject;
@@ -14,24 +16,28 @@ import com.example.exe201_heureux.model.mapper.TeamMapper;
 import com.example.exe201_heureux.repository.TeamRepository;
 
 import com.example.exe201_heureux.repository.UserRepository;
+import com.example.exe201_heureux.repository.UserTeamRepository;
 import com.example.exe201_heureux.service.Interface.ProjectServiceInterface;
 import com.example.exe201_heureux.service.Interface.TeamServiceInterface;
+import com.example.exe201_heureux.service.Interface.UserTeamInterface;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 
 @Service
 public class TeamServiceImp implements TeamServiceInterface {
-    private final UserRepository userRepo;
+    private final UserTeamRepository userTeamRepository;
     private final TeamRepository teamRepository;
     ProjectServiceInterface projectServiceInterface;
-    public TeamServiceImp(TeamRepository teamRepository , UserRepository userRepo) {
-        this.userRepo = userRepo;
+    UserTeamInterface userTeamInterface;
+    public TeamServiceImp(TeamRepository teamRepository , UserTeamRepository userTeamRepository) {
+        this.userTeamRepository = userTeamRepository;
         this.teamRepository = teamRepository;
     }
     public ResponseObject createTeam (CreateTeamRequestDTO requestDTO) {
@@ -45,6 +51,8 @@ public class TeamServiceImp implements TeamServiceInterface {
 
         Team team = teamRepository.save(
                 Team.builder()
+                        .size(0)
+                        .flag(false)
                         .name(requestDTO.getName())
                         .build()
         );
@@ -94,6 +102,13 @@ public class TeamServiceImp implements TeamServiceInterface {
 
         return teamOptional.get();
     }
+    public UserTeam findTeamByID(Integer teamId) throws TeamNotFoundException {
+        Optional<UserTeam> teamOptional = userTeamRepository.findById(teamId);
+
+        if(teamOptional.isEmpty()) throw new TeamNotFoundException();
+
+        return teamOptional.get();
+    }
 
     public void addProjectToTeam(Integer teamId, Integer projectId) throws TeamNotFoundException, ProjectNotFoundException {
         Team team = findByID(teamId);
@@ -103,4 +118,17 @@ public class TeamServiceImp implements TeamServiceInterface {
 
         teamRepository.save(team);
     }
+    public void addUserToTeam(Integer teamId, List<Integer> userIds) throws TeamNotFoundException, ProjectNotFoundException {
+        UserTeam team = findTeamByID(teamId);
+        for (Integer userId : userIds) {
+            User user = userTeamInterface.findByID(userId);
+            if (user == null) {
+                throw new ProjectNotFoundException();
+            }
+            team.setUserid(user);
+        }
+
+        userTeamRepository.save(team);
+    }
+
 }

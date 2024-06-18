@@ -11,5 +11,7 @@ import lombok.NoArgsConstructor;
 @Builder
 public class CreateTeamRequestDTO {
     private String name;
+    private int size;
+    private boolean flag;
 }
 

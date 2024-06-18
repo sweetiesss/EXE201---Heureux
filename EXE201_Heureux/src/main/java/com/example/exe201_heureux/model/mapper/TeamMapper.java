@@ -21,8 +21,8 @@ public class TeamMapper {
         return TeamResponseDTO.builder()
                 .id(c.getId())
                 .name(c.getName())
-                .flag(c.getFlag())
-                .size(c.getSize())
+                .flag(c.getFlag() != null ? c.getFlag() : false)
+                .size(c.getSize() != null ? c.getSize() : 0)
                 .build();
     }
 }
