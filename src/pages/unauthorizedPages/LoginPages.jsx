@@ -8,6 +8,7 @@ import {
 import {  PiEnvelopeLight, PiKeyLight } from "react-icons/pi";
 import ggIcon from "../../assets/icon/google.png";
 import { useState } from "react";
+import { ToastSuccess } from "../../components/setting/ToastSetting";
 
 
 function Ggsvg() {
@@ -37,7 +38,8 @@ export default function LoginPages() {
     e.preventDefault();
     console.log(form);
     if(form.emailOrUserName==="admin@gmail.com"&form.password==="01"){
-      nav("/student/general");
+      ToastSuccess("Login successfully.");
+      // nav("/student/general");
     }
   };
   return (
