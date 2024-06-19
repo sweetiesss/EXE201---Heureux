@@ -5,7 +5,7 @@ import TaskScheduler from "../../../components/studentCom/TaskScheduler";
 
 export default function DashboardPages() {
   return (
-    <div className="h-fit w-full">
+    <div className="h-fit w-full pb-[1rem]">
       <div className="flex h-[23rem] w-full justify-between mt-[3rem]">
         <div className="flex justify-between flex-col">
           <p className="text-xl font-semibold">Work Time</p>

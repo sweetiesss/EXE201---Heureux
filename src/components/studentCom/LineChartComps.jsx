@@ -20,14 +20,13 @@ ChartJS.register(
   Legend
 );
 
-export default function LineChartComps({className,isTitle}) {
+export default function LineChartComps({ className, isTitle }) {
   const getTextColor = window
     .getComputedStyle(document.documentElement)
     .getPropertyValue("--liner-day-chart-font-color");
   const parentStyle = {
     background: "var(--liner-day-chart-background-color)",
     borderRadius: "5%",
-  
   };
 
   const data = {
@@ -77,7 +76,7 @@ export default function LineChartComps({className,isTitle}) {
           color: getTextColor,
           font: {
             weight: "bolder",
-            size:18
+            size: 18,
           },
         },
         display: true,
@@ -99,7 +98,12 @@ export default function LineChartComps({className,isTitle}) {
   };
 
   return (
-    <div style={parentStyle} className={`shadow-xl ${className?className:"w-[26rem] h-[15rem] p-[1rem]"}`}>
+    <div
+      style={parentStyle}
+      className={`shadow-xl ${
+        className ? className : "w-[26rem] h-[15rem] p-[1rem]"
+      }`}
+    >
       <Line data={data} options={options} />
     </div>
   );

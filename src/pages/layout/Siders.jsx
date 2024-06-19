@@ -10,6 +10,7 @@ import Heuruex from "../../assets/icon/heuruex.png";
 import { useEffect, useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import Calendar from "../../components/sharing/Calendar";
+import UpcomingEvent from "../../components/studentCom/UpcomingEvent";
 export function LeftSider() {
   const location = useLocation();
   const [onPages, setPages] = useState();
@@ -107,7 +108,8 @@ export function LeftSider() {
         <div
           className="flex items-center justify-start pl-[1rem] pr-[1.5rem] mb-[3rem] py-[1rem] hover:bg-white cursor-pointer transition-all"
           onClick={() => {
-            nav("");
+            nav("/");
+            console.log("er");
           }}
         >
           <label>
@@ -121,9 +123,12 @@ export function LeftSider() {
 }
 export function RightSiderDateTime() {
   return (
-    <div className="h-full w-full items-center  flex flex-col bg-[var(--sider\_color)] ">
-      <div className="w-[95%] flex items-center justify-center mt-[6rem]">
+    <div className="h-full w-full  flex flex-col bg-[var(--sider\_color)] px-[1rem] overflow-hidden">
+      <div className="w-[100%] flex items-center justify-center mt-[6rem] ">
         <Calendar />
+      </div>
+      <div className="mt-[3rem]">
+        <UpcomingEvent/>
       </div>
     </div>
   );

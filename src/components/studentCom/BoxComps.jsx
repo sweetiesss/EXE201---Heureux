@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import RocketColoredShort from "../../assets/icon/ShortRocket.png";
 import {
   PiChatDots,
@@ -13,6 +13,7 @@ import { useGSAP } from "@gsap/react";
 import "../../styles/Task.css";
 import "../../styles/Scrollbar.css";
 import { SimpleProgressBar } from "../sharing/ProgressBar";
+import { formatDistance, formatDistanceToNowStrict } from "date-fns";
 
 export function ReportBoxShort({
   title,
@@ -223,7 +224,9 @@ export function TasksHolderComps({
 }) {
   const taskContainer = useRef();
   const { contextSafe } = useGSAP({ scope: taskContainer });
-  const [centered, setCentered] = useState(4);
+  const [centered, setCentered] = useState(0);
+  const [data,setData]=useState([]);
+
 
   const boxStyle = {};
   const documetFontSize = window.getComputedStyle(
@@ -233,6 +236,11 @@ export function TasksHolderComps({
   if (documetFontSize) {
     fontSize = parseFloat(documetFontSize);
   }
+
+  useEffect(()=>{
+    setData(arrayOfContent);
+  },[arrayOfContent])
+  console.log(data);
 
   return (
     <div
@@ -247,8 +255,9 @@ export function TasksHolderComps({
         </p>
       </div>
       <div className="relative" ref={taskContainer}>
-        {arrayOfContent ? (
-          arrayOfContent.map((box, index) => (
+        {data ? (
+          data.map((box, index) => (
+            
             <div
               key={index}
               className={`bg-white absolute task   ${
@@ -257,19 +266,19 @@ export function TasksHolderComps({
                   : centered - 1 === index && centered - 1 >= 0
                   ? "task-top"
                   : centered + 1 === index &&
-                    centered + 1 <= arrayOfContent.length
+                    centered + 1 <= data.length
                   ? "task-bottom"
                   : "hidden"
               } transition-all  min-h-[3rem] px-[0.5rem] py-[0.3rem] rounded-xl shadow-xl`}
               onClick={(e) => setCentered(index)}
             >
               <div className="flex justify-between items-center">
-                <p>{box?.title}</p>
+                <p>{box?.name}</p>
                 <p
                   className="text-gray-400"
-                  style={{ fontSize: "0.5rem", lineHeight: "1rem" }}
+                  style={{ fontSize: "0.6rem", lineHeight: "1rem" }}
                 >
-                  3 days left
+                  {formatDistanceToNowStrict(box?.endDate)+" left"}
                 </p>
               </div>
               <div className="flex justify-between">

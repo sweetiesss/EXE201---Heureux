@@ -24,3 +24,7 @@
     background: #888; /* Color of the scrollbar thumb */
     border-radius: 10px; /* Rounded corners */
 }
+
+.scrollball-hidden::-webkit-scrollbar{
+width: 0;
+}

@@ -6,8 +6,23 @@ import LineChartComps from "../../../components/studentCom/LineChartComps";
 import TaskAssigned from "../../../components/studentCom/TaskAssigned";
 import DotnutCharComps from "../../../components/studentCom/DotnutCharComps";
 import InforBoxCol from "../../../components/studentCom/InforBoxComp";
+import { useEffect, useState } from "react";
+import UnitOfWork from "../../../services/UnitOfWork.ts";
 
 export default function GeneralPages({}) {
+const [taskes,setTaskes]=useState();
+useEffect(()=>{
+  const fetchData=async()=>{
+    try{
+      const result=await UnitOfWork.fetchFilterTask(1);
+      setTaskes(result);
+    }catch(e){
+      console.log(e);
+    }
+  }
+  fetchData();
+},[])
+
   const d = new Date();
   const isOpen = true;
   const arrayOfReport = [
@@ -21,22 +36,9 @@ export default function GeneralPages({}) {
       submited: 3,
       comment: 4,
     },
-    {
-      title: "test2",
-      submited: 6,
-      comment: 3,
-    },
-    {
-      title: "test3",
-      submited: 1,
-      comment: 0,
-    },
-    {
-      title: "test4",
-      submited: 0,
-      comment: 0,
-    },
   ];
+
+  
 
   return (
     <div className="flex flex-col justify-around items-start h-full">
@@ -83,7 +85,7 @@ export default function GeneralPages({}) {
               title={"Proposal"}
               bgColor={"report_color"}
               newClassName="w-[48%] shadow-xl mr-[1.5rem]"
-              arrayOfContent={arrayOfReport}
+              arrayOfContent={taskes}
               dateCreate={d}
               taskTitle={"Character design for goof long"}
               isOpen={isOpen}
