@@ -59,11 +59,13 @@ export function ReportBoxShort({
         newClassName && newClassName
       } min-w-[13rem] flex relative justify-end min-h-[8rem] rounded-xl bg-[var(--backgroundColor)]`}
       style={boxStyle}
+     
     >
       <img
         src={RocketColoredShort}
         className="h-full w-auto absolute overflow-auto left-0"
         style={isOpen ? {} : { filter: "grayscale(100%)" }}
+      
       />
       <div className="mr-[1rem] my-[0.5rem] flex flex-col justify-between">
         <div>

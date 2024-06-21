@@ -39,7 +39,7 @@ export default function LoginPages() {
     console.log(form);
     if(form.emailOrUserName==="admin@gmail.com"&form.password==="01"){
       ToastSuccess("Login successfully.");
-      // nav("/student/general");
+       nav("/student/general");
     }
   };
   return (

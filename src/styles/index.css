@@ -46,6 +46,9 @@ body {
   -webkit-user-select: none;
   -ms-user-select: none;
 }
+img{
+  pointer-events: none;
+}
 
 .allow-select {
   user-select: auto;
@@ -87,3 +90,29 @@ body {
     align-items: center;
   }
 }
+.grid-container {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+}
+.grid-item img {
+  max-width: 100%;
+  width: 16rem;
+  height: auto;
+ 
+}
+.grid-item{
+  background-color: var(--liner-day-chart-background-color);
+  border-radius: 0.75rem;
+  position: relative;
+}
+.grid-container:hover > :not(:hover){
+  opacity: 0.5;
+}
+.grid-container:hover > :hover{
+  box-sizing: border-box;
+  border-width: 0.2rem;
+  border-color: var(--liner-day-chart-font-color);
+  border-end-end-radius: 0;
+}
+

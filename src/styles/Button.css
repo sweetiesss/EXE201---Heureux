@@ -1,9 +1,12 @@
 .button-holder:active > .button-main{
     outline-style: solid;
-    outline-color: white;
+    outline-color:  var(--outlineActive);
     outline-offset: -5px;
     transform: scale(0.95);
   
+}
+.button-holder {
+    /* width: 100%; */
 }
 .button-holder .button-main{
     background-color: var(--backgroundColor);

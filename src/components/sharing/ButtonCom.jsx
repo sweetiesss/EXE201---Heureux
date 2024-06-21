@@ -9,12 +9,14 @@ export default function Button({
   isValid,
   fIcon: FIcon,
   bIcon: BIcon,
+  outlineCoredName,
 }) {
   const buttonHolderStyle = {
     "--backgroundColor": `var(--${bgColoredName ? bgColoredName : "default"})`,
     "--hoveredColor": `var(--${
       bgColoredName ? bgColoredName : "default"
     }_hover)`,
+    "--outlineActive": `var(--${outlineCoredName ? outlineCoredName : "white"})`
   };
 
   return (
