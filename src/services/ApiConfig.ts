@@ -1,7 +1,9 @@
 import axios from "axios";
 
-const apiConectionString =
-  "http://ec2-13-231-122-49.ap-northeast-1.compute.amazonaws.com:8000/class-service";
+
+
+const apiMainPort="http://ec2-57-180-35-85.ap-northeast-1.compute.amazonaws.com:8000/"
+
 const conectStringAvailable = [
   "class-project-entity-controller",
   "class-project-search-controller",
@@ -32,7 +34,8 @@ const conectStringAvailable = [
 ];
 
 export const axiosConfig=axios.create({
-    baseURL:apiConectionString,
+    baseURL:apiMainPort,
     timeout:1000,
 })
+
 

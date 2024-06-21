@@ -11,15 +11,21 @@ import { useEffect, useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import Calendar from "../../components/sharing/Calendar";
 import UpcomingEvent from "../../components/studentCom/UpcomingEvent";
+import { useLocalData } from "../../components/setting/useContext";
 export function LeftSider() {
   const location = useLocation();
   const [onPages, setPages] = useState();
+  const {setData}=useLocalData();
 
   useEffect(() => {
     const locations = location.pathname.split("/");
     setPages(locations[locations.length - 1]);
   }, [location]);
   const nav = useNavigate();
+  const handleLogOut=()=>{
+    localStorage.removeItem("DATA");
+    nav("/");
+  }
   return (
     <div className="h-full w-full flex flex-col justify-between text-[var(--login\_button)]">
       <div>
@@ -108,8 +114,7 @@ export function LeftSider() {
         <div
           className="flex items-center justify-start pl-[1rem] pr-[1.5rem] mb-[3rem] py-[1rem] hover:bg-white cursor-pointer transition-all"
           onClick={() => {
-            nav("/");
-            console.log("er");
+           handleLogOut();
           }}
         >
           <label>

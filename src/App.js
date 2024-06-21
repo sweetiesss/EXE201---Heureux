@@ -12,7 +12,8 @@ import Main from "./pages/authorizedPages/chooseRoom/Main";
 import Layouts from "./pages/layout/Layouts";
 import StudentHome from "./pages/authorizedPages/student/StudentHome";
 import TestFunc, { TestFunc2 } from "./components/studentCom/Test3d";
-
+import AutherizonRequire from "./components/setting/AutherizonRequire";
+import LecturerHome from "./pages/authorizedPages/lecturer/LecturerHome";
 
 function App() {
   return (
@@ -34,9 +35,12 @@ function App() {
           <Route element={<Layouts header="sign up" />}>
             <Route path="/Signup" element={<SignupPages />} />
           </Route>
-          <Route path="/Main/*" element={<Main />} />
-          <Route path="/Student/*" element={<StudentHome />} />
-          <Route path="/Test" element={<TestFunc2 />} />
+          <Route element={<AutherizonRequire allowedAuth={["STUDENT","ADMIN"]} />}>
+            <Route path="/Main/*" element={<Main />} />
+            <Route path="/Student/*" element={<StudentHome />} />
+          </Route>
+          <Route path="/Lecturer/*" element={<LecturerHome />} />
+
         </Routes>
       </div>
     </div>

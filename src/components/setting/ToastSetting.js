@@ -14,6 +14,13 @@ export const ToastSuccess = (message) => {
   });
 };
 
+export const ToastError =(message)=>{
+  toast.error(message);
+}
+export const ToastWarning =(message)=>{
+  toast.warning(message);
+}
+
 function ToastSetting() {
   return (
     <div>

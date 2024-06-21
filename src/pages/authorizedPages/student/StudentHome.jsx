@@ -1,4 +1,4 @@
-import { Route, Routes } from "react-router-dom";
+import { Navigate, Route, Routes } from "react-router-dom";
 
 import { Outlet } from "react-router-dom";
 
@@ -13,8 +13,9 @@ export default function StudentHome() {
   return (
     <div className="">
       <Routes>
-        <Route path="" element={<StudentLayout />}>
-          <Route index path="general" element={<GeneralPages />} />
+        <Route path="/*" element={<StudentLayout />}>
+          <Route index element={<Navigate to="general"/>}/>
+          <Route  path="general" element={<GeneralPages />}/>
           <Route path="reports" element={<ReportsPages />} />
           <Route path="tasks" element={<TasksPages />} />
           <Route path="dashboard" element={<DashboardPages />} />
