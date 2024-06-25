@@ -2,7 +2,9 @@ package com.example.exe201_heureux.controller;
 
 import com.example.exe201_heureux.model.DTO.ResponseObject;
 import com.example.exe201_heureux.model.DTO.classservice.CreateReportRequestDTO;
+import com.example.exe201_heureux.model.DTO.classservice.EventRequestDTO;
 import com.example.exe201_heureux.model.DTO.classservice.ReportResponseDTO;
+import com.example.exe201_heureux.model.DTO.classservice.UpdateReportRequestDTO;
 import com.example.exe201_heureux.model.DTO.pagination.APIPageableResponseDTO;
 import com.example.exe201_heureux.service.Interface.ProjectServiceInterface;
 import com.example.exe201_heureux.service.Interface.ReportServiceInterface;
@@ -27,6 +29,10 @@ public class ReportController {
                                                                    @RequestParam(defaultValue = "id") String sortField,
                                                                    @RequestParam(defaultValue = "true") boolean ascending) {
         return reportService.getAllReports(pageNo, pageSize, sortField, ascending);
+    }
+    @PostMapping("/update/{id}")
+    public ResponseObject updateReport(@PathVariable Integer id, @RequestBody UpdateReportRequestDTO requestDTO) {
+        return reportService.updateReport(id,requestDTO);
     }
     @GetMapping("/team/{teamId}")
     public APIPageableResponseDTO<ReportResponseDTO> getAllReportsByTeamId(@PathVariable Integer teamId,

@@ -5,18 +5,13 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.Instant;
-
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class ReportResponseDTO {
-    private Integer id;
-    private String teamName;
+public class UpdateReportRequestDTO {
     private String description;
-    private String status;
     private Integer submittionId;
     private String title;
-    private Instant createDate;
+    private String status;
 }

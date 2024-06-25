@@ -18,6 +18,13 @@ public class Report {
     @Column(name = "id", nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+    @Size(max = 50)
+    @Column(name = "title", length = 50)
+    private String title;
+
+
+    @Column(name = "submittionId")
+    private Integer submittionId;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "teamid")

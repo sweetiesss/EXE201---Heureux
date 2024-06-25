@@ -6,16 +6,18 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.Instant;
+import java.time.LocalDateTime;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class CreateReportRequestDTO {
-    private Integer teamId;
-    private String description;
-    private Integer submittionId;
+public class EventRequestDTO {
     private String title;
+   /* private LocalDateTime createDate;*/
+    private LocalDateTime endDate;
+    private String type;
     private String status;
+    private Integer team;
+
 }

@@ -1,22 +1,23 @@
 package com.example.exe201_heureux.model.DTO.classservice;
 
+import com.example.exe201_heureux.entity.Team;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.Instant;
+import java.time.LocalDateTime;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class ReportResponseDTO {
+public class EventResponseDTO {
     private Integer id;
-    private String teamName;
-    private String description;
-    private String status;
-    private Integer submittionId;
     private String title;
-    private Instant createDate;
+    private LocalDateTime createDate;
+    private LocalDateTime endDate;
+    private String type;
+    private String status;
+    private String team;
 }
