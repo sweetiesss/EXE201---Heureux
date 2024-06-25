@@ -15,6 +15,6 @@ public interface TeamServiceInterface {
     ResponseObject createTeam (CreateTeamRequestDTO requestDTO);
     ResponseObject updateTeam(UpdateTeamRequestDTO requestDTO);
     APIPageableResponseDTO<TeamResponseDTO> getAllTeams(int pageNo, int pageSize, String search, String sortField, boolean ascending);
-    Team findByID(Integer teamId) throws TeamNotFoundException;
-    void addUserToTeam(Integer teamId, List<Integer> userIds) throws TeamNotFoundException, ProjectNotFoundException;
+    Team getTeamById(Integer id);
+
 }

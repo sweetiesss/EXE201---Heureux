@@ -24,6 +24,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -96,18 +97,15 @@ public class TeamServiceImp implements TeamServiceInterface {
     }
 
     public Team findByID(Integer teamId) throws TeamNotFoundException {
-        Optional<Team> teamOptional = teamRepository.findById(teamId);
+        Optional<Team> teamOptional = teamRepository.findTeamById(teamId);
 
         if(teamOptional.isEmpty()) throw new TeamNotFoundException();
 
         return teamOptional.get();
     }
-    public UserTeam findTeamByID(Integer teamId) throws TeamNotFoundException {
-        Optional<UserTeam> teamOptional = userTeamRepository.findById(teamId);
-
-        if(teamOptional.isEmpty()) throw new TeamNotFoundException();
-
-        return teamOptional.get();
+    public Team getTeamById(Integer id) {
+        return teamRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Team not found with id: " + id));
     }
 
     public void addProjectToTeam(Integer teamId, Integer projectId) throws TeamNotFoundException, ProjectNotFoundException {
@@ -118,19 +116,6 @@ public class TeamServiceImp implements TeamServiceInterface {
 
         teamRepository.save(team);
     }
-    public void addUserToTeam(Integer teamId, List<Integer> userIds) throws TeamNotFoundException, ProjectNotFoundException {
-        UserTeam userteam = findTeamByID(teamId);
-        Team team = findByID(teamId);
-        for (Integer userId : userIds) {
-            User user = userTeamInterface.findByID(userId);
-            if (user == null) {
-                throw new ProjectNotFoundException();
-            }
-            userteam.setTeamid(team);
-            userteam.setUserid(user);
-        }
 
-        userTeamRepository.save(userteam);
-    }
 
 }
