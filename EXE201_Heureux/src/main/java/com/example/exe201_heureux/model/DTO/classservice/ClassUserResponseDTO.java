@@ -5,14 +5,17 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class TeamResponseDTO {
-    private  int id;
-    private String name;
+public class ClassUserResponseDTO {
+    private Integer id ;
+    private String class_name;
+    private Integer class_id;
+    private LocalDate class_createdDate;
+    private String user_name;
     private boolean flag;
-    private String project_name;
-    private int size;
 }

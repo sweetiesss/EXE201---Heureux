@@ -4,6 +4,7 @@ import com.example.exe201_heureux.entity.Event;
 import com.example.exe201_heureux.model.DTO.ResponseObject;
 import com.example.exe201_heureux.model.DTO.classservice.EventRequestDTO;
 import com.example.exe201_heureux.model.DTO.classservice.EventResponseDTO;
+import com.example.exe201_heureux.model.DTO.classservice.UserTeamResponseDTO;
 import com.example.exe201_heureux.model.DTO.pagination.APIPageableResponseDTO;
 import com.example.exe201_heureux.service.Interface.EventServiceInterface;
 import com.example.exe201_heureux.service.Interface.ProjectServiceInterface;
@@ -22,7 +23,10 @@ public class EventController {
     private EventServiceInterface eventService;
 
 
-
+    @GetMapping("{teamId}")
+    public List<EventResponseDTO> getEventsByTeamId(@PathVariable Integer teamId) {
+        return eventService.getEventByTeamId(teamId);
+    }
     @GetMapping("/paged")
     public APIPageableResponseDTO<EventResponseDTO> getAllEventsPaged(
             @RequestParam(defaultValue = "0") int pageNo,

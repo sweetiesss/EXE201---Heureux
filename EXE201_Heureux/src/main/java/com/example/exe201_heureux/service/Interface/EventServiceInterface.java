@@ -13,4 +13,5 @@ public interface EventServiceInterface {
     ResponseObject updateEvent(Integer id, EventRequestDTO requestDTO);
     ResponseObject deleteEvent(Integer eventId);
     APIPageableResponseDTO<EventResponseDTO> getAllEvents(int pageNo, int pageSize, String sortField, String search, boolean ascending);
+    List<EventResponseDTO> getEventByTeamId(Integer teamId);
 }

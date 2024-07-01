@@ -64,6 +64,16 @@ public class UserTeamServiceImp implements UserTeamInterface {
                 .map(UserTeamMapper::teamToDTO)
                 .collect(Collectors.toList());
     }
+    public List<UserTeamResponseDTO> getTeamsByUser(Integer userId) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new ResourceNotFoundException("Team not found with id " + userId));
+
+        List<UserTeam> users = userTeamRepository.findByUserid(user);
+
+        return users.stream()
+                .map(UserTeamMapper::teamToDTO)
+                .collect(Collectors.toList());
+    }
     public APIPageableResponseDTO<UserTeamResponseDTO> getAllUserTeams(int pageNo, int pageSize, String sortField, boolean ascending) {
         Sort.Direction direction = ascending ? Sort.Direction.ASC : Sort.Direction.DESC;
         Pageable pageable = PageRequest.of(pageNo, pageSize, direction, sortField);
@@ -71,6 +81,7 @@ public class UserTeamServiceImp implements UserTeamInterface {
         Page<UserTeamResponseDTO> userDtoPage = page.map(UserTeamMapper::teamToDTO);
         return new APIPageableResponseDTO<>(userDtoPage);
     }
+
     public ResponseObject setLeaderForUser(Integer userTeamId) {
         UserTeam userTeam = userTeamRepository.findById(userTeamId)
                 .orElse(null);

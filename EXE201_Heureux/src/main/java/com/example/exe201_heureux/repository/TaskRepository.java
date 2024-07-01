@@ -12,4 +12,5 @@ public interface TaskRepository extends JpaRepository<Task, Integer> {
     Optional<Task> findById (int id);
     Optional<Task> findAllByName (String name);
     List<Task> findByTeamid(Team teamId);
+    List<Task> findByAssignee(String user);
 }

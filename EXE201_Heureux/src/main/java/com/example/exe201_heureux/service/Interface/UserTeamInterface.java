@@ -19,5 +19,6 @@ public interface UserTeamInterface {
     ResponseObject setLeaderForUser(Integer userTeamId);
     ResponseObject updateUserTeam(UpdateUserTeamRequestDTO userTeam);
     ResponseObject deleteUserTeam(Integer userTeamId);
+    List<UserTeamResponseDTO> getTeamsByUser(Integer userId);
 
 }

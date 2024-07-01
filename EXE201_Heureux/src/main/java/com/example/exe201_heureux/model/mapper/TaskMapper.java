@@ -26,6 +26,7 @@ public class TaskMapper {
                 .startDate(c.getStartDate())
                 .endDate(c.getEndDate())
                 .priority(c.getPriority())
+                .section(c.getSection())
                 .assignee(c.getAssignee())
                 .build();
 

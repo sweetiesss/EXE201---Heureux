@@ -19,5 +19,6 @@ public class TaskResponseDTO {
     private LocalDate startDate;
     private LocalDate endDate;
     private String status;
+    private String section;
     private String priority;
 }

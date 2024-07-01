@@ -1,17 +1,13 @@
 package com.example.exe201_heureux.service.Implement;
 
-import com.example.exe201_heureux.entity.Event;
-import com.example.exe201_heureux.entity.Report;
-import com.example.exe201_heureux.entity.Team;
+import com.example.exe201_heureux.entity.*;
 import com.example.exe201_heureux.model.DTO.ResponseObject;
-import com.example.exe201_heureux.model.DTO.classservice.CreateReportRequestDTO;
-import com.example.exe201_heureux.model.DTO.classservice.EventRequestDTO;
-import com.example.exe201_heureux.model.DTO.classservice.EventResponseDTO;
-import com.example.exe201_heureux.model.DTO.classservice.ProjectResponseDTO;
+import com.example.exe201_heureux.model.DTO.classservice.*;
 import com.example.exe201_heureux.model.DTO.message.ResponseMessage;
 import com.example.exe201_heureux.model.DTO.pagination.APIPageableResponseDTO;
 import com.example.exe201_heureux.model.mapper.EventMapper;
 import com.example.exe201_heureux.model.mapper.ProjectMapper;
+import com.example.exe201_heureux.model.mapper.UserTeamMapper;
 import com.example.exe201_heureux.repository.EventRepository;
 import com.example.exe201_heureux.repository.ReportRepository;
 import com.example.exe201_heureux.repository.TeamRepository;
@@ -20,11 +16,13 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class EventServiceImp implements EventServiceInterface {
@@ -59,6 +57,16 @@ public class EventServiceImp implements EventServiceInterface {
                     .statusCode(200)
                     .build();
         }
+    public List<EventResponseDTO> getEventByTeamId(Integer teamId) {
+        Team team = teamRepository.findById(teamId)
+                .orElseThrow(() -> new ResourceNotFoundException("Team not found with id " + teamId));
+
+        List<Event> events = eventRepository.findByTeam(team);
+
+        return events.stream()
+                .map(EventMapper::eventToDTO)
+                .collect(Collectors.toList());
+    }
     public APIPageableResponseDTO<EventResponseDTO> getAllEvents(int pageNo, int pageSize, String sortField,String search, boolean ascending) {
         Sort.Direction direction = ascending ? Sort.Direction.ASC : Sort.Direction.DESC;
         Pageable pageable = PageRequest.of(pageNo, pageSize, direction, sortField);

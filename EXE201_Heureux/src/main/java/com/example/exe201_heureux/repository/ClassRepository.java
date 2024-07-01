@@ -13,5 +13,6 @@ import java.util.Optional;
 public interface ClassRepository extends JpaRepository<Class, Integer> {
     Page<Class> findByNameContaining(Pageable pageable, String search);
 
+
     Optional<Class> findByName(String name);
 }

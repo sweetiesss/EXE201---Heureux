@@ -1,17 +1,13 @@
 package com.example.exe201_heureux.service.Implement;
 
-import com.example.exe201_heureux.entity.Project;
-import com.example.exe201_heureux.entity.Task;
-import com.example.exe201_heureux.entity.Team;
+import com.example.exe201_heureux.entity.*;
 import com.example.exe201_heureux.model.DTO.ResponseObject;
-import com.example.exe201_heureux.model.DTO.classservice.CreateTaskRequestDTO;
-import com.example.exe201_heureux.model.DTO.classservice.ProjectResponseDTO;
-import com.example.exe201_heureux.model.DTO.classservice.TaskResponseDTO;
-import com.example.exe201_heureux.model.DTO.classservice.UpdateTaskRequestDTO;
+import com.example.exe201_heureux.model.DTO.classservice.*;
 import com.example.exe201_heureux.model.DTO.message.ResponseMessage;
 import com.example.exe201_heureux.model.DTO.pagination.APIPageableResponseDTO;
 import com.example.exe201_heureux.model.mapper.ProjectMapper;
 import com.example.exe201_heureux.model.mapper.TaskMapper;
+import com.example.exe201_heureux.model.mapper.UserTeamMapper;
 import com.example.exe201_heureux.repository.TaskRepository;
 import com.example.exe201_heureux.repository.TeamRepository;
 import com.example.exe201_heureux.repository.UserRepository;
@@ -31,11 +27,25 @@ import java.util.stream.Collectors;
 public class TaskServiceImp implements TaskServiceInterface {
     private final TaskRepository taskRepository;
     private final TeamRepository teamRepository;
+    private final UserRepository userRepository;
 
 
-    public TaskServiceImp(TaskRepository taskRepository , TeamRepository teamRepository) {
+    public TaskServiceImp(TaskRepository taskRepository , TeamRepository teamRepository, UserRepository userRepository) {
         this.teamRepository = teamRepository;
         this.taskRepository = taskRepository;
+        this.userRepository = userRepository;
+    }
+    public List<TaskResponseDTO> getTasksByUser(String userName) {
+        List<User> users = userRepository.findAllByUsername(userName);
+        if (users.isEmpty()) {
+            throw new ResourceNotFoundException("User not found with name " + userName);
+        }
+
+        List<Task> tasks = taskRepository.findByAssignee(userName);
+
+        return tasks.stream()
+                .map(TaskMapper::taskToDTO)
+                .collect(Collectors.toList());
     }
     public ResponseObject createTask(CreateTaskRequestDTO requestDTO) {
         if (requestDTO.getName() == null) {
@@ -51,7 +61,13 @@ public class TaskServiceImp implements TaskServiceInterface {
                     .statusCode(400)
                     .build();
         }
-
+        List<User> users = userRepository.findAllByUsername(requestDTO.getAssignee());
+        if (users.isEmpty()) {
+            return ResponseObject.builder()
+                    .message("User not found with name " + requestDTO.getAssignee())
+                    .statusCode(404)
+                    .build();
+        }
         Optional<Team> teamOptional = teamRepository.findById(requestDTO.getTeamid());
         if (!teamOptional.isPresent()) {
             return ResponseObject.builder()
@@ -69,6 +85,7 @@ public class TaskServiceImp implements TaskServiceInterface {
                 .startDate(requestDTO.getStartDate())
                 .endDate(requestDTO.getEndDate())
                 .status(requestDTO.getStatus())
+                .section(requestDTO.getSection())
                 .priority(requestDTO.getPriority())
                 .teamid(team)
                 .build();
@@ -104,6 +121,7 @@ public class TaskServiceImp implements TaskServiceInterface {
 
 
             task.setStartDate(requestDTO.getStartDate());
+            task.setSection(requestDTO.getSection());
 
 
             task.setEndDate(requestDTO.getEndDate());

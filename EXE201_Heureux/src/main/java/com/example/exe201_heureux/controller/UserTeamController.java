@@ -35,6 +35,10 @@ public class UserTeamController {
     public List<UserTeamResponseDTO> getUsersByTeamId(@PathVariable Integer teamId) {
         return userTeamService.getUsersByTeam(teamId);
     }
+    @GetMapping("/team/{userId}")
+    public List<UserTeamResponseDTO> getTeamsByUserId(@PathVariable Integer userId) {
+        return userTeamService.getTeamsByUser(userId);
+    }
     @GetMapping
     public ResponseEntity<APIPageableResponseDTO<UserTeamResponseDTO>> getAllTeams(
             @RequestParam(defaultValue = "0") int pageNo,

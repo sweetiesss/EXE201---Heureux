@@ -13,4 +13,5 @@ public interface TaskServiceInterface {
     ResponseObject deleteTask(Integer taskId);
     List<TaskResponseDTO> getAllTasks();
     List<TaskResponseDTO> getTasksByTeamId(Integer teamId);
+    List<TaskResponseDTO> getTasksByUser(String userName);
 }

@@ -28,6 +28,10 @@ public class Task {
     private String name;
 
     @Size(max = 100)
+    @Column(name = "section", nullable = false, length = 100)
+    private String section;
+
+    @Size(max = 100)
     @Column(name = "assignee", length = 100)
     private String assignee;
 

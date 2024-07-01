@@ -21,6 +21,7 @@ public class TeamMapper {
         return TeamResponseDTO.builder()
                 .id(c.getId())
                 .name(c.getName())
+                .project_name(c.getProjectid().getName())
                 .flag(c.getFlag() != null ? c.getFlag() : false)
                 .size(c.getSize() != null ? c.getSize() : 0)
                 .build();

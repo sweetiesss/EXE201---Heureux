@@ -33,6 +33,10 @@ public class TaskController {
         return ResponseEntity.status(response.getStatusCode()).body(response);
     }
 
+    @GetMapping("/user/{userName}")
+    public List<TaskResponseDTO> getTasksByUser(@PathVariable String userName) {
+        return taskService.getTasksByUser(userName);
+    }
     @DeleteMapping("/{id}")
     public ResponseEntity<ResponseObject> deleteTask(@PathVariable Integer id) {
         ResponseObject response = taskService.deleteTask(id);
