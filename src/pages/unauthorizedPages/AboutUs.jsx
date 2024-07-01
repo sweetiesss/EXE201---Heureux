@@ -8,7 +8,7 @@ import {
   Button as CustButtom,
   Link as CustLink,
 } from "../../components/sharing";
-import { useNavigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 export default function AboutUs({}) {
   const nav = useNavigate();
   const buttonHolderStyle = {
@@ -33,7 +33,7 @@ export default function AboutUs({}) {
         </p>
         <div className="flex w-full justify-evenly mt-[3rem]">
           <div className="button-holder   text-white" style={buttonHolderStyle}>
-            <button className="button-main px-[2rem] py-[1rem]  rounded-full">
+            <button className="button-main px-[2rem] py-[1rem]  rounded-full" onClick={()=>nav("/Signup")}>
               Sign up now {">"}
             </button>
           </div>

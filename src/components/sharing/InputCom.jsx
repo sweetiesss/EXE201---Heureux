@@ -43,6 +43,7 @@ export default function Input({
         onChange={functed ? functed : () => {}}
         type={`${typeInput ? typeInput : "text"}`}
         placeholder={`${placeHolder ? placeHolder : ""}`}
+        style={inputValue ? { color: "black" } : {}}
         className={`input_main py-[0.5rem] ${
           inputClassName && inputClassName
         } ${FIcon && "pl-[3rem]"} ${BIcon ? "pr-[3rem]" : "pr-[1rem]"}`}
@@ -50,3 +51,5 @@ export default function Input({
     </div>
   );
 }
+
+

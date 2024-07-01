@@ -3,7 +3,9 @@ import { UnauthorizedHeader } from "./Header";
 import { LeftSider, RightSiderDateTime, RightSiderMember } from "./Siders";
 import { Input as InputCus } from "../../components/sharing";
 import { PiMagnifyingGlass, PiPlusBold } from "react-icons/pi";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import defaultAvatar from "../../assets/img/DefaultAvatar.png";
+import AddingStudent from "../../components/studentCom/AddingStudent";
 
 export default function Layouts({ header, footer }) {
   return (
@@ -14,7 +16,7 @@ export default function Layouts({ header, footer }) {
         {header === "home" && <UnauthorizedHeader pageType="home" />}
         {header === "sign up" && <UnauthorizedHeader pageType="sign up" />}
       </div>
-      <div className="h-[85%]">
+      <div className="min-h-[85%] ">
         <Outlet />
       </div>
     </div>
@@ -25,7 +27,50 @@ export function StudentLayout() {
   const [search, setSearch] = useState();
   const [typeRight, setTypeRight] = useState("");
   const [avatarShowed, setAvatarShowed] = useState(10);
+  const [openSetting, setOpenSetting] = useState(false);
+  const setting = useRef(null);
+  const addTeam = useRef(null);
+  //adding
+  const [openAddStudent, setOpenAddStudent] = useState(false);
+  //clone members
+  const cloneMembers=[{
+    id: 1,
+    email: "abc@gmail.com",
+    username: "abc",
+  },
+  {
+    id: 2,
+    email: "def@gmail.com",
+    username: "def",
+  },
+  {
+    id: 3,
+    email: "ghi@gmail.com",
+    username: "ghi",
+  }];
 
+  const handleClickedOusite = (e) => {
+    if (setting.current && !setting.current.contains(e.target)) {
+      setOpenSetting(false);
+    }
+    if (addTeam.current && !addTeam.current.contains(e.target)) {
+      setOpenAddStudent(false);
+    }
+  };
+
+
+  
+
+  useEffect(() => {
+    document.addEventListener("mousedown", handleClickedOusite);
+    return () => {
+      document.removeEventListener("mousedown", handleClickedOusite);
+    };
+  }, []);
+  const toggleSetting = (e) => {
+    e.stopPropagation();
+    setOpenSetting((prev) => !prev);
+  };
   const location = useLocation();
   useEffect(() => {
     const calculateAvatars = () => {
@@ -63,8 +108,9 @@ export function StudentLayout() {
     calculateRightSide();
   }, [location]);
 
+
   return (
-    <div className="flex w-full h-[100vh] ">
+    <div className="flex w-full h-[100vh] relative">
       <div className=" h-full bg-[var(--sider\_color)]  w-[11%]  font-semibold">
         <LeftSider />
       </div>
@@ -96,13 +142,35 @@ export function StudentLayout() {
                 className="w-[3rem] h-[3rem] ml-[-1rem] bg-yellow-500 rounded-full shadow-lg avatar-shadow"
               ></div>
             ))}
-            <div className="w-[3rem] h-[3rem] ml-[-1rem] cursor-pointer bg-[var(--sider\_color)] text-[var(--login\_button)] rounded-full shadow-lg avatar-shadow flex justify-center items-center ">
+            <div
+              className="w-[3rem] h-[3rem] ml-[-1rem] cursor-pointer bg-[var(--sider\_color)] text-[var(--login\_button)] rounded-full shadow-lg avatar-shadow flex justify-center items-center"
+              onClick={() => setOpenAddStudent((prev) => !prev)}
+            >
               <PiPlusBold className="text-2xl" />
             </div>
           </div>
         </div>
         <div className="h-[88%] px-[2rem]">
           <Outlet />
+        </div>
+      </div>
+      <div className="absolute right-0 top-4 z-10" ref={setting}>
+        <div
+          className="bg-black  rounded-full w-[4rem] h-[4rem] cursor-pointer mr-[2rem]"
+          onClick={toggleSetting}
+        >
+          <img src={defaultAvatar} />
+        </div>
+        <div
+          className={`absolute bg-white mt-[1rem] w-[22rem] ${
+            openSetting ? " block " : " hidden "
+          } `}
+          style={{ right: "10px", top: "70px" }} // Adjust the position if necessary
+        >
+          <div></div>
+          <div></div>
+          <div>Purchase and your memberships.</div>
+          <div></div>
         </div>
       </div>
       <div
@@ -117,6 +185,7 @@ export function StudentLayout() {
           <RightSiderMember />
         )}
       </div>
+      <AddingStudent addTeam={addTeam} openAddStudent={openAddStudent} setOpenAddStudent={setOpenAddStudent} members={cloneMembers}/>
     </div>
   );
 }

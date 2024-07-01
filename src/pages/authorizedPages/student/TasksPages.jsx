@@ -1,11 +1,14 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { AddSectionTab, TaskHolderComps } from "../../../components/studentCom/TaskHolderComps";
+import APIServices from "../../../services/APIServices.ts";
 
 export default function TasksPages({}) {
   const itemReft = useRef(null);
   const [isMouseDown, setMouseDown] = useState(false);
   const [startX, setStartX] = useState(false);
   const [scrollLeft, setScrollLeft] = useState(false);
+  const [data,setData]=useState();
+  const teamId=1;
   const items = [
     { title: "heelo",status:"Succes" },
     { title: "heelo2",status:"OnGoing" },
@@ -18,6 +21,17 @@ export default function TasksPages({}) {
     { title: "heelo6" },
     { title: "heelo6" },
   ];
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const result = await APIServices.getAPI(`/class-service/task/team/${teamId}`);
+        setData(result);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+    fetchData();
+  }, []);
 
   const handleMouseDown = (e) => {
     setMouseDown(true);
@@ -47,7 +61,7 @@ export default function TasksPages({}) {
       onMouseUp={handleMouseUp}
       onMouseMove={handleMouseMove}
     >
-      <TaskHolderComps titleColor={"#FF9347"} bodyColor={"#FFE5D4"} arrayList={items}/>
+      <TaskHolderComps titleColor={"#FF9347"} bodyColor={"#FFE5D4"} arrayList={data&&data}/>
       <TaskHolderComps />
       <TaskHolderComps />
       <TaskHolderComps />

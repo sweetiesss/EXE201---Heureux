@@ -21,12 +21,39 @@ export function TaskHolderComps({
   const bodyColorShow = bodyColor ? bodyColor : "#F1F2F4";
   var Icon = "";
   var statusTitle = "";
+console.log("here",arrayList);
+
+// assignee
+// : 
+// "string"
+// description
+// : 
+// "123123te"
+// endDate
+// : 
+// "2024-06-19"
+// id
+// : 
+// 1
+// name
+// : 
+// "test"
+// priority
+// : 
+// "string"
+// startDate
+// : 
+// "2024-06-18"
+// status
+// : 
+// "on-going"
 
   function TaskBoxContainer({ title, status }) {
     var bgColor = "#F1F2F4";
     var fontColor = "rgb(0,0,0)";
+    
     if (status) {
-      if (status === "Succes") {
+      if (status === "Success") {
         bgColor = "rgb(13,203,61)";
         fontColor = "rgb(255,255,255)";
         Icon = PiCheckCircleBold;
@@ -41,6 +68,12 @@ export function TaskHolderComps({
         fontColor = "rgb(255,255,255)";
         Icon = PiWarningBold;
         statusTitle = "Urgent";
+      }else{
+        bgColor = "rgb(255,0,0)";
+        fontColor = "rgb(255,255,255)";
+        Icon = PiWarningBold;
+        statusTitle = "ERROR";
+        
       }
     }
     return (
@@ -81,7 +114,7 @@ export function TaskHolderComps({
       >
         {arrayList &&
           arrayList.map((item) => {
-            return <TaskBoxContainer title={item.title} status={item.status} />;
+            return <TaskBoxContainer title={item?.name} status={item?.status} />;
           })}
       </div>
       <div

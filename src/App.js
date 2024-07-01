@@ -35,10 +35,10 @@ function App() {
           <Route element={<Layouts header="sign up" />}>
             <Route path="/Signup" element={<SignupPages />} />
           </Route>
-          <Route element={<AutherizonRequire allowedAuth={["STUDENT","ADMIN"]} />}>
+          {/* <Route element={<AutherizonRequire allowedAuth={["STUDENT","ADMIN"]} />}> */}
             <Route path="/Main/*" element={<Main />} />
             <Route path="/Student/*" element={<StudentHome />} />
-          </Route>
+          {/* </Route> */}
           <Route path="/Lecturer/*" element={<LecturerHome />} />
 
         </Routes>

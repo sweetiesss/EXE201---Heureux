@@ -1,8 +1,8 @@
 import axios from "axios";
 
 
-
-const apiMainPort="http://ec2-57-180-35-85.ap-northeast-1.compute.amazonaws.com:8000/"
+const changingPort="ec2-13-114-100-239.ap-northeast-1.compute.amazonaws.com";
+const apiMainPort="http://"+changingPort+":8000/";
 
 const conectStringAvailable = [
   "class-project-entity-controller",
