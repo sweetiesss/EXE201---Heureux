@@ -23,6 +23,8 @@ public class ClassMapper {
                 .className(c.getName())
 //                .status(c.getStatus() ? ONGOING_STATUS : FINISHED_STATUS) them status
                 .createDate(formattedString)
+                .id(c.getId())
+                .createdBy(c.getCreateBy())
                 .build();
     }
 

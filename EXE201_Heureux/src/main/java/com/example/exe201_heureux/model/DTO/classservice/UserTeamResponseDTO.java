@@ -15,4 +15,7 @@ public class UserTeamResponseDTO {
     private String userid;
     private boolean isLeader;
     private Integer id;
+    private Integer teamId;
+    private Integer classId;
+    private Integer projectId;
 }

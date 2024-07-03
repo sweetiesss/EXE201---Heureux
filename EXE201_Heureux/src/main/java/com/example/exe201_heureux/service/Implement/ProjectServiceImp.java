@@ -2,16 +2,16 @@ package com.example.exe201_heureux.service.Implement;
 
 
 import com.example.exe201_heureux.entity.Class;
+import com.example.exe201_heureux.entity.Event;
 import com.example.exe201_heureux.entity.Project;
+import com.example.exe201_heureux.entity.Team;
 import com.example.exe201_heureux.exceptions.ProjectNotFoundException;
 import com.example.exe201_heureux.model.DTO.ResponseObject;
-import com.example.exe201_heureux.model.DTO.classservice.ClassResponseDTO;
-import com.example.exe201_heureux.model.DTO.classservice.CreateProjectRequestDTO;
-import com.example.exe201_heureux.model.DTO.classservice.ProjectResponseDTO;
-import com.example.exe201_heureux.model.DTO.classservice.UpdateProjectRequestDTO;
+import com.example.exe201_heureux.model.DTO.classservice.*;
 import com.example.exe201_heureux.model.DTO.message.ResponseMessage;
 import com.example.exe201_heureux.model.DTO.pagination.APIPageableResponseDTO;
 import com.example.exe201_heureux.model.mapper.ClassMapper;
+import com.example.exe201_heureux.model.mapper.EventMapper;
 import com.example.exe201_heureux.model.mapper.ProjectMapper;
 import com.example.exe201_heureux.repository.ProjectRepository;
 import com.example.exe201_heureux.repository.UserRepository;
@@ -21,9 +21,12 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 
@@ -167,5 +170,6 @@ public class ProjectServiceImp implements ProjectServiceInterface {
 
         return projectOptional.get();
     }
+
 
 }

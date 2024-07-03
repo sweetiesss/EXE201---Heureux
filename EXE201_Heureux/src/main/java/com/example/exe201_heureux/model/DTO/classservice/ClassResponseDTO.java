@@ -8,4 +8,6 @@ import lombok.Data;
 public class ClassResponseDTO {
     private String className;
     private String createDate;
+    private Integer id;
+    private String createdBy;
 }

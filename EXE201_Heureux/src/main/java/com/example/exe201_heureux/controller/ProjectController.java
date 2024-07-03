@@ -1,5 +1,7 @@
 package com.example.exe201_heureux.controller;
 
+import com.example.exe201_heureux.entity.Project;
+import com.example.exe201_heureux.exceptions.ProjectNotFoundException;
 import com.example.exe201_heureux.model.DTO.ResponseObject;
 import com.example.exe201_heureux.model.DTO.classservice.CreateProjectRequestDTO;
 import com.example.exe201_heureux.model.DTO.classservice.ProjectResponseDTO;
@@ -52,6 +54,15 @@ public class ProjectController {
 
         APIPageableResponseDTO<ProjectResponseDTO> responseDTO = projectService.getAllProjects(pageNo, pageSize, search, sortField, ascending);
         return ResponseEntity.ok(responseDTO);
+    }
+    @GetMapping("/{id}")
+    public ResponseEntity<Project> getProjectById(@PathVariable("id") Integer projectId) {
+        try {
+            Project project = projectService.findByID(projectId);
+            return new ResponseEntity<>(project, HttpStatus.OK);
+        } catch (ProjectNotFoundException e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
     @GetMapping("/active_projects")
     public ResponseEntity<APIPageableResponseDTO<ProjectResponseDTO>> getAllActiveProjects(

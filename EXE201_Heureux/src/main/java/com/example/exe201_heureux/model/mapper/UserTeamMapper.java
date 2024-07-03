@@ -24,6 +24,9 @@ public class UserTeamMapper {
                 .team(c.getTeamid().getName())
                 .userid(c.getUserid().getUsername())
                 .isLeader(c.getIsLeader())
+                .teamId(c.getTeamid().getId())
+                .classId(c.getTeamid().getClassid().getId())
+                .projectId(c.getTeamid().getProjectid().getId())
                 .build();
     }
 }
