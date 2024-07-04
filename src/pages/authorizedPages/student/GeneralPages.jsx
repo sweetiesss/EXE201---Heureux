@@ -12,31 +12,18 @@ import UnitOfWork from "../../../services/UnitOfWork.ts";
 export default function GeneralPages({ taskesDataArrayList }) {
   const [taskes, setTaskes] = useState([]);
   const [sections, setSections] = useState();
-  var yourAssigned=0;
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const result = await UnitOfWork.fetchFilterTask(1);
-        yourAssigned=result.filter(item=>item?.assignee==="abc").length;
-        setTaskes(result);
-      } catch (e) {
-        console.log(e);
-      }
-    };
-    fetchData();
-  }, []);
 
   useEffect(() => {
     setTaskes(taskesDataArrayList || []);
   }, [taskesDataArrayList]);
 
-  const groupedData = taskes.reduce((acc, item) => {
+  const groupedData = taskes && taskes.length > 0 ? taskes.reduce((acc, item) => {
     if (!acc[item.section]) {
       acc[item.section] = [];
     }
     acc[item.section].push(item);
     return acc;
-  }, {});
+  }, {}) : {};
 
   const latestSections = Object.entries(groupedData)
     .sort(([sectionA], [sectionB]) => {
@@ -138,7 +125,7 @@ export default function GeneralPages({ taskesDataArrayList }) {
               className="w-[47%] h-[10.5rem] rounded-xl bg-[var(--task-assigned-background-color)] text-[var(--task-assigned-text-color)]"
               title="Tasks"
               body="You are assigned"
-              number={yourAssigned}
+              number={0}
             />
           </div>
         </div>
