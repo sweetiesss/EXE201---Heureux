@@ -101,7 +101,7 @@ export default function LineChartComps({ className, isTitle }) {
     <div
       style={parentStyle}
       className={`shadow-xl ${
-        className ? className : "w-[26rem] h-[15rem] p-[1rem]"
+        className ? className : "w-full h-[15rem] p-[1rem]"
       }`}
     >
       <Line data={data} options={options} />

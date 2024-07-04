@@ -1,42 +1,29 @@
 import { useEffect, useRef, useState } from "react";
-import { AddSectionTab, TaskHolderComps } from "../../../components/studentCom/TaskHolderComps";
+import {
+  AddSectionTab,
+  TaskHolderComps,
+} from "../../../components/studentCom/TaskHolderComps";
 import APIServices from "../../../services/APIServices.ts";
 
-export default function TasksPages({}) {
+export default function TasksPages({ taskesDataArrayList,sectionsDataArrayList }) {
   const itemReft = useRef(null);
   const [isMouseDown, setMouseDown] = useState(false);
   const [startX, setStartX] = useState(false);
   const [scrollLeft, setScrollLeft] = useState(false);
-  const [data,setData]=useState();
-  const teamId=1;
-  const items = [
-    { title: "heelo",status:"Succes" },
-    { title: "heelo2",status:"OnGoing" },
-    { title: "heelo3",status:"Urgent" },
-    { title: "heelo4" },
-    { title: "heelo5" },
-    { title: "heelo6" },
-    { title: "heelo6" },
-    { title: "heelo6" },
-    { title: "heelo6" },
-    { title: "heelo6" },
-  ];
+  const [showedData, setShowedData] = useState([]);
+  const [sectionsData,setSectionsData]=useState();
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const result = await APIServices.getAPI(`/class-service/task/team/${teamId}`);
-        setData(result);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    };
-    fetchData();
-  }, []);
+    setShowedData(taskesDataArrayList||[]);
+    setSectionsData(sectionsDataArrayList||{});
+  }, [taskesDataArrayList]);
+  console.log("section", sectionsData);
+  console.log("showedData", showedData);
+  
 
   const handleMouseDown = (e) => {
     setMouseDown(true);
     // setStartX(e.pageX - -itemReft.current.offsetLeft);
-    setStartX(e.pageX -itemReft.current.offsetLeft);
+    setStartX(e.pageX - itemReft.current.offsetLeft);
     setScrollLeft(itemReft.current.scrollLeft);
   };
   const handleMouseLeave = () => {
@@ -49,9 +36,16 @@ export default function TasksPages({}) {
     if (!isMouseDown) return;
     e.preventDefault();
     const x = e.pageX - itemReft.current.offsetLeft;
-    const walk = (x - startX) ;
+    const walk = x - startX;
     itemReft.current.scrollLeft = scrollLeft - walk;
   };
+  const groupedData = showedData.reduce((acc, item) => {
+    if (!acc[item.section]) {
+      acc[item.section] = [];
+    }
+    acc[item.section].push(item);
+    return acc;
+  }, {});
   return (
     <div
       className="h-full w-full flex  overflow-x-scroll max-w-[100%] "
@@ -61,11 +55,19 @@ export default function TasksPages({}) {
       onMouseUp={handleMouseUp}
       onMouseMove={handleMouseMove}
     >
-      <TaskHolderComps titleColor={"#FF9347"} bodyColor={"#FFE5D4"} arrayList={data&&data}/>
-      <TaskHolderComps />
-      <TaskHolderComps />
-      <TaskHolderComps />
-      <AddSectionTab/>
+      {Object.entries(groupedData).map(([section, tasks], index) => (
+        <>
+          <TaskHolderComps
+            key={index}
+            titleColor={"#FF9347"}
+            bodyColor={"#FFE5D4"}
+            arrayList={tasks}
+            sectionName={section}
+          />
+          {console.log(section)}
+        </>
+      ))}
+      <AddSectionTab />
     </div>
   );
 }

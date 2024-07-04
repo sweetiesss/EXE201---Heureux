@@ -9,19 +9,42 @@ import InforBoxCol from "../../../components/studentCom/InforBoxComp";
 import { useEffect, useState } from "react";
 import UnitOfWork from "../../../services/UnitOfWork.ts";
 
-export default function GeneralPages({}) {
-const [taskes,setTaskes]=useState();
-useEffect(()=>{
-  const fetchData=async()=>{
-    try{
-      const result=await UnitOfWork.fetchFilterTask(1);
-      setTaskes(result);
-    }catch(e){
-      console.log(e);
+export default function GeneralPages({ taskesDataArrayList }) {
+  const [taskes, setTaskes] = useState([]);
+  const [sections, setSections] = useState();
+  var yourAssigned=0;
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const result = await UnitOfWork.fetchFilterTask(1);
+        yourAssigned=result.filter(item=>item?.assignee==="abc").length;
+        setTaskes(result);
+      } catch (e) {
+        console.log(e);
+      }
+    };
+    fetchData();
+  }, []);
+
+  useEffect(() => {
+    setTaskes(taskesDataArrayList || []);
+  }, [taskesDataArrayList]);
+
+  const groupedData = taskes.reduce((acc, item) => {
+    if (!acc[item.section]) {
+      acc[item.section] = [];
     }
-  }
-  fetchData();
-},[])
+    acc[item.section].push(item);
+    return acc;
+  }, {});
+
+  const latestSections = Object.entries(groupedData)
+    .sort(([sectionA], [sectionB]) => {
+      if (sectionA > sectionB) return -1;
+      if (sectionA < sectionB) return 1;
+      return 0;
+    })
+    .slice(0, 2);
 
   const d = new Date();
   const isOpen = true;
@@ -38,16 +61,14 @@ useEffect(()=>{
     },
   ];
 
-  
-
   return (
     <div className="flex flex-col justify-around items-start h-full">
       <div className=" flex items-start justify-between w-full">
-        <div className="max-w-[50%]">
+        <div className="w-[48%] ">
           <div className="mb-[2rem] flex items-center w-full justify-between">
             <p className="font-bold text-xl">Report</p>
             <CusLink
-              linkTo=""
+              linkTo="../reports"
               content="View more"
               newClassName="w-fit text-sm  font-medium  "
               textColoredName="login_button"
@@ -73,36 +94,33 @@ useEffect(()=>{
           <div className="mb-[2rem] flex items-center mt-[3rem]  w-full justify-between">
             <p className="font-bold text-xl">Task</p>
             <CusLink
-              linkTo=""
+              linkTo="../tasks"
               content="View more"
               newClassName="w-fit text-sm  font-medium "
               textColoredName="login_button"
               bIcon={PiCaretRight}
             />
           </div>
-          <div className="flex ">
-            <TasksHolderComps
-              title={"Proposal"}
-              bgColor={"report_color"}
-              newClassName="w-[48%] shadow-xl mr-[1.5rem]"
-              arrayOfContent={taskes}
-              dateCreate={d}
-              taskTitle={"Character design for goof long"}
-              isOpen={isOpen}
-            />
-            <TasksHolderComps
-              title={"Proposal"}
-              bgColor={"report_color"}
-              newClassName="w-[48%] shadow-xl"
-              dateCreate={d}
-            />
+          <div className="flex w-full justify-between">
+            {latestSections.map(([section, tasks], index) => (
+              <TasksHolderComps
+                key={index}
+                title={"Proposal"}
+                bgColor={"report_color"}
+                newClassName="w-[48%] shadow-xl mr-[1.5rem]"
+                arrayOfContent={tasks}
+                dateCreate={d}
+                taskTitle={section}
+                isOpen={isOpen}
+              />
+            ))}
           </div>
         </div>
-        <div className="max-w-[50%] ">
+        <div className="w-[48%] ">
           <div className="mb-[2rem] flex items-center justify-between">
             <p className="font-bold">Dashboard</p>
             <CusLink
-              linkTo=""
+              linkTo="../dashboard"
               content="View more"
               newClassName="w-fit text-sm  font-medium "
               textColoredName="login_button"
@@ -111,8 +129,17 @@ useEffect(()=>{
           </div>
           <LineChartComps isTitle={true} />
           <div className="w-full flex justify-between mt-[2rem]">
-            <DotnutCharComps className="w-[47%] shadow-xl h-[10.5rem] px-[1rem] pt-[1rem] pb-[0.5rem]" isTitle={true} isLegend={false}/>
-            <TaskAssigned className="w-[47%] h-[10.5rem] rounded-xl bg-[var(--task-assigned-background-color)] text-[var(--task-assigned-text-color)]" title="Tasks" body="You are assigned" number="04"/>
+            <DotnutCharComps
+              className="w-[47%] shadow-xl h-[10.5rem] px-[1rem] pt-[1rem] pb-[0.5rem]"
+              isTitle={true}
+              isLegend={false}
+            />
+            <TaskAssigned
+              className="w-[47%] h-[10.5rem] rounded-xl bg-[var(--task-assigned-background-color)] text-[var(--task-assigned-text-color)]"
+              title="Tasks"
+              body="You are assigned"
+              number={yourAssigned}
+            />
           </div>
         </div>
       </div>

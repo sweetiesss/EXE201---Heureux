@@ -58,7 +58,6 @@ export default function LoginPages() {
         password: form.password,
       });
       if(result===200){
-       
          const userInfor=await APIServices.getAPI(`api/User/GetUser/${form?.emailOrUserName}`)
         console.log(userInfor);
         setData(userInfor);

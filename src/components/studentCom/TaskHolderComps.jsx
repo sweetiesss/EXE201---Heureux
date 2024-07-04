@@ -23,31 +23,6 @@ export function TaskHolderComps({
   var statusTitle = "";
 console.log("here",arrayList);
 
-// assignee
-// : 
-// "string"
-// description
-// : 
-// "123123te"
-// endDate
-// : 
-// "2024-06-19"
-// id
-// : 
-// 1
-// name
-// : 
-// "test"
-// priority
-// : 
-// "string"
-// startDate
-// : 
-// "2024-06-18"
-// status
-// : 
-// "on-going"
-
   function TaskBoxContainer({ title, status }) {
     var bgColor = "#F1F2F4";
     var fontColor = "rgb(0,0,0)";
@@ -62,7 +37,7 @@ console.log("here",arrayList);
         bgColor = "rgb(255,192,0)";
         fontColor = "rgb(255,255,255)";
         Icon = PiCoffeeFill;
-        statusTitle = "On Going";
+        statusTitle = "OnGoing";
       } else if (status === "Urgent") {
         bgColor = "rgb(255,0,0)";
         fontColor = "rgb(255,255,255)";
@@ -73,7 +48,6 @@ console.log("here",arrayList);
         fontColor = "rgb(255,255,255)";
         Icon = PiWarningBold;
         statusTitle = "ERROR";
-        
       }
     }
     return (
