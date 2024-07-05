@@ -11,6 +11,7 @@ import DashboardPages from "./DashboardPages";
 import APIServices from "../../../services/APIServices.ts";
 import ChosenRoom from "./ChosenRoom.jsx";
 import UnitOfWork from "../../../services/UnitOfWork.ts";
+import ReportSubmit from "./ReportSubmit.jsx";
 
 export default function StudentHome() {
   const [task, setTask] = useState([]);
@@ -72,6 +73,8 @@ export default function StudentHome() {
             <Route path="reports" element={<ReportsPages />} />
             <Route path="tasks" element={<TasksPages taskesDataArrayList={taskesShowedData} sectionsDataArrayList={sectionsData} />} />
             <Route path="dashboard" element={<DashboardPages />} />
+            <Route path="reportsubmit" element={<ReportSubmit />} />
+
           </Route>
         </Route>
       </Routes>

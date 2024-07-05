@@ -12,11 +12,12 @@ export default function TasksPages({ taskesDataArrayList,sectionsDataArrayList }
   const [scrollLeft, setScrollLeft] = useState(false);
   const [showedData, setShowedData] = useState([]);
   const [sectionsData,setSectionsData]=useState();
+  const [openAddingSection,isOpenAddSection]=useState(false);
   useEffect(() => {
     setShowedData(taskesDataArrayList||[]);
     setSectionsData(sectionsDataArrayList||{});
   }, [taskesDataArrayList]);
-  console.log("section", sectionsData);
+ 
   console.log("showedData", showedData);
   
 
@@ -67,7 +68,7 @@ export default function TasksPages({ taskesDataArrayList,sectionsDataArrayList }
           {console.log(section)}
         </>
       ))}
-      <AddSectionTab />
+      <AddSectionTab addSectionClicked={(pre)=>isOpenAddSection(!pre)}/>
     </div>
   );
 }

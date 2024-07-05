@@ -7,9 +7,9 @@ export default function DashboardPages() {
   return (
     <div className="h-fit w-full pb-[1rem]">
       <div className="flex h-[23rem] w-full justify-between mt-[3rem]">
-        <div className="flex justify-between flex-col">
+        <div className="flex justify-between flex-col ">
           <p className="text-xl font-semibold">Work Time</p>
-          <LineChartComps className="w-[40rem] h-[20rem] p-[3rem]" />
+          <LineChartComps className="w-[50rem] h-[20rem] p-[3rem]" />
         </div>
         <div className="flex justify-between flex-col">
           <p className="text-xl font-semibold">Your Assigned</p>
@@ -39,7 +39,7 @@ export default function DashboardPages() {
         </div>
       </div>
       <div className="flex h-fit w-full mt-[3rem] justify-between">
-        <div className="w-[53.5rem] flex flex-col">
+        <div className="w-[63.5rem] flex flex-col">
           <p className="text-xl font-semibold mb-[1rem]">Tasks Progress</p>
           <TaskScheduler />
          </div>

@@ -33,21 +33,23 @@ export function StudentLayout() {
   //adding
   const [openAddStudent, setOpenAddStudent] = useState(false);
   //clone members
-  const cloneMembers=[{
-    id: 1,
-    email: "abc@gmail.com",
-    username: "abc",
-  },
-  {
-    id: 2,
-    email: "def@gmail.com",
-    username: "def",
-  },
-  {
-    id: 3,
-    email: "ghi@gmail.com",
-    username: "ghi",
-  }];
+  const cloneMembers = [
+    {
+      id: 1,
+      email: "abc@gmail.com",
+      username: "abc",
+    },
+    {
+      id: 2,
+      email: "def@gmail.com",
+      username: "def",
+    },
+    {
+      id: 3,
+      email: "ghi@gmail.com",
+      username: "ghi",
+    },
+  ];
 
   const handleClickedOusite = (e) => {
     if (setting.current && !setting.current.contains(e.target)) {
@@ -57,9 +59,6 @@ export function StudentLayout() {
       setOpenAddStudent(false);
     }
   };
-
-
-  
 
   useEffect(() => {
     document.addEventListener("mousedown", handleClickedOusite);
@@ -99,7 +98,7 @@ export function StudentLayout() {
 
       var page = locations[locations.length - 1];
 
-      if (page === "general") {
+      if (page === "general" || page === "reports" || page == "reportsubmit") {
         setTypeRight("Date");
       } else if (page === "tasks") {
         setTypeRight("Member");
@@ -108,17 +107,20 @@ export function StudentLayout() {
     calculateRightSide();
   }, [location]);
 
-
   return (
     <div className="flex w-full h-[100vh] relative">
-      <div className=" h-full bg-[var(--sider\_color)]  w-[11%]  font-semibold">
+      <div className=" h-full bg-[var(--sider\_color)]  w-[11%] absolute  font-semibold">
         <LeftSider />
       </div>
 
       <div
         className={`${
-          typeRight && typeRight == "Date" ? " w-[66%] " : " w-[79%] "
-        } flex flex-col  h-full`}
+          typeRight && typeRight == "Date"
+            ? " w-[66%] "
+            : typeRight === "Member"
+            ? " w-[79%] "
+            : "w-full"
+        } flex flex-col  h-full ml-[11%]`}
       >
         <div className="pl-[2rem]  flex items-center w-full relative h-[10%]">
           <p className="text-xl font-semibold">Project Name</p>
@@ -154,38 +156,54 @@ export function StudentLayout() {
           <Outlet />
         </div>
       </div>
-      <div className="absolute right-0 top-4 z-10" ref={setting}>
-        <div
-          className="bg-black  rounded-full w-[4rem] h-[4rem] cursor-pointer mr-[2rem]"
-          onClick={toggleSetting}
-        >
-          <img src={defaultAvatar} />
+      {typeRight !== "" ? (
+        <div className="absolute right-0 top-4 z-10" ref={setting}>
+          <div
+            className="bg-black  rounded-full w-[4rem] h-[4rem] cursor-pointer mr-[2rem]"
+            onClick={toggleSetting}
+          >
+            <img src={defaultAvatar} />
+          </div>
+          <div
+            className={`absolute bg-white mt-[1rem] w-[22rem] ${
+              openSetting ? " block " : " hidden "
+            } `}
+            style={{ right: "10px", top: "70px" }} // Adjust the position if necessary
+          >
+            <div></div>
+            <div></div>
+            <div>Purchase and your memberships.</div>
+            <div></div>
+          </div>
         </div>
-        <div
-          className={`absolute bg-white mt-[1rem] w-[22rem] ${
-            openSetting ? " block " : " hidden "
-          } `}
-          style={{ right: "10px", top: "70px" }} // Adjust the position if necessary
-        >
-          <div></div>
-          <div></div>
-          <div>Purchase and your memberships.</div>
-          <div></div>
-        </div>
-      </div>
+      ) : (
+        <></>
+      )}
+
       <div
         className={` ${
-          typeRight && typeRight == "Date" ? " w-[23%] " : " w-[10%] "
+          typeRight && typeRight == "Date"
+            ? " w-[23%] "
+            : typeRight === "Member"
+            ? " w-[10%] "
+            : "hidden"
         }  h-full  `}
         style={{ background: "var(--sider_color)" }}
       >
         {typeRight && typeRight === "Date" ? (
           <RightSiderDateTime />
-        ) : (
+        ) : typeRight === "Member" ? (
           <RightSiderMember />
+        ) : (
+          <></>
         )}
       </div>
-      <AddingStudent addTeam={addTeam} openAddStudent={openAddStudent} setOpenAddStudent={setOpenAddStudent} members={cloneMembers}/>
+      <AddingStudent
+        addTeam={addTeam}
+        openAddStudent={openAddStudent}
+        setOpenAddStudent={setOpenAddStudent}
+        members={cloneMembers}
+      />
     </div>
   );
 }

@@ -102,7 +102,7 @@ console.log("here",arrayList);
     </div>
   );
 }
-export function AddSectionTab() {
+export function AddSectionTab({addSectionClicked}) {
   const titleColorShow ="rgb(209,219,255)";
 
   return (
@@ -111,7 +111,7 @@ export function AddSectionTab() {
         className="h-[4rem] w-full rounded-2xl flex items-center shadow-lg overflow-hidden"
         style={{backgroundColor:titleColorShow}}
       >
-        <button className="flex pl-[2rem] items-center overflow-hidden font-semibold  w-full h-full ">
+        <button className="flex pl-[2rem] items-center overflow-hidden font-semibold  w-full h-full" onClick={addSectionClicked}>
           <PiPlus className="mr-[1rem]" /> Add Section
         </button>
       </div>
