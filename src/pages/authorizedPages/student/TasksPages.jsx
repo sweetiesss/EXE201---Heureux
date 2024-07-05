@@ -18,7 +18,7 @@ export default function TasksPages({ taskesDataArrayList,sectionsDataArrayList }
     setSectionsData(sectionsDataArrayList||{});
   }, [taskesDataArrayList]);
  
-  console.log("showedData", showedData);
+
   
 
   const handleMouseDown = (e) => {
@@ -65,7 +65,7 @@ export default function TasksPages({ taskesDataArrayList,sectionsDataArrayList }
             arrayList={tasks}
             sectionName={section}
           />
-          {console.log(section)}
+     
         </>
       ))}
       <AddSectionTab addSectionClicked={(pre)=>isOpenAddSection(!pre)}/>

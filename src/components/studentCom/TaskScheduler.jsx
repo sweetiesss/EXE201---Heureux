@@ -22,10 +22,10 @@ export default function TaskScheduler() {
   const [daysOfWeek, setDaysOfWeek] = useState([]);
   const cloneEvents = [
     { startDate: "2024-07-01", endDate: "2024-09-30" },
-    { startDate: "2024-07-01", endDate: "2024-10-30" },
-    { startDate: "2024-07-01", endDate: "2024-10-30" },
+    { startDate: "2024-07-10", endDate: "2024-10-30" },
+    { startDate: "2024-07-03", endDate: "2024-10-30" },
   ];
-  const usedColor = ["#fdd7e2 ", "#ffe5d4", "#ffffff"];
+  const usedColor = ["#36a2eb ", "#fa6e9b", "#ff9347"];
 
   const todayDay = format(currentDate, "eee-dd-MM-yy");
   const todayMonth = format(currentDate, "MMMM yyyy");
