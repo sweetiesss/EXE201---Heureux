@@ -40,6 +40,8 @@ export default function TasksPages({ taskesDataArrayList,sectionsDataArrayList }
     const walk = x - startX;
     itemReft.current.scrollLeft = scrollLeft - walk;
   };
+
+
   const groupedData = showedData.reduce((acc, item) => {
     if (!acc[item.section]) {
       acc[item.section] = [];

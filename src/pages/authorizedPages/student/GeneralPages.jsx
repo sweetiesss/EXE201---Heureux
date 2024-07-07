@@ -9,7 +9,7 @@ import InforBoxCol from "../../../components/studentCom/InforBoxComp";
 import { useEffect, useState } from "react";
 import UnitOfWork from "../../../services/UnitOfWork.ts";
 
-export default function GeneralPages({ taskesDataArrayList }) {
+export default function GeneralPages({ taskesDataArrayList,yourAsignData }) {
   const [taskes, setTaskes] = useState([]);
   const [sections, setSections] = useState();
 
@@ -125,7 +125,7 @@ export default function GeneralPages({ taskesDataArrayList }) {
               className="w-[47%] h-[10.5rem] rounded-xl bg-[var(--task-assigned-background-color)] text-[var(--task-assigned-text-color)]"
               title="Tasks"
               body="You are assigned"
-              number={0}
+              number={yourAsignData}
             />
           </div>
         </div>

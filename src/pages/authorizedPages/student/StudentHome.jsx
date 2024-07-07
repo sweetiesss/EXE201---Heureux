@@ -2,7 +2,7 @@ import { Navigate, Route, Routes } from "react-router-dom";
 
 import { Outlet } from "react-router-dom";
 
-import { useEffect, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 import { StudentLayout, StudentLayoutNoDateSide } from "../../layout/Layouts";
 import GeneralPages from "./GeneralPages";
 import TasksPages from "./TasksPages";
@@ -12,13 +12,20 @@ import APIServices from "../../../services/APIServices.ts";
 import ChosenRoom from "./ChosenRoom.jsx";
 import UnitOfWork from "../../../services/UnitOfWork.ts";
 import ReportSubmit from "./ReportSubmit.jsx";
+import DataContext from "../../../components/setting/ContextData.js";
+
+export const RefrestApi = createContext();
 
 export default function StudentHome() {
+
+  const auth=useContext(DataContext);
+  console.log(auth.data);
   const [task, setTask] = useState([]);
   const [sectionsData, setSectionsData] = useState();
   const [taskesShowedData, setTaskesShowedData] = useState();
-  const [yourTaskes,setYourTaskes]=useState();
-  var yourAssigned=0;
+  const [yourTaskes, setYourTaskes] = useState();
+  const [refreshAPI, setRefreshAPI] = useState(false);
+  var yourAssigned = 0;
   const teamId = 1;
   useEffect(() => {
     const fetchData = async () => {
@@ -33,8 +40,10 @@ export default function StudentHome() {
     };
     const fetchYourDataTaskes = async () => {
       try {
-        const result = await UnitOfWork.fetchFilterTask(1);
-        yourAssigned=result.filter(item=>item?.assignee==="abc").length;
+        const result = await  APIServices.getAPI(
+          `/class-service/task/user/${auth?.data?.username}`
+        );
+        if(result)
         setYourTaskes(result);
       } catch (e) {
         console.log(e);
@@ -42,10 +51,10 @@ export default function StudentHome() {
     };
     fetchData();
     fetchYourDataTaskes();
-  }, []);
+  }, [refreshAPI]);
   useEffect(() => {
     const getSection = () => {
-      if (task&&task.length > 0) {
+      if (task && task.length > 0) {
         const sections = Array.from(new Set(task.map((item) => item.section)));
         const sectionMap = {};
         sections.forEach((section, index) => {
@@ -62,22 +71,40 @@ export default function StudentHome() {
     getSection();
   }, [task]);
 
+  const refreshing=()=>{
+    setRefreshAPI(prev=>!prev);
+  }
+
   return (
     <div className="">
-      <Routes>
-        <Route path="/*">
-          <Route index element={<Navigate to="room" />} />
-          <Route path="room" element={<ChosenRoom />} />
-          <Route path="/*" element={<StudentLayout />}>
-            <Route path="general" element={<GeneralPages taskesDataArrayList={taskesShowedData} />} />
-            <Route path="reports" element={<ReportsPages />} />
-            <Route path="tasks" element={<TasksPages taskesDataArrayList={taskesShowedData} sectionsDataArrayList={sectionsData} />} />
-            <Route path="dashboard" element={<DashboardPages />} />
-            <Route path="reportsubmit" element={<ReportSubmit />} />
-
+      <RefrestApi.Provider value={{refreshAPI,refreshing}}>
+        <Routes>
+          <Route path="/*">
+            <Route index element={<Navigate to="room" />} />
+            <Route path="room" element={<ChosenRoom />} />
+            <Route path="/*" element={<StudentLayout />}>
+              <Route
+                path="general"
+                element={
+                  <GeneralPages taskesDataArrayList={taskesShowedData} yourAsignData={yourTaskes?.length}/>
+                }
+              />
+              <Route path="reports" element={<ReportsPages />} />
+              <Route
+                path="tasks"
+                element={
+                  <TasksPages
+                    taskesDataArrayList={taskesShowedData}
+                    sectionsDataArrayList={sectionsData}
+                  />
+                }
+              />
+              <Route path="dashboard" element={<DashboardPages />} />
+              <Route path="reportsubmit" element={<ReportSubmit />} />
+            </Route>
           </Route>
-        </Route>
-      </Routes>
+        </Routes>
+      </RefrestApi.Provider>
     </div>
   );
 }

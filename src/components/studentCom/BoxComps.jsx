@@ -243,7 +243,7 @@ export function TasksHolderComps({
   useEffect(() => {
     setData(arrayOfContent || []);
   }, [arrayOfContent]);
-  console.log("dataHolder", data);
+ 
 
   function TaskBoxContainer({ title, status }) {
     var bgColor = "#F1F2F4";
