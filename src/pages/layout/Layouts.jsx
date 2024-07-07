@@ -3,9 +3,11 @@ import { UnauthorizedHeader } from "./Header";
 import { LeftSider, RightSiderDateTime, RightSiderMember } from "./Siders";
 import { Input as InputCus } from "../../components/sharing";
 import { PiMagnifyingGlass, PiPlusBold } from "react-icons/pi";
-import { useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import defaultAvatar from "../../assets/img/DefaultAvatar.png";
 import AddingStudent from "../../components/studentCom/AddingStudent";
+import DataContext from "../../components/setting/ContextData";
+import APIServices from "../../services/APIServices.ts";
 
 export default function Layouts({ header, footer }) {
   return (
@@ -28,8 +30,10 @@ export function StudentLayout() {
   const [typeRight, setTypeRight] = useState("");
   const [avatarShowed, setAvatarShowed] = useState(10);
   const [openSetting, setOpenSetting] = useState(false);
+  const [members, setMembers] = useState([]);
   const setting = useRef(null);
   const addTeam = useRef(null);
+  const dataContext = useContext(DataContext);
   //adding
   const [openAddStudent, setOpenAddStudent] = useState(false);
   //clone members
@@ -66,6 +70,18 @@ export function StudentLayout() {
       document.removeEventListener("mousedown", handleClickedOusite);
     };
   }, []);
+  useEffect(() => {
+    const fetchingTeamMember = async () => {
+      try {
+        const result = await APIServices.getAPI(
+          "/class-service/user_team/user/" + dataContext.othersId.teamId
+        );
+        setMembers(result);
+      } catch (e) {}
+    };
+    fetchingTeamMember();
+  }, []);
+
   const toggleSetting = (e) => {
     e.stopPropagation();
     setOpenSetting((prev) => !prev);
@@ -138,7 +154,7 @@ export function StudentLayout() {
             className=" pl-[1rem] flex w-[20%] absolute right-0 "
             id="avatarHolder"
           >
-            {Array.from({ length: avatarShowed }, (_, index) => (
+            {members?.slice(0, avatarShowed).map((_, index) => (
               <div
                 key={index}
                 className="w-[3rem] h-[3rem] ml-[-1rem] bg-yellow-500 rounded-full shadow-lg avatar-shadow"
@@ -202,7 +218,7 @@ export function StudentLayout() {
         addTeam={addTeam}
         openAddStudent={openAddStudent}
         setOpenAddStudent={setOpenAddStudent}
-        members={cloneMembers}
+        members={members}
       />
     </div>
   );

@@ -6,24 +6,43 @@ import LineChartComps from "../../../components/studentCom/LineChartComps";
 import TaskAssigned from "../../../components/studentCom/TaskAssigned";
 import DotnutCharComps from "../../../components/studentCom/DotnutCharComps";
 import InforBoxCol from "../../../components/studentCom/InforBoxComp";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import UnitOfWork from "../../../services/UnitOfWork.ts";
+import DataContext from "../../../components/setting/ContextData.js";
+import APIServices from "../../../services/APIServices.ts";
 
-export default function GeneralPages({ taskesDataArrayList,yourAsignData }) {
+export default function GeneralPages({ taskesDataArrayList, yourAsignData }) {
   const [taskes, setTaskes] = useState([]);
   const [sections, setSections] = useState();
+  const [members, setMembers] = useState([]);
+  const dataContext = useContext(DataContext);
 
   useEffect(() => {
     setTaskes(taskesDataArrayList || []);
   }, [taskesDataArrayList]);
 
-  const groupedData = taskes && taskes.length > 0 ? taskes.reduce((acc, item) => {
-    if (!acc[item.section]) {
-      acc[item.section] = [];
-    }
-    acc[item.section].push(item);
-    return acc;
-  }, {}) : {};
+  useEffect(() => {
+    const fetchingTeamMember = async () => {
+      try {
+        const result = await APIServices.getAPI(
+          "/class-service/user_team/user/" + dataContext.othersId.teamId
+        );
+        setMembers(result);
+      } catch (e) {}
+    };
+    fetchingTeamMember();
+  }, []);
+
+  const groupedData =
+    taskes && taskes.length > 0
+      ? taskes.reduce((acc, item) => {
+          if (!acc[item.section]) {
+            acc[item.section] = [];
+          }
+          acc[item.section].push(item);
+          return acc;
+        }, {})
+      : {};
 
   const latestSections = Object.entries(groupedData)
     .sort(([sectionA], [sectionB]) => {
@@ -133,11 +152,14 @@ export default function GeneralPages({ taskesDataArrayList,yourAsignData }) {
       <div className="w-full flex-col  flex">
         <p className="font-bold text-xl mb-[2rem]">Team member</p>
         <div className="flex justify-around w-full  bg-[var(--sider\_color)] h-[10rem] rounded-xl items-center">
-          <InforBoxCol name="Vung A Dinh" title="Environment design" />
-          <InforBoxCol name="Vung A Dinh" title="Environment design" />
-          <InforBoxCol name="Vung A Dinh" title="Environment design" />
-          <div className="bg-yellow-500 w-[4rem] h-[4rem] rounded-full text-sm flex justify-center items-center">
-            <PiPlusBold className="text-3xl" />
+          {members?.slice(0, 4).map((item, index) => (
+            <InforBoxCol
+              name={item?.userid}
+              title={item?.leader ? "Leader" : "Member"}
+            />
+          ))}
+          <div className="bg-gray-300 w-[4rem] h-[4rem] rounded-full text-2xl flex justify-center items-center">
+            {members &&<div> + {members.length - 4}</div>}
           </div>
         </div>
       </div>
