@@ -64,6 +64,21 @@
   font-weight: bold;
   color: white;
 }
+.col.pasted {
+  background-color: var(--error-color);
+  font-weight: bold;
+  color: white;
+}
+.col.going {
+  background-color: var(--ongoing-color);
+  font-weight: bold;
+  color: white;
+}
+.col.event {
+  background-color: var(--warning-color);
+  font-weight: bold;
+  color: white;
+}
 
 .number {
   position: relative;

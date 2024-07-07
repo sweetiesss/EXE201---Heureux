@@ -7,6 +7,7 @@ import {
 import ggIcon from "../../assets/icon/google.png";
 import homePagesImg from "../../assets/img/HomePageImg.png";
 
+
 function Ggsvg() {
   return (
     <div className="rounded-full relative bg-white p-4">

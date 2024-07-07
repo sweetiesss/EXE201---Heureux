@@ -7,25 +7,28 @@ import {
   PiPower,
 } from "react-icons/pi";
 import Heuruex from "../../assets/icon/heuruex.png";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import Calendar from "../../components/sharing/Calendar";
 import UpcomingEvent from "../../components/studentCom/UpcomingEvent";
 import { useLocalData } from "../../components/setting/useContext";
+import DataContext from "../../components/setting/ContextData";
+import APIServices from "../../services/APIServices.ts";
 export function LeftSider() {
   const location = useLocation();
   const [onPages, setPages] = useState();
-  const {setData}=useLocalData();
+  const { setData } = useLocalData();
 
   useEffect(() => {
     const locations = location.pathname.split("/");
     setPages(locations[locations.length - 1]);
   }, [location]);
   const nav = useNavigate();
-  const handleLogOut=()=>{
+  const handleLogOut = () => {
     localStorage.removeItem("DATA");
+    localStorage.removeItem("OTHERS");
     nav("/");
-  }
+  };
   return (
     <div className="h-full w-full flex flex-col justify-between text-[var(--login\_button)]">
       <div>
@@ -114,7 +117,7 @@ export function LeftSider() {
         <div
           className="flex items-center justify-start pl-[1rem] pr-[1.5rem] mb-[3rem] py-[1rem] hover:bg-white cursor-pointer transition-all"
           onClick={() => {
-           handleLogOut();
+            handleLogOut();
           }}
         >
           <label>
@@ -127,13 +130,28 @@ export function LeftSider() {
   );
 }
 export function RightSiderDateTime() {
+  const [events, setEvents] = useState([]);
+
+  const dataContext = useContext(DataContext);
+  useEffect(() => {
+    const fetchEvent = async () => {
+      if (dataContext?.othersId) {
+        const result = await APIServices.getAPI(
+          "/class-service/event/" + dataContext?.othersId.teamId
+        );
+        setEvents(result);
+      }
+    };
+    fetchEvent();
+  }, []);
+
   return (
     <div className="h-full w-full  flex flex-col bg-[var(--sider\_color)] px-[1rem] overflow-hidden">
       <div className="w-[100%] flex items-center justify-center mt-[6rem] ">
-        <Calendar />
+        <Calendar eventsDataArray={events} />
       </div>
       <div className="mt-[3rem]">
-        <UpcomingEvent/>
+        <UpcomingEvent eventsDataArray={events} />
       </div>
     </div>
   );

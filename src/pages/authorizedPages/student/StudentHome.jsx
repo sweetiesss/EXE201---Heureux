@@ -19,7 +19,8 @@ export const RefrestApi = createContext();
 export default function StudentHome() {
 
   const auth=useContext(DataContext);
-  console.log(auth.data);
+  console.log("auth",auth.data);
+  console.log("otherId",auth.othersId);
   const [task, setTask] = useState([]);
   const [sectionsData, setSectionsData] = useState();
   const [taskesShowedData, setTaskesShowedData] = useState();
@@ -31,7 +32,7 @@ export default function StudentHome() {
     const fetchData = async () => {
       try {
         const result = await APIServices.getAPI(
-          `/class-service/task/team/${teamId}`
+          `/class-service/task/team/${auth.othersId?.teamId}`
         );
         setTask(result);
       } catch (error) {

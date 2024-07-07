@@ -1,5 +1,5 @@
 // src/Calendar.js
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   format,
   addMonths,
@@ -11,16 +11,20 @@ import {
   addDays,
   isSameMonth,
   isSameDay,
-  parse,
-  getDay,
+  isBefore,
 } from "date-fns";
 import "../../styles/Calendar.css"; // We'll define styles later
 import { PiCaretLeftFill, PiCaretRightFill } from "react-icons/pi";
 
-const Calendar = () => {
+const Calendar = ({ eventsDataArray }) => {
   const [currentMonth, setCurrentMonth] = useState(new Date());
   const [selectedDate, setSelectedDate] = useState(new Date());
+  const [events, setEvent] = useState([]);
   const today = new Date();
+
+  useEffect(() => {
+    setEvent(eventsDataArray || []);
+  }, [eventsDataArray]);
 
   const renderHeader = () => {
     return (
@@ -76,22 +80,39 @@ const Calendar = () => {
       for (let i = 0; i < 7; i++) {
         formattedDate = format(day, "d");
         const cloneDay = day;
+        const dayEvents =
+          events &&
+          events.filter((event) =>
+            isSameDay(
+              new Date(
+                event?.endDate.split("-")[0],
+                event?.endDate.split("-")[1] - 1,
+                event?.endDate.split("-")[2].slice(0, 2)
+              ),
+              day
+            )
+          );
+
         days.push(
           <div
             className={`col cell ${
               !isSameMonth(day, monthStart)
                 ? "disabled"
+                : dayEvents?.length > 0
+                ? isBefore(day, today)
+                  ? "pasted"
+                  : isSameDay(day, today)
+                  ? "going"
+                  : "event"
                 : isSameDay(day, selectedDate)
                 ? "selected"
                 : isSameDay(day, today)
                 ? "today"
                 : ""
-            }`}
+            } 
+              `}
             key={day}
-            onClick={
-              () => onDateClick(cloneDay)
-              // console.log(new Date(cloneDay))
-            }
+            onClick={() => onDateClick(cloneDay)}
           >
             <span className="number">{formattedDate}</span>
             {/* <span className="bg">{formattedDate}</span> */}
@@ -110,7 +131,6 @@ const Calendar = () => {
   };
 
   const onDateClick = (day) => {
-    console.log(day);
     setSelectedDate(new Date(day));
   };
 

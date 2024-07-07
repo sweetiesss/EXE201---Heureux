@@ -35,27 +35,11 @@ export default function ChosenRoom() {
         console.log(e);
       }
     };
-    // const fetchApiTeamByUserID = async () => {
-    //   try {
-    //     const teamByUserId = await APIServices.getAPI(
-    //       "/class-service/user_team/team/" + cloneId
-    //     );
-    //     setYourTeam(teamByUserId);
-    //   } catch (e) {
-    //     console.log(e);
-    //   }
-    // };
-
     fetchApiClasses();
     fetchApiClassByUserID();
-    // fetchApiTeamByUserID();
-    // fetchApiTeamByClassID();
   }, []);
 
-  // console.log("classes", classes);
-  // console.log("classInfor", classInfor);
-  // console.log("team", team);
-  // console.log("yourTeam", yourTeam);
+ 
 
   const handleJoinClass = async (e, item) => {
     try {
