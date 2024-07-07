@@ -4,6 +4,7 @@
 
 html {
   font-size: 18px;
+
 }
 
 :root {
@@ -45,6 +46,7 @@ body {
   -moz-user-select: none;
   -webkit-user-select: none;
   -ms-user-select: none;
+  
 }
 img{
   pointer-events: none;

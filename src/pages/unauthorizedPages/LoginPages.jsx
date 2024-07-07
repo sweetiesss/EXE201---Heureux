@@ -72,7 +72,6 @@ export default function LoginPages() {
     }catch(e){
       ToastError(e.response.data?.title);
       ToastError(e.response.data?.message);
-
     }
      
   };

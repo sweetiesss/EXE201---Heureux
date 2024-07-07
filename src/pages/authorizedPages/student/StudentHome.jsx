@@ -76,7 +76,7 @@ export default function StudentHome() {
   }
 
   return (
-    <div className="">
+    <div className="w-full h-full">
       <RefrestApi.Provider value={{refreshAPI,refreshing}}>
         <Routes>
           <Route path="/*">

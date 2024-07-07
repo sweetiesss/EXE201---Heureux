@@ -21,7 +21,7 @@ function App() {
       <div className="Updating">
         <div>This platform is updating...</div>
       </div>
-      <div className="Functioned">
+      <div className="Functioned ">
         <Routes>
           <Route element={<Layouts header="home" />}>
             <Route index path="/" element={<HomePages />} />
