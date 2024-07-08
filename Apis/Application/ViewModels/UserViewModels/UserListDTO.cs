@@ -9,6 +9,7 @@ namespace Application.ViewModels.UserViewModels
 {
     public class UserListDTO
     {
+        public int? Id { get; set; }
         public string? RoleCode { get; set; }
         public string Email { get; set; } = null!;
         public string Password { get; set; } = null!;
