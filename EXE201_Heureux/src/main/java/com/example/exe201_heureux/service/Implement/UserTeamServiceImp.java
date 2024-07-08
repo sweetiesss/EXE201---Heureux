@@ -19,6 +19,7 @@ import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -126,21 +127,33 @@ public class UserTeamServiceImp implements UserTeamInterface {
                 .statusCode(200)
                 .build();
     }
-    public ResponseObject deleteUserTeam(Integer userTeamId) {
-        UserTeam userTeam = userTeamRepository.findById(userTeamId)
-                .orElse(null);
+    public ResponseObject deleteUserTeam(Integer userId) {
+        Optional<User> optionalUser = userRepository.findById(userId);
 
-        if (userTeam == null) {
+        // Kiểm tra xem người dùng có tồn tại không
+        if (!optionalUser.isPresent()) {
             return ResponseObject.builder()
-                    .message("No UserTeam found with id: " + userTeamId)
+                    .message("User not found with id: " + userId)
                     .statusCode(404)
                     .build();
         }
 
-        userTeamRepository.delete(userTeam);
+        User user = optionalUser.get();
+        List<UserTeam> userTeams = userTeamRepository.findByUserid(user);
+
+        // Kiểm tra xem danh sách UserTeam có trống không
+        if (userTeams == null || userTeams.isEmpty()) {
+            return ResponseObject.builder()
+                    .message("No UserTeam found for user with id: " + userId)
+                    .statusCode(404)
+                    .build();
+        }
+
+        // Xóa tất cả các UserTeam liên quan đến người dùng này
+        userTeamRepository.deleteAll(userTeams);
 
         return ResponseObject.builder()
-                .message(ResponseMessage.msgSuccess)
+                .message("UserTeam(s) deleted successfully")
                 .statusCode(200)
                 .build();
     }

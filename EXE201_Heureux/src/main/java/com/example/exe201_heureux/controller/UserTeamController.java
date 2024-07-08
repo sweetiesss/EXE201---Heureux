@@ -59,8 +59,8 @@ public class UserTeamController {
     public ResponseObject updateUserTeam(@RequestBody UpdateUserTeamRequestDTO userTeamRequest) {
         return userTeamService.updateUserTeam(userTeamRequest);
     }
-    @DeleteMapping("/delete/{userTeamId}")
-    public ResponseObject deleteUserTeam(@PathVariable Integer userTeamId) {
-        return userTeamService.deleteUserTeam(userTeamId);
+    @DeleteMapping("/delete/{userId}")
+    public ResponseObject deleteUserTeam(@PathVariable Integer userId) {
+        return userTeamService.deleteUserTeam(userId);
     }
 }
