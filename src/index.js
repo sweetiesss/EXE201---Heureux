@@ -12,15 +12,13 @@ import ToastSetting from "./components/setting/ToastSetting";
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   // <React.StrictMode>
+
   <LocalStorageDataProvider>
-    <LocalStorageDataProvider>
-      <BrowserRouter>
-        <App />
-        <ToastSetting />
-      </BrowserRouter>
-    </LocalStorageDataProvider>
+    <BrowserRouter>
+      <App />
+      <ToastSetting />
+    </BrowserRouter>
   </LocalStorageDataProvider>
+
   // </React.StrictMode>
 );
-
-

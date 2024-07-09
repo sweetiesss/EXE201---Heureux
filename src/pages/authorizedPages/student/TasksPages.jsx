@@ -5,7 +5,7 @@ import {
 } from "../../../components/studentCom/TaskHolderComps";
 import APIServices from "../../../services/APIServices.ts";
 
-export default function TasksPages({ taskesDataArrayList,sectionsDataArrayList }) {
+export default function TasksPages({ taskesDataArrayList,sectionsDataArrayList,setSectionSelect }) {
   const itemReft = useRef(null);
   const [isMouseDown, setMouseDown] = useState(false);
   const [startX, setStartX] = useState(false);

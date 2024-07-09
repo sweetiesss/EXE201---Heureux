@@ -10,23 +10,28 @@ import { useContext, useEffect, useState } from "react";
 import UnitOfWork from "../../../services/UnitOfWork.ts";
 import DataContext from "../../../components/setting/ContextData.js";
 import APIServices from "../../../services/APIServices.ts";
-import { RefrestApi } from "./StudentHome.jsx";
 
-export default function GeneralPages({
-  taskesDataArrayList,
-  yourAsignData,
-  membersArray,
-}) {
+export default function GeneralPages({ taskesDataArrayList, yourAsignData }) {
   const [taskes, setTaskes] = useState([]);
   const [sections, setSections] = useState();
   const [members, setMembers] = useState([]);
-  useEffect(() => {
-    setMembers(membersArray || []);
-  }, [membersArray]);
+  const dataContext = useContext(DataContext);
 
   useEffect(() => {
     setTaskes(taskesDataArrayList || []);
   }, [taskesDataArrayList]);
+
+  useEffect(() => {
+    const fetchingTeamMember = async () => {
+      try {
+        const result = await APIServices.getAPI(
+          "/class-service/user_team/user/" + dataContext.othersId.teamId
+        );
+        setMembers(result);
+      } catch (e) {}
+    };
+    fetchingTeamMember();
+  }, []);
 
   const groupedData =
     taskes && taskes.length > 0
@@ -154,7 +159,7 @@ export default function GeneralPages({
             />
           ))}
           <div className="bg-gray-300 w-[4rem] h-[4rem] rounded-full text-2xl flex justify-center items-center">
-            {members && <div> + {members.length - 4}</div>}
+            {members &&<div> + {members.length - 4}</div>}
           </div>
         </div>
       </div>

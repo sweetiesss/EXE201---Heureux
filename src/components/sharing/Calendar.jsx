@@ -92,7 +92,6 @@ const Calendar = ({ eventsDataArray }) => {
               day
             )
           );
-
         days.push(
           <div
             className={`col cell ${
@@ -100,7 +99,7 @@ const Calendar = ({ eventsDataArray }) => {
                 ? "disabled"
                 : dayEvents?.length > 0
                 ? isBefore(day, today)
-                  ? "pasted"
+                  ? "passed"
                   : isSameDay(day, today)
                   ? "going"
                   : "event"

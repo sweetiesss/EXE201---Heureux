@@ -64,7 +64,7 @@
   font-weight: bold;
   color: white;
 }
-.col.pasted {
+.col.passed {
   background-color: var(--error-color);
   font-weight: bold;
   color: white;

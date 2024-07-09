@@ -31,7 +31,7 @@ export default function LoginPages() {
 
   const nav = useNavigate();
   const [user,setUser]=useState();
-  const {setData}=useLocalData();
+  const {setData,setSupscriptionData}=useLocalData();
   const [form, setForm] = useState({
     emailOrUserName: "",
     password: "",
@@ -59,10 +59,14 @@ export default function LoginPages() {
       });
       if(result===200){
          const userInfor=await APIServices.getAPI(`api/User/GetUser/${form?.emailOrUserName}`)
-        console.log(userInfor);
         setData(userInfor);
         if(userInfor?.roleCode==="STUDENT"){
-          nav("/Student");
+          const supcriptionResult=await APIServices.getAPI("/api/UserSubscription/GetUserSubscriptionById/"+userInfor?.id);
+          console.log(supcriptionResult);
+          if(supcriptionResult){
+            
+          }
+          nav("/ChooseRoom");
    
           ToastSuccess("Welcome "+userInfor?.username);
         }

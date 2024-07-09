@@ -2,6 +2,7 @@ import { useContext, useEffect, useState } from "react";
 import APIServices from "../../../services/APIServices.ts";
 import DataContext from "../../../components/setting/ContextData.js";
 import { useNavigate } from "react-router-dom";
+import { format } from "date-fns";
 
 export default function ChosenRoom() {
   const [classes, setClasses] = useState([]);
@@ -10,9 +11,9 @@ export default function ChosenRoom() {
   const [team, setTeam] = useState();
   const [yourTeam, setYourTeam] = useState();
   const [classId, setClassId] = useState();
-  const cloneId = 1;
+
   const dataContext = useContext(DataContext);
-  const nav=useNavigate();
+  const nav = useNavigate();
 
   useEffect(() => {
     const fetchApiClasses = async () => {
@@ -28,7 +29,7 @@ export default function ChosenRoom() {
     const fetchApiClassByUserID = async () => {
       try {
         const classByUserId = await APIServices.getAPI(
-          "/class-service/class-user/team/" + cloneId
+          "/class-service/class-user/team/" + dataContext.data.id
         );
         setClassInfor(classByUserId);
       } catch (e) {
@@ -39,7 +40,7 @@ export default function ChosenRoom() {
     fetchApiClassByUserID();
   }, []);
 
- 
+  console.log(classes);
 
   const handleJoinClass = async (e, item) => {
     try {
@@ -56,6 +57,7 @@ export default function ChosenRoom() {
       console.log(e);
     }
   };
+
   const handleJoinTeam = (e, item) => {
     try {
       e.preventDefault();
@@ -68,7 +70,7 @@ export default function ChosenRoom() {
           classId: classId,
         };
         dataContext.setOthersId(submitForm);
-        nav("../general");
+        nav("../student/general");
       }
     } catch (e) {
       console.log(e);
@@ -78,33 +80,47 @@ export default function ChosenRoom() {
   return (
     <div className="w-full h-full">
       {team && (
-        <div className="absolute w-full h-full bg-black opacity-50 flex justify-around items-center z-20">
-          {team.map((item) => (
-            <div className="w-[20rem] bg-white border-[var(--login\_button)] border-[0.15rem] rounded-xl min-h-[10rem]">
-              <div className="w-full text-xl font-semibold text-center">
-                {item?.name}
+        <div className="absolute w-full h-full  flex items-center z-20  justify-center ">
+          <div className="w-full h-full bg-black opacity-50 absolute "></div>
+          <div className="flex w-[58%] flex-wrap max-h-[40rem]  overflow-auto relative z-10 bg-white pb-[2rem] px-[1rem] rounded-xl shadow-xl">
+            <div className="absolute right-[0.8rem] top-0 text-2xl font-semibold">x</div>
+            {team.map((item) => (
+              <div
+                className="w-[17rem] h-[10rem] bg-white border-[var(--login\_button)] border-[0.15rem] rounded-xl min-h-[12rem] mt-[2rem] flex cursor-pointer mx-[1rem]"
+                onClick={(e) => handleJoinTeam(e, item)}
+              >
+                <div className="w-[6rem] h-full"></div>
+                <div className="p-[1rem]">
+                  <div className="w-full text-xl font-semibold text-left text-orange-400">
+                    {item?.name}
+                  </div>
+                  <div>{item?.project_name}</div>
+                  <div>MemberSize: {item?.size}</div>
+                </div>
               </div>
-              <div>{item?.project_name}</div>
-              <div>MemberSize: {item?.size}</div>
-              <button onClick={(e) => handleJoinTeam(e, item)}>Join Now</button>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
       )}
 
-      <div className="flex w-full h-full items-center justify-around relative">
-        {classes &&
-          classes.map((item) => (
-            <div className="w-[20rem] bg-white border-[var(--login\_button)] border-[0.15rem] rounded-xl min-h-[10rem]">
-              <div className="w-full text-xl font-semibold text-center">
-                {item?.className}
+      <div className="flex w-full h-full items-center justify-center relative">
+        <div className="flex w-[60%] flex-wrap mt-[5rem] max-h-[40rem] overflow-auto">
+          {classes &&
+            classes.map((item) => (
+              <div
+                className="w-[17rem] bg-white border-[var(--login\_button)] border-[0.15rem] rounded-xl min-h-[12rem] mt-[1rem] flex cursor-pointer mx-[1rem]"
+                onClick={(e) => handleJoinClass(e, item)}
+              >
+                <div className="w-[6rem] h-full"></div>
+                <div className="p-[1rem]">
+                  <div className="w-full text-xl font-semibold text-left text-orange-400">
+                    {item?.className}
+                  </div>
+                  <div className="text-[#5e5e5e]">{item?.createdBy}</div>
+                </div>
               </div>
-              <div>{item?.createDate}</div>
-              <button onClick={(e) => handleJoinClass(e, item)}>
-                Join Now
-              </button>
-            </div>
-          ))}
+            ))}
+        </div>
       </div>
     </div>
   );

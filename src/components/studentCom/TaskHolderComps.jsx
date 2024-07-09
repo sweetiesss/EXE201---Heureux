@@ -11,7 +11,7 @@ import APIServices from "../../services/APIServices.ts";
 import { useCallback, useContext, useEffect, useState } from "react";
 import { RefrestApi } from "../../pages/authorizedPages/student/StudentHome.jsx";
 import { isAfter, isBefore } from "date-fns";
-import { debounce } from 'lodash';
+import { debounce } from "lodash";
 
 function TaskBoxContainer({ taskColorShow, item, clicking }) {
   let bgColor = "#F1F2F4";
@@ -88,7 +88,7 @@ export function TaskHolderComps({
     setDataArray(arrayList || []);
   }, [arrayList]);
 
-  const upDateTaskStatus  =async (item,e) => {
+  const upDateTaskStatus = async (item, e) => {
     e.preventDefault();
 
     try {
@@ -97,11 +97,13 @@ export function TaskHolderComps({
         submitform = { ...submitform, status: "Success" };
       } else {
         const endDate = submitform?.endDate.split("-");
-        const endDateDay = new Date(endDate[0], endDate[1] + 1, endDate[2]);
+        const endDateDay = new Date(endDate[0], endDate[1]-1, endDate[2]);
+        console.log(endDateDay);
+        console.log("today",new Date());
         if (isAfter(endDateDay, new Date())) {
-          submitform = { ...submitform, status: "Urgent" };
-        } else if (isBefore(endDateDay, new Date())) {
           submitform = { ...submitform, status: "OnGoing" };
+        } else{
+          submitform = { ...submitform, status: "Urgent" };
         }
       }
       console.log(submitform);
@@ -112,7 +114,16 @@ export function TaskHolderComps({
     }
   };
 
-  const debouncedUpdateTaskStatus = useCallback(debounce(upDateTaskStatus, 500), [refreshAPI]);
+  const debouncedUpdateTaskStatus = useCallback(
+    debounce(upDateTaskStatus, 500),
+    [refreshAPI]
+  );
+
+  const hanldeClickAddTask = (e) => {
+    e.preventDefault();
+    refreshAPI.openTaskAdding();
+    refreshAPI.hanldeSetSection(sectionName);
+  };
 
   return (
     <div
@@ -140,7 +151,7 @@ export function TaskHolderComps({
               taskColorShow={taskColorShow}
               key={index}
               item={item}
-              clicking={(e) => debouncedUpdateTaskStatus(item,e)}
+              clicking={(e) => debouncedUpdateTaskStatus(item, e)}
             />
           ))}
       </div>
@@ -150,7 +161,7 @@ export function TaskHolderComps({
       >
         <button
           className="flex justify-center items-center"
-          onClick={() => console.log("222")}
+          onClick={hanldeClickAddTask}
         >
           Add task <PiPlusCircleBold className="ml-[0.5rem]" />
         </button>
