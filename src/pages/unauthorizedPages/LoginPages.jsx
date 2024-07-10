@@ -28,10 +28,9 @@ function Ggsvg() {
   );
 }
 export default function LoginPages() {
-
   const nav = useNavigate();
-  const [user,setUser]=useState();
-  const {setData,setSupscriptionData}=useLocalData();
+  const [user, setUser] = useState();
+  const { setData, setSupscriptionData } = useLocalData();
   const [form, setForm] = useState({
     emailOrUserName: "",
     password: "",
@@ -40,44 +39,51 @@ export default function LoginPages() {
     e.preventDefault();
     const { name, value } = e.target;
     setForm((prev) => ({ ...prev, [name]: value }));
-  };  
- 
-  console.log(user);
-
+  };
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(form);
-  try{
-
-    if(form.emailOrUserName===""||form.password===""){
-      ToastError("Enter your email or password");
-      return
-    }
+    try {
+      if (form.emailOrUserName === "" || form.password === "") {
+        ToastError("Enter your email or password");
+        return;
+      }
       const result = await APIServices.postAPI("api/User/Login", {
         email: form.emailOrUserName,
         password: form.password,
       });
-      if(result===200){
-         const userInfor=await APIServices.getAPI(`api/User/GetUser/${form?.emailOrUserName}`)
+
+      if (result === 200) {
+        const userInfor = await APIServices.getAPI(
+          `api/User/GetUser/${form?.emailOrUserName}`
+        );
         setData(userInfor);
-        if(userInfor?.roleCode==="STUDENT"){
-          const supcriptionResult=await APIServices.getAPI("/api/UserSubscription/GetUserSubscriptionById/"+userInfor?.id);
-          console.log(supcriptionResult);
-          if(supcriptionResult){
-            
+        if (userInfor) {
+          const roleCodeSub = await APIServices.getAPI("/api/Subscription/GetSubcriptions?pageIndex=0&pageSize=10");
+          if (roleCodeSub) {
+            const userSub = await APIServices.getAPI("/api/UserSubscription/GetUserSubscription?pageIndex=0&pageSize=100");
+            if (userSub) {
+              const userSubscriptions = userSub.items.filter((trans) => trans.userId === userInfor.id);
+              const enrichedSubscriptions = userSubscriptions.map((item) => {
+                const matchedRole = roleCodeSub.items.find((role) => role.id === item.subscriptionId);
+                return matchedRole
+                  ? { ...item, ...matchedRole }
+                  : { ...item, name: "Free trial" };
+              });
+              setSupscriptionData(enrichedSubscriptions);
+            }
           }
-          nav("/ChooseRoom");
-   
-          ToastSuccess("Welcome "+userInfor?.username);
         }
-        return;
+        if (userInfor?.roleCode === "STUDENT") {
+          nav("/ChooseRoom");
+          ToastSuccess("Welcome " + userInfor?.username);
+        } else {
+          nav("/Lecturer");
+          ToastSuccess("Welcome " + userInfor?.username);
+        }
       }
+
       // nav("/student/general");
-    }catch(e){
-      ToastError(e.response.data?.title);
-      ToastError(e.response.data?.message);
-    }
-     
+    } catch (e) {}
   };
   return (
     <div className="flex flex-col justify-start items-center ">

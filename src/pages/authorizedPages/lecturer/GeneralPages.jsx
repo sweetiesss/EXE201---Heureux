@@ -68,11 +68,11 @@ export default function GeneralPages({ taskesDataArrayList, yourAsignData }) {
   ];
 
   return (
-    <div className="flex flex-col justify-around items-start h-full">
+    <div className="w-full h-full">
       <div className=" flex items-start justify-between w-full">
         <div className="w-[48%] ">
           <div className="mb-[2rem] flex items-center w-full justify-between">
-            <p className="font-bold text-xl">Report</p>
+            <p className="font-bold text-xl">Classes</p>
             <CusLink
               linkTo="../reports"
               content="View more"
@@ -98,7 +98,7 @@ export default function GeneralPages({ taskesDataArrayList, yourAsignData }) {
             />
           </div>
           <div className="mb-[2rem] flex items-center mt-[3rem]  w-full justify-between">
-            <p className="font-bold text-xl">Task</p>
+            <p className="font-bold text-xl">Report Project</p>
             <CusLink
               linkTo="../tasks"
               content="View more"
@@ -107,19 +107,38 @@ export default function GeneralPages({ taskesDataArrayList, yourAsignData }) {
               bIcon={PiCaretRight}
             />
           </div>
+
           <div className="flex w-full justify-between">
-            {latestSections.map(([section, tasks], index) => (
-              <TasksHolderComps
-                key={index}
-                title={"Proposal"}
-                bgColor={"report_color"}
-                newClassName="w-[48%] shadow-xl mr-[1.5rem]"
-                arrayOfContent={tasks}
-                dateCreate={d}
-                taskTitle={section}
-                isOpen={isOpen}
-              />
-            ))}
+            <ReportBoxShort
+              title={"Proposal"}
+              bgColor={"report_color"}
+              newClassName="w-[48%] shadow-xl  h-[10rem]"
+              arrayOfContent={{ comment: 2, submited: 1 }}
+              dateCreate={d}
+              isOpen={isOpen}
+            />
+            <ReportBoxShort
+              title={"Proposal"}
+              bgColor={"report_color"}
+              newClassName="w-[48%] shadow-xl  h-[10rem]"
+              dateCreate={d}
+            />
+          </div>
+          <div className="flex w-full justify-between mt-[2rem]">
+            <ReportBoxShort
+              title={"Proposal"}
+              bgColor={"report_color"}
+              newClassName="w-[48%] shadow-xl  h-[10rem]"
+              arrayOfContent={{ comment: 2, submited: 1 }}
+              dateCreate={d}
+              isOpen={isOpen}
+            />
+            <ReportBoxShort
+              title={"Proposal"}
+              bgColor={"report_color"}
+              newClassName="w-[48%] shadow-xl  h-[10rem]"
+              dateCreate={d}
+            />
           </div>
         </div>
         <div className="w-[48%] ">
@@ -147,19 +166,21 @@ export default function GeneralPages({ taskesDataArrayList, yourAsignData }) {
               number={yourAsignData}
             />
           </div>
-        </div>
-      </div>
-      <div className="w-full flex-col  flex">
-        <p className="font-bold text-xl mb-[2rem]">Team member</p>
-        <div className="flex justify-around w-full  bg-[var(--sider\_color)] h-[10rem] rounded-xl items-center">
-          {members?.slice(0, 4).map((item, index) => (
-            <InforBoxCol
-              name={item?.userid}
-              title={item?.leader ? "Leader" : "Member"}
-            />
-          ))}
-          <div className="bg-gray-300 w-[4rem] h-[4rem] rounded-full text-2xl flex justify-center items-center">
-            {members &&<div> + {members.length - 4}</div>}
+          <div className="w-full h-[10.5rem] flex-col justify-between rounded-xl bg-[var(--liner-day-chart-background-color)] text-[var(--liner-day-chart-font-color)] p-[1rem] mt-[1.5rem]">
+            <div className="text-center w-full text-xl h-[2.5rem] font-semibold">
+              Total Students
+            </div>
+            <div className="flex justify-evenly h-[6rem]">
+              <div className="text-center w-[10rem]">
+                <div className="text-xl text-black">Students</div>
+                <div className="text-3xl font-semibold mt-[1rem]  ">100</div>
+              </div>
+              <div className="h-full border-r-[0.2rem] border-[var(--liner-day-chart-font-color)]" />
+              <div className="text-center w-[10rem]">
+                <div className="text-xl text-black">Classes</div>
+                <div className="text-3xl font-semibold mt-[1rem]  ">100</div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
