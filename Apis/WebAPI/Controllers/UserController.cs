@@ -44,7 +44,7 @@ namespace WebAPI.Controllers
             return await _userService.Register(registerRequestModel);
         }
 
-        [HttpPut]
+        [HttpPost]
         public async Task<HttpStatusCode> UpdateUser([FromBody] RegisterRequestModel registerRequestModel)
         {
             if (!ModelState.IsValid)
@@ -55,7 +55,7 @@ namespace WebAPI.Controllers
             return await _userService.UpdateUser(registerRequestModel);
         }
 
-        [HttpDelete("{email}")]
+        [HttpPost("{email}")]
         public async Task<HttpStatusCode> DeleteUser(string email) => await _userService.DeleteUser(email);
 
 

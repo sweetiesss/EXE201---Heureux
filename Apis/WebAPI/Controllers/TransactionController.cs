@@ -31,7 +31,7 @@ namespace WebAPI.Controllers
         [HttpGet("{orderCode}")]
         public async Task<TransactionRequestModel> GetTransaction(int orderCode) => await _transactionService.GetTransaction(orderCode);
 
-        [HttpPut]
+        [HttpPost]
         public async Task<HttpStatusCode> UpdateTransaction(string code, int orderCode, string cancel, string status) => await _transactionService.Update(code, orderCode, cancel, status);
     }
 }

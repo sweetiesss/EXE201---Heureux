@@ -32,12 +32,12 @@ namespace WebAPI.Controllers
         public async Task<Subscription> CreateSubscription(SubscriptionRequest subscription) => await _subscriptionService.CreateSubscription(subscription);
 
 
-        [HttpPut("{id}")]
+        [HttpPost("{id}")]
         public async System.Threading.Tasks.Task UpdateSubscription(int id, SubscriptionRequest subscription)
         => await _subscriptionService.UpdateSubscription(id, subscription);
        
 
-        [HttpDelete("{id}")]
+        [HttpPost("{id}")]
         public async Task<Subscription> DeleteSubscription(int id)
         {
             return await _subscriptionService.DeleteSubscription(id);

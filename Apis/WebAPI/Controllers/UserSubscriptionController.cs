@@ -36,12 +36,12 @@ namespace WebAPI.Controllers
         {
             return await _userSubscriptionService.CreateUserSubscription(userSubscription);
         }
-        [HttpPut]
+        [HttpPost]
         public async Task<UserSubscription> UpdateUserSubscription(int id, [FromForm]UserSubscriptionRequest userSubscription)
         {
             return await _userSubscriptionService.UpdateUserSubscription(id,userSubscription);
         }
-        [HttpDelete("{id}")]
+        [HttpPost("{id}")]
         public async Task<UserSubscription> DeleteUserSubscription(int id)
         {
             return await _userSubscriptionService.DeleteUserSubscription(id);
