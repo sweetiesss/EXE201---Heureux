@@ -33,9 +33,12 @@ export function LeftSider() {
   };
   useEffect(() => {
     const checkPermisstion = () => {
-      if (supscriptionData?.subscriptionId===1||supscriptionData?.subscriptionId===2) {
+      if (
+        supscriptionData?.[0]?.subscriptionId == 1 ||
+        supscriptionData?.[0]?.subscriptionId == 2
+      ) {
         setPermission(true);
-      }else{
+      } else {
         setPermission(false);
       }
     };

@@ -82,7 +82,8 @@ export function PremiumPayment() {
       if (result) {
         console.log(result);
         setPaymentScription(result);
-        window.open(result.data.checkoutUrl, "_blank", "noopener,noreferrer");
+        window.open(result.data.checkoutUrl, "_blank");
+        
       }
 
       // const result=await APIServices.postAPI()
