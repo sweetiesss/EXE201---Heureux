@@ -17,7 +17,7 @@ import APIServices from "../../services/APIServices.ts";
 export function LeftSider() {
   const location = useLocation();
   const [onPages, setPages] = useState();
-  const { setData } = useLocalData();
+  const { setData,supscriptionData } = useLocalData();
 
   useEffect(() => {
     const locations = location.pathname.split("/");
@@ -27,6 +27,7 @@ export function LeftSider() {
   const handleLogOut = () => {
     localStorage.removeItem("DATA");
     localStorage.removeItem("OTHERS");
+    localStorage.removeItem("SUPSCRIPTION");
     nav("/");
   };
   return (

@@ -1,7 +1,7 @@
 import axios from "axios";
 
 
-const changingPort="ec2-57-180-42-37.ap-northeast-1.compute.amazonaws.com";
+const changingPort="ec2-18-179-37-110.ap-northeast-1.compute.amazonaws.com";
 export const apiMainPort="http://"+changingPort+":8000/";
 
 const conectStringAvailable = [

@@ -8,9 +8,13 @@ import axios from "axios";
 import { apiMainPort } from "../../../services/ApiConfig.ts";
 
 export function PremiumPayment() {
+  // const returnUrl="http://localhost:3000/";
+  const returnUrl="https://www.heureux.id.vn/";
+
   const [currentSubcription, setCurrentSubcription] = useState([]);
   const dataContext = useContext(DataContext);
   const [paymentScription, setPaymentScription] = useState();
+  const [refresh,setRefresh]=useState(false);
   const [roleCode,setRoleCode]=useState();
   const resultPayment = useLocation();
   const subIdValue =
@@ -60,14 +64,14 @@ export function PremiumPayment() {
       } catch (e) {}
     };
     fetchSub();
-  }, [roleCode]);
+  }, [roleCode,refresh]);
   const nav = useNavigate();
   const hanldeUpdateSub = async () => {
     try {
       let submitForm = {
         buyerEmail: dataContext.data.email,
-        cancelUrl: "http://localhost:3000/student/premiumbenefits",
-        returnUrl: "http://localhost:3000/student/premiumbenefits",
+        cancelUrl: returnUrl+"student/premiumbenefits",
+        returnUrl: returnUrl+"student/premiumbenefits",
         description: "Update Studentpackage",
         subscriptionId: subIdValue,
       };
@@ -120,14 +124,15 @@ export function PremiumPayment() {
                 }
               )
               .then((response) => {
-                
+                dataContext.setCurrentSubcription()
               })
               .catch((error) => {
                 console.error("Error:", error);
               });
           }
         }
-        nav("./premiumbenefits");
+        setRefresh((pre)=>!pre)
+        nav("../premiumbenefits");
       }
     };
     fetchApi();
