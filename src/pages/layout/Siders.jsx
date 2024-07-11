@@ -17,7 +17,8 @@ import APIServices from "../../services/APIServices.ts";
 export function LeftSider() {
   const location = useLocation();
   const [onPages, setPages] = useState();
-  const { setData,supscriptionData } = useLocalData();
+  const { setData, supscriptionData } = useLocalData();
+  const [permisstion, setPermission] = useState(false);
 
   useEffect(() => {
     const locations = location.pathname.split("/");
@@ -30,6 +31,15 @@ export function LeftSider() {
     localStorage.removeItem("SUPSCRIPTION");
     nav("/");
   };
+  useEffect(() => {
+    const checkPermisstion = () => {
+      if (supscriptionData) {
+        setPermission(true);
+      }
+    };
+
+    checkPermisstion();
+  }, [supscriptionData]);
   return (
     <div className="h-full w-full flex flex-col justify-between text-[var(--login\_button)]">
       <div>
@@ -79,38 +89,42 @@ export function LeftSider() {
           </label>
           <p>Tasks</p>
         </div>
-        <div
-          className={`flex items-center mt-[1.5rem]  ${
-            onPages === "reports"
-              ? "pl-[2rem] ml-[1rem] py-[0.7rem] bg-white  rounded-s-full"
-              : "pl-[1rem] hover:bg-white py-[0.5rem] cursor-pointer"
-          } transition-all`}
-          onClick={() => {
-            setPages("reports");
-            nav("reports");
-          }}
-        >
-          <label>
-            <PiStack className="text-xl mr-[0.5rem]" />
-          </label>
-          <p>Reports</p>
-        </div>
-        <div
-          className={`flex items-center mt-[1.5rem]  ${
-            onPages === "dashboard"
-              ? "pl-[2rem] ml-[1rem] py-[0.7rem] bg-white  rounded-s-full"
-              : "pl-[1rem] hover:bg-white py-[0.5rem] cursor-pointer"
-          } transition-all`}
-          onClick={() => {
-            setPages("dashboard");
-            nav("dashboard");
-          }}
-        >
-          <label>
-            <PiChartLine className="text-xl mr-[0.5rem]" />
-          </label>
-          <p>Dashboard</p>
-        </div>
+        {permisstion && (
+          <div
+            className={`flex items-center mt-[1.5rem]  ${
+              onPages === "reports"
+                ? "pl-[2rem] ml-[1rem] py-[0.7rem] bg-white  rounded-s-full"
+                : "pl-[1rem] hover:bg-white py-[0.5rem] cursor-pointer"
+            } transition-all`}
+            onClick={() => {
+              setPages("reports");
+              nav("reports");
+            }}
+          >
+            <label>
+              <PiStack className="text-xl mr-[0.5rem]" />
+            </label>
+            <p>Reports</p>
+          </div>
+        )}
+        {permisstion && (
+          <div
+            className={`flex items-center mt-[1.5rem]  ${
+              onPages === "dashboard"
+                ? "pl-[2rem] ml-[1rem] py-[0.7rem] bg-white  rounded-s-full"
+                : "pl-[1rem] hover:bg-white py-[0.5rem] cursor-pointer"
+            } transition-all`}
+            onClick={() => {
+              setPages("dashboard");
+              nav("dashboard");
+            }}
+          >
+            <label>
+              <PiChartLine className="text-xl mr-[0.5rem]" />
+            </label>
+            <p>Dashboard</p>
+          </div>
+        )}
       </div>
       <div>
         <div className="w-full border-[1.5px] border-white"></div>

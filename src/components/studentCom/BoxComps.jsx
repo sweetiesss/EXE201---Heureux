@@ -313,7 +313,7 @@ export function TasksHolderComps({
               onClick={(e) => setCentered(index)}
             >
               <div className="flex justify-between items-center">
-                <p>{box?.name}</p>
+                <p className="overflow-x-hidden max-w-[8rem] max-h-[1.5rem] overflow-hidden">{box?.name}</p>
                 <p
                   className="text-gray-700"
                   style={{ fontSize: "0.6rem", lineHeight: "1rem" }}

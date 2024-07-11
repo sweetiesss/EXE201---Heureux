@@ -74,7 +74,7 @@ export default function UpcomingEvent({ eventsDataArray }) {
       <div className="w-full containerUpcomming flex" style={style}>
         <div className="w-full flex justify-between">
           <div className="flex flex-col">
-            <div className="text-xl font-semibold">{title}</div>
+            <div className="text-xl font-semibold w-[13rem]">{title}</div>
             <div className="text-sm">{task}</div>
           </div>
           {dateInfor && (

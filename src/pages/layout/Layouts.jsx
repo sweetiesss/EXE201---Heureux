@@ -288,7 +288,7 @@ export function StudentLayout() {
   };
   return (
     <div className="flex w-full h-[100vh] relative">
-      <div className=" h-full bg-[var(--sider\_color)]  w-[11%] absolute  font-semibold">
+      <div className=" h-full bg-[var(--sider\_color)]  w-[11%] fixed  font-semibold">
         <LeftSider />
       </div>
 
