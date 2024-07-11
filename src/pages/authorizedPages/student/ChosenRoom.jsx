@@ -40,12 +40,9 @@ export default function ChosenRoom() {
     fetchApiClassByUserID();
   }, []);
 
-  console.log(classes);
-
   const handleJoinClass = async (e, item) => {
     try {
       e.preventDefault();
-      console.log(item);
       if (item) {
         const teamByUserId = await APIServices.getAPI(
           "/class-service/team/" + item?.id
@@ -76,6 +73,10 @@ export default function ChosenRoom() {
       console.log(e);
     }
   };
+  const handleCloseTeam = () => {
+    setTeam([]);
+    setClassId(-1);
+  };
 
   return (
     <div className="w-full h-full">
@@ -83,7 +84,12 @@ export default function ChosenRoom() {
         <div className="absolute w-full h-full  flex items-center z-20  justify-center ">
           <div className="w-full h-full bg-black opacity-50 absolute "></div>
           <div className="flex w-[58%] flex-wrap max-h-[40rem]  overflow-auto relative z-10 bg-white pb-[2rem] px-[1rem] rounded-xl shadow-xl">
-            <div className="absolute right-[0.8rem] top-0 text-2xl font-semibold">x</div>
+            <div
+              className="absolute right-[0.8rem] top-0 text-2xl font-semibold"
+              onClick={handleCloseTeam}
+            >
+              x
+            </div>
             {team.map((item) => (
               <div
                 className="w-[17rem] h-[10rem] bg-white border-[var(--login\_button)] border-[0.15rem] rounded-xl min-h-[12rem] mt-[2rem] flex cursor-pointer mx-[1rem]"
