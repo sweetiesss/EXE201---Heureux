@@ -9,6 +9,7 @@ export default function ChosenRoom() {
   const [classInfor, setClassInfor] = useState();
 
   const [team, setTeam] = useState();
+  const [openChoseTeam,setOpenChooseTeam]=useState(false);
   const [yourTeam, setYourTeam] = useState();
   const [classId, setClassId] = useState();
 
@@ -49,6 +50,7 @@ export default function ChosenRoom() {
         );
         setTeam(teamByUserId);
         setClassId(item?.id);
+        setOpenChooseTeam(true);
       }
     } catch (e) {
       console.log(e);
@@ -59,7 +61,6 @@ export default function ChosenRoom() {
     try {
       e.preventDefault();
       let submitForm = {};
-      console.log(item);
       if (item) {
         submitForm = {
           teamId: item?.id,
@@ -74,18 +75,18 @@ export default function ChosenRoom() {
     }
   };
   const handleCloseTeam = () => {
-    setTeam([]);
-    setClassId(-1);
+    setTeam();
+    setOpenChooseTeam(false);
   };
 
   return (
     <div className="w-full h-full">
-      {team && (
+      {openChoseTeam && (
         <div className="absolute w-full h-full  flex items-center z-20  justify-center ">
           <div className="w-full h-full bg-black opacity-50 absolute "></div>
           <div className="flex w-[58%] flex-wrap max-h-[40rem]  overflow-auto relative z-10 bg-white pb-[2rem] px-[1rem] rounded-xl shadow-xl">
             <div
-              className="absolute right-[0.8rem] top-0 text-2xl font-semibold"
+              className="absolute right-[0.8rem] top-0 text-2xl font-semibold cursor-pointer  "
               onClick={handleCloseTeam}
             >
               x
